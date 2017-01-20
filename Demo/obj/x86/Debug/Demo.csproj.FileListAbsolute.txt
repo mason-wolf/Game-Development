@@ -1,0 +1,170 @@
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Demo.exe
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Demo.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.RawInput.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.RawInput.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\obj\x86\Debug\Demo.csprojResolveAssemblyReference.cache
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\obj\x86\Debug\Demo.exe
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\obj\x86\Debug\Demo.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Content\TITLESCREEN.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Content\FONT.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Content\MENUBACKGROUND.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Newtonsoft.Json.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\MonoGame.Extended.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\MonoGame.Extended.Tiled.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Newtonsoft.Json.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Content\TILESET_1.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Content\map.tmx
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Content\CHARACTER_1.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\MonoGame.Extended.Collisions.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Content\MAP_1.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Content\TILESET_2.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Content\BUTTONBACKGROUND.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Content\CHARACTER_2.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Content\CHARACTER_1_WEAPON.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Content\WOLF.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Desktop\Demo\Demo\bin\Windows\x86\Debug\Content\CHARACTER_2_WEAPON.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Content\map.tmx
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Content\TILESET_2.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Content\BUTTONBACKGROUND.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Content\CHARACTER_1.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Content\CHARACTER_1_WEAPON.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Content\CHARACTER_2.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Content\CHARACTER_2_WEAPON.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Content\FONT.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Content\MAP_1.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Content\MENUBACKGROUND.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Content\TILESET_1.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Content\TITLESCREEN.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Content\WOLF.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Demo.exe
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Demo.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\MonoGame.Extended.Collisions.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Newtonsoft.Json.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.RawInput.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\MonoGame.Extended.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\MonoGame.Extended.Tiled.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\Newtonsoft.Json.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.RawInput.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\obj\x86\Debug\Demo.csprojResolveAssemblyReference.cache
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\obj\x86\Debug\Demo.exe
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Demo\Demo\obj\x86\Debug\Demo.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\obj\x86\Debug\Demo.exe
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\obj\x86\Debug\Demo.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Content\map.tmx
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Content\TILESET_2.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Content\BUTTONBACKGROUND.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Content\CHARACTER_1.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Content\CHARACTER_1_WEAPON.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Content\CHARACTER_2.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Content\CHARACTER_2_WEAPON.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Content\FONT.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Content\MAP_1.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Content\MENUBACKGROUND.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Content\TILESET_1.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Content\TITLESCREEN.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Content\WOLF.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Demo.exe
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Demo.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\MonoGame.Extended.Collisions.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Newtonsoft.Json.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.RawInput.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\MonoGame.Extended.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\MonoGame.Extended.Tiled.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\Newtonsoft.Json.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.RawInput.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\CATCHING GROUNDS\Demo\obj\x86\Debug\Demo.csprojResolveAssemblyReference.cache
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\obj\x86\Debug\Demo.exe
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\obj\x86\Debug\Demo.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Demo.exe
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Demo.pdb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.RawInput.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.RawInput.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\obj\x86\Debug\Demo.csprojResolveAssemblyReference.cache
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\characters\character_1.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\enemies\wolf.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\interface\button.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\interface\font.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\interface\healthbar.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\interface\menu.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\interface\staminabar.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\interface\statusbar.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\interface\titlescreen.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\maps\village.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\music\chopping_block.wma
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\music\chopping_block.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\objects\teleporter.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\player\player.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\sfx\sfx_sword.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\tilesets\tileset_1.xnb

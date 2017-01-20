@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/button.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/characters/character_1.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/player/player.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/music/chopping_block.mp3</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/font.spritefont</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/maps/village.tmx</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/healthbar.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/menu.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/staminabar.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/statusbar.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/objects/teleporter.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/tilesets/tileset_1.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/enemies/wolf.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/titlescreen.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/sfx/sfx_sword.wav</File>
+  </SourceFiles>
+</SourceFileCollection>
