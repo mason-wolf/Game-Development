@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/characters/character_1.png</SourceFile>
-  <SourceTime>2017-01-12T07:42:49.1531129-06:00</SourceTime>
+  <SourceTime>2017-01-20T05:59:58-06:00</SourceTime>
   <DestFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/bin/Windows/characters/character_1.xnb</DestFile>
-  <DestTime>2017-01-20T07:04:40.8141306-06:00</DestTime>
+  <DestTime>2017-06-25T14:16:41.7951438-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

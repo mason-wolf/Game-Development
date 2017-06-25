@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/font.spritefont</SourceFile>
-  <SourceTime>2017-01-02T10:33:55.6403548-06:00</SourceTime>
+  <SourceTime>2017-01-20T05:59:58-06:00</SourceTime>
   <DestFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/bin/Windows/interface/font.xnb</DestFile>
-  <DestTime>2017-01-20T07:04:43.2098711-06:00</DestTime>
+  <DestTime>2017-06-25T14:16:44.0767702-05:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

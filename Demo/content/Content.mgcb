@@ -171,3 +171,20 @@
 /processorParam:Quality=Best
 /build:sfx/sfx_sword.wav
 
+#begin maps/area_1.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:maps/area_1.tmx
+
+#begin objects/water.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:objects/water.png
+

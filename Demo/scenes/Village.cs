@@ -193,7 +193,9 @@ namespace Demo
 
             if(enteredWestExit)
             {
-             //   this.Hide();
+                Game1.area_1.Show();
+                this.Hide();
+
             }
 
             Player controls = new Player();

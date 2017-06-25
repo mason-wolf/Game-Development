@@ -16,7 +16,7 @@ namespace Demo
         public static SpriteFont font;
         public static SceneManager start;
         public static SceneManager main;
-
+        public static SceneManager area_1;
         public static KeyboardState oldState;
         public static KeyboardState newState;
 
@@ -67,7 +67,11 @@ namespace Demo
             Components.Add(main);
             main.Hide();
 
-            main.Show();
+            area_1 = new Area_1(this, Window);
+            Components.Add(area_1);
+            area_1.Hide();
+            area_1.Show();
+         //   main.Show();
 
         }
 

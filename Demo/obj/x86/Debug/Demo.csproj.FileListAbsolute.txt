@@ -168,3 +168,5 @@ C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\player\player.xnb
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\sfx\sfx_sword.xnb
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\tilesets\tileset_1.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\maps\area_1.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\objects\water.xnb
