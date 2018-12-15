@@ -176,18 +176,9 @@ C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Projects\MONOGAME DEMO\Demo\obj\x86\Deb
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Projects\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\tilesets\gridbox.xnb
 C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\tilesets\gridbox.xnb
 C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\tilesets\tileset_1.xnb
-C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\sfx\sfx_sword.xnb
-C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\maps\area_1.xnb
-C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\maps\rpg_maker_vx_rtp_tileset_by_telles0808.xnb
-C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\maps\very-large.xnb
-C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\maps\village.xnb
-C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\objects\teleporter.xnb
-C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\enemies\wolf.xnb
 C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\interface\button.xnb
 C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\interface\font.xnb
-C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\interface\healthbar.xnb
 C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\interface\menu.xnb
-C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\interface\staminabar.xnb
 C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\interface\statusbar.xnb
 C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\interface\titlescreen.xnb
 C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\player\player.xnb
@@ -221,3 +212,4 @@ C:\Users\Mason\Documents\mgframework\Demo\obj\x86\Debug\Demo.csproj.CoreCompileI
 C:\Users\Mason\Documents\mgframework\Demo\obj\x86\Debug\Demo.csproj.CopyComplete
 C:\Users\Mason\Documents\mgframework\Demo\obj\x86\Debug\Demo.exe
 C:\Users\Mason\Documents\mgframework\Demo\obj\x86\Debug\Demo.pdb
+C:\Users\Mason\Documents\mgframework\Demo\bin\Windows\x86\Debug\Content\maps\build_mode.xnb

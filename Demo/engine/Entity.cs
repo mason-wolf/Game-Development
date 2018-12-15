@@ -33,11 +33,9 @@ namespace Demo
     public class Entity : IUpdate, IActorTarget
     {
         private readonly AnimatedSprite sprite;
-        private float _direction = -1.0f;
-        private Action _state;
+        private float direction = -1.0f;
+        private Action state;
         public RectangleF BoundingBox => sprite.BoundingRectangle;
-
-        public bool IsOnGround { get; private set; }
 
         public Vector2 Position
         {
@@ -48,15 +46,15 @@ namespace Demo
 
         public Action State
         {
-            get { return _state; }
+            get { return state; }
 
              set
             {
-                if (_state != value)
+                if (state != value)
                 {
-                    _state = value;
+                    state = value;
 
-                    switch (_state)
+                    switch (state)
                     {
                         case Action.Idle:
                             sprite.Play("idle");
@@ -64,14 +62,8 @@ namespace Demo
                         case Action.WalkSouth:
                             sprite.Play("walkSouth", () => State = Action.Idle);
                             break;
-                        case Action.AttackSouth:
-                            sprite.Play("attackSouth", () => State = Action.Idle);
-                            break;
                         case Action.WalkWest:
                             sprite.Play("walkWest", () => State = Action.IdleWest);
-                            break;
-                        case Action.AttackWest:
-                            sprite.Play("attackWest", () => State = Action.IdleWest);
                             break;
                         case Action.IdleWest:
                             sprite.Play("idleWest");
@@ -79,29 +71,14 @@ namespace Demo
                         case Action.WalkEast:
                             sprite.Play("walkEast", () => State = Action.IdleEast);
                             break;
-                        case Action.AttackEast:
-                            sprite.Play("attackEast", () => State = Action.IdleEast);
-                            break;
                         case Action.IdleEast:
                             sprite.Play("idleEast");
                             break;
                         case Action.WalkNorth:
                             sprite.Play("walkNorth", () => State = Action.IdleNorth);
                             break;
-                        case Action.AttackNorth:
-                            sprite.Play("attackNorth", () => State = Action.IdleNorth);
-                            break;
                         case Action.IdleNorth:
                             sprite.Play("idleNorth");
-                            break;
-                        case Action.HurtSouth:
-                            sprite.Play("hurtSouth");
-                            break;
-                        case Action.HurtWest:
-                            sprite.Play("hurtWest");
-                            break;
-                        case Action.HurtEast:
-                            sprite.Play("hurtEast");
                             break;
                     }
                 }
@@ -114,13 +91,11 @@ namespace Demo
         public Entity(SpriteSheetAnimationFactory animations)
         {
             sprite = new AnimatedSprite(animations);
-            IsOnGround = false;
         }
 
         public void Update(GameTime gameTime)
         {
             sprite.Update(gameTime);
-            IsOnGround = false;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -130,9 +105,9 @@ namespace Demo
 
         public void Walk(float direction)
         {
-            sprite.Effect = _direction > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            _direction = direction;
-            Velocity = new Vector2(200f * _direction, Velocity.Y);
+            sprite.Effect = this.direction > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            this.direction = direction;
+            Velocity = new Vector2(200f * this.direction, Velocity.Y);
         }
 
         public void OnCollision(CollisionInfo c)

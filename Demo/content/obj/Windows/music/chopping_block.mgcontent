@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/Mason/Documents/mgframework/Demo/Content/music/chopping_block.mp3</SourceFile>
-  <SourceTime>2018-12-15T14:50:34.2131812-06:00</SourceTime>
+  <SourceTime>2018-12-15T15:20:58.4985967-06:00</SourceTime>
   <DestFile>C:/Users/Mason/Documents/mgframework/Demo/Content/bin/Windows/music/chopping_block.xnb</DestFile>
-  <DestTime>2018-12-15T14:51:09.1998156-06:00</DestTime>
+  <DestTime>2018-12-15T15:35:36.7360456-06:00</DestTime>
   <Importer>Mp3Importer</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>SongProcessor</Processor>

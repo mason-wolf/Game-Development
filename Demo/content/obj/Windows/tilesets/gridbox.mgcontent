@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/Mason/Documents/mgframework/Demo/Content/tilesets/gridbox.png</SourceFile>
-  <SourceTime>2018-12-15T14:50:34.2288059-06:00</SourceTime>
+  <SourceTime>2018-12-15T15:20:58.5298417-06:00</SourceTime>
   <DestFile>C:/Users/Mason/Documents/mgframework/Demo/Content/bin/Windows/tilesets/gridbox.xnb</DestFile>
-  <DestTime>2018-12-15T14:51:10.7935672-06:00</DestTime>
+  <DestTime>2018-12-15T15:35:37.2048107-06:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
