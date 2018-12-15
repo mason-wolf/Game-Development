@@ -83,7 +83,7 @@ namespace Demo
             mapRenderer.SwapMap(map);
             song = Content.Load<Song>(@"music\chopping_block");
             swordSFX = Content.Load<SoundEffect>(@"sfx\sfx_sword");
-            MediaPlayer.Play(song);
+      //      MediaPlayer.Play(song);
 
             playerData = new Player();
             playerData.LoadContent(Content);

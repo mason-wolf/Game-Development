@@ -4,24 +4,24 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/button.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/characters/character_1.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/player/player.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/music/chopping_block.mp3</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/font.spritefont</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/maps/village.tmx</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/healthbar.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/menu.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/staminabar.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/statusbar.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/objects/teleporter.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/tilesets/tileset_1.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/enemies/wolf.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/titlescreen.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/sfx/sfx_sword.wav</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/maps/area_1.tmx</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/maps/rpg_maker_vx_rtp_tileset_by_telles0808.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/maps/very-large.tmx</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/tilesets/gridbox.png</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/interface/button.png</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/characters/character_1.png</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/player/player.png</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/music/chopping_block.mp3</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/interface/font.spritefont</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/maps/village.tmx</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/interface/healthbar.png</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/interface/menu.png</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/interface/staminabar.png</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/interface/statusbar.png</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/objects/teleporter.png</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/tilesets/tileset_1.png</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/enemies/wolf.png</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/interface/titlescreen.png</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/sfx/sfx_sword.wav</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/maps/area_1.tmx</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/maps/rpg_maker_vx_rtp_tileset_by_telles0808.png</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/maps/very-large.tmx</File>
+    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/tilesets/gridbox.png</File>
   </SourceFiles>
 </SourceFileCollection>
