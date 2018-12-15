@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Storage;
-
+using MonoGame.Extended.Tiled.Renderers;
 
 namespace Demo.Scenes
 {
@@ -19,6 +19,8 @@ namespace Demo.Scenes
         protected SpriteBatch spriteBatch;
         protected ContentManager Content;
         protected Game game;
+
+        public IMapRenderer mapRenderer;
 
         public SceneManager(Game game)
             : base(game)
@@ -40,6 +42,7 @@ namespace Demo.Scenes
 
         public override void Initialize()
         {
+            mapRenderer = new FullMapRenderer(GraphicsDevice);
             base.Initialize();
         }
 

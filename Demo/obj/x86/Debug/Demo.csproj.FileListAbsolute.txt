@@ -151,7 +151,6 @@ C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.XInput.xml
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.RawInput.xml
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
-C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\obj\x86\Debug\Demo.csprojResolveAssemblyReference.cache
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\characters\character_1.xnb
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\enemies\wolf.xnb
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\interface\button.xnb
@@ -169,4 +168,9 @@ C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\sfx\sfx_sword.xnb
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\tilesets\tileset_1.xnb
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\maps\area_1.xnb
-C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\objects\water.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\maps\rpg_maker_vx_rtp_tileset_by_telles0808.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\PROJECTS\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\maps\very-large.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Projects\MONOGAME DEMO\Demo\obj\x86\Debug\Demo.csprojAssemblyReference.cache
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Projects\MONOGAME DEMO\Demo\obj\x86\Debug\Demo.csproj.CoreCompileInputs.cache
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Projects\MONOGAME DEMO\Demo\obj\x86\Debug\Demo.csproj.CopyComplete
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Projects\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\tilesets\gridbox.xnb

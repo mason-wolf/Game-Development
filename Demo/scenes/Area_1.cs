@@ -20,7 +20,6 @@ namespace Demo.Scenes
     {
         private TiledMap map;
         public static ViewportAdapter viewPortAdapter;
-        private FullMapRenderer mapRenderer;
         private Queue<string> maps;
 
         public static Entity player;
@@ -32,8 +31,9 @@ namespace Demo.Scenes
 
         public static KeyboardState oldState;
         public static KeyboardState newState;
-
-        Entity water;
+        Texture2D gridLine;
+        MouseState mouseState;
+        Vector2 startingPosition = new Vector2(1050, 500);
 
         public Area_1(Game game, GameWindow window) : base(game)
         {
@@ -56,17 +56,11 @@ namespace Demo.Scenes
             collision = new CollisionWorld(new Vector2(0));
             collision.CreateGrid(map.GetLayer<TiledTileLayer>("Collision"));
             collision.CreateActor(player);
-
-            var waterTexture = Content.Load<Texture2D>(@"objects\water");
-            var waterAtlas = TextureAtlas.Create(waterTexture, 16, 16);
-            var waterAnimation = new SpriteSheetAnimationFactory(waterAtlas);
-            waterAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, (float)(.2), isLooping: true));
-            waterAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 0, 1, 2}, (float)(.2), isLooping: true));
-
-            water = new Entity(waterAnimation);
-            water.Position = new Vector2(900, 500);
-            water.State = Action.WalkSouth;
-
+            Mouse.SetPosition((int)player.Position.X, (int)player.Position.Y);
+         //   gridLine = new Texture2D(spriteBatch.GraphicsDevice, map.TileWidth, map.TileHeight);
+         gridLine = Content.Load<Texture2D>(@"tilesets\gridbox");
+            //   gridLine.SetData<Color>(new Color[] { Color.White });
+            Game.IsMouseVisible = true;
             base.LoadContent();
         }
 
@@ -81,26 +75,52 @@ namespace Demo.Scenes
 
         public override void Update(GameTime gameTime)
         {
+
+    
+            Console.WriteLine(mouseState.X.ToString());
+
             newState = Keyboard.GetState();
             player.Update(gameTime);
             collision.Update(gameTime);       
             camera.Zoom = 4;
-            camera.LookAt(player.Position);
+            camera.LookAt(new Vector2(1000, 575));
             Player controls = new Player();
             controls.HandleInput(gameTime, player, false, newState, oldState);
             oldState = newState;
             mapRenderer.Update(gameTime);
-            water.Update(gameTime);
             base.Update(gameTime);
         }
+
 
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
             mapRenderer.Draw(camera.GetViewMatrix());
             player.Draw(spriteBatch);
-            playerData.DrawHUD(spriteBatch, camera.Position);
-            water.Draw(spriteBatch);
+          //  CreateBorder(gridLine, .01f, Color.White);
+
+            int x = 900;
+            int y = 500;
+
+            for (int i = 0; i < 10; ++i)
+            {
+                for (int j = 0; j < 10; ++j)
+                {
+                    spriteBatch.Draw(gridLine, new Vector2(x, y), Color.White);
+                    x += map.TileWidth - 1;
+                }
+
+                x = 900;
+ 
+                spriteBatch.Draw(gridLine, new Vector2(x, y), Color.White);
+                y += map.TileWidth - 1;
+                
+            }
+
+
+
+
+            //   playerData.DrawHUD(spriteBatch, camera.Position);
             spriteBatch.End();
             base.Draw(gameTime);
         }
