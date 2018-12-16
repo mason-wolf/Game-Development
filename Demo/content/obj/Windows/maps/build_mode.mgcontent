@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/Mason/Documents/mgframework/Demo/Content/maps/build_mode.tmx</SourceFile>
-  <SourceTime>2018-12-15T15:20:58.4503768-06:00</SourceTime>
+  <SourceTime>2018-12-16T13:39:11.1701284-06:00</SourceTime>
   <DestFile>C:/Users/Mason/Documents/mgframework/Demo/Content/bin/Windows/maps/build_mode.xnb</DestFile>
-  <DestTime>2018-12-15T15:35:37.3298118-06:00</DestTime>
+  <DestTime>2018-12-16T13:39:56.2053648-06:00</DestTime>
   <Importer>TiledMapImporter</Importer>
   <ImporterTime>2018-12-15T15:20:58.2903782-06:00</ImporterTime>
   <Processor>TiledMapProcessor</Processor>

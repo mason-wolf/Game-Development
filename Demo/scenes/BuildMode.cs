@@ -13,6 +13,7 @@ using MonoGame.Extended.Collisions;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
 using System;
+using MonoGame.Extended.Shapes;
 
 namespace Demo.Scenes
 {
@@ -46,7 +47,9 @@ namespace Demo.Scenes
             gridLine = Content.Load<Texture2D>(@"tilesets\gridbox");
             Game.IsMouseVisible = true;
             Mouse.SetPosition((int)mousePosition.X, (int)mousePosition.Y);
-        
+            camera.LookAt(mousePosition);
+
+
             base.LoadContent();
         }
 
@@ -59,43 +62,59 @@ namespace Demo.Scenes
             return map;
         }
 
-        public List<Tuple<TimeSpan, Vector2>> Points { get; set; }
+        Rectangle bounds = new Rectangle(100, 100, 2000, 1000);
 
-        public Vector2 CurrentPoint { get; set; }
-        
-     
+        public static float GetHorizontalIntersectionDepth(Rectangle rectA, Rectangle rectB)
+        {
+            // Calculate half sizes.
+            float halfWidthA = rectA.Width / 2.0f;
+            float halfWidthB = rectB.Width / 2.0f;
+
+            // Calculate centers.
+            float centerA = rectA.Left + halfWidthA;
+            float centerB = rectB.Left + halfWidthB;
+
+            // Calculate current and minimum-non-intersecting distances between centers.
+            float distanceX = centerA - centerB;
+            float minDistanceX = halfWidthA + halfWidthB;
+
+            // If we are not intersecting at all, return (0, 0).
+            if (Math.Abs(distanceX) >= minDistanceX)
+                return 0f;
+
+            // Calculate and return intersection depths.
+            return distanceX > 0 ? minDistanceX - distanceX : -minDistanceX - distanceX;
+        }
+
         public override void Update(GameTime gameTime)
         {
             mouseState = Mouse.GetState();
-        
-         
-            //camera.Zoom = 3;
 
-            //camera.LookAt(mousePosition);
+            camera.Zoom = 3;
 
+            if (mouseState.RightButton == ButtonState.Pressed)
+            {
+                if (camera.BoundingRectangle.Intersects(bounds.ToRectangleF()))
+                {
+                    Console.WriteLine("true");
 
-            //if (mouseState.Position.X != mousePosition.X)
-            //{
-            //    Points.Add(new Tuple<TimeSpan, Vector2>(TimeSpan.FromSeconds(1), mousePosition));
-            //    foreach (var point in Points)
-            //    {
-            //        point -= gameTime.ElapsedTimeSpan;
+                    //float x =  GetHorizontalIntersectionDepth(camera.BoundingRectangle.ToRectangle(), bounds);
+                    // camera.Position = new Vector2(x, camera.Position.Y);
 
-            //        if (point.Item1 < TimeSpan.Zero) point
-            //             CurrentPoint = point.Item2;
-            //    }
-            //}
+                }
+                else
+                {
+                    camera.Position = Vector2.Lerp(camera.Position, mousePosition, 0.025f);
+                }
 
-            //mousePosition.X = mouseState.X;
-            //mousePosition.Y = mouseState.Y;
+            }
 
-            //mapRenderer.Update(gameTime);
-
-
-           
-
+            mousePosition.X = mouseState.X;
+            mousePosition.Y = mouseState.Y;
+            mapRenderer.Update(gameTime);
             base.Update(gameTime);
         }
+
 
 
         public override void Draw(GameTime gameTime)
@@ -111,15 +130,15 @@ namespace Demo.Scenes
             {
                 for (int j = 0; j < 15; ++j)
                 {
-                    spriteBatch.Draw(gridLine, new Vector2(x, y), Color.White);
+                    //    spriteBatch.Draw(gridLine, new Vector2(x, y), Color.White);
                     x += map.TileWidth - 1;
                 }
 
                 x = 900;
- 
-                spriteBatch.Draw(gridLine, new Vector2(x, y), Color.White);
+
+                //   spriteBatch.Draw(gridLine, new Vector2(x, y), Color.White);
                 y += map.TileWidth - 1;
-                
+
             }
 
             spriteBatch.End();
@@ -141,3 +160,4 @@ namespace Demo.Scenes
         }
     }
 }
+
