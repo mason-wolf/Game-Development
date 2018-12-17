@@ -94,18 +94,18 @@ namespace Demo.Scenes
 
             if (mouseState.RightButton == ButtonState.Pressed)
             {
-                if (camera.BoundingRectangle.Intersects(bounds.ToRectangleF()))
-                {
-                    Console.WriteLine("true");
+                //if (camera.BoundingRectangle.Intersects(bounds.ToRectangleF()))
+                //{
+                //    Console.WriteLine("true");
 
-                    //float x =  GetHorizontalIntersectionDepth(camera.BoundingRectangle.ToRectangle(), bounds);
-                    // camera.Position = new Vector2(x, camera.Position.Y);
+                //    //float x =  GetHorizontalIntersectionDepth(camera.BoundingRectangle.ToRectangle(), bounds);
+                //    // camera.Position = new Vector2(x, camera.Position.Y);
 
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     camera.Position = Vector2.Lerp(camera.Position, mousePosition, 0.025f);
-                }
+                //}
 
             }
 
@@ -122,6 +122,7 @@ namespace Demo.Scenes
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
             mapRenderer.Draw(camera.GetViewMatrix());
 
+            spriteBatch.Draw(gridLine, bounds, Color.White);
 
             int x = 900;
             int y = 400;
