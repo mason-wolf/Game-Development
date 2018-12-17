@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Audio;
 using System;
 using MonoGame.Extended.Shapes;
 
+
 namespace Demo.Scenes
 {
     class BuildMode : SceneManager
@@ -22,14 +23,22 @@ namespace Demo.Scenes
         private TiledMap map;
         public static ViewportAdapter viewPortAdapter;
         private Queue<string> maps;
-
+     
 
         Camera2D camera;
-
-
         Texture2D gridLine;
+        Texture2D horizontal_wall_wood;
+        Texture2D buildMenu;
+        Texture2D cursor;
+
         MouseState mouseState;
         Vector2 mousePosition = new Vector2(1050, 500);
+        List<BuildingComponent> buildingComponents = new List<BuildingComponent>();
+        CollisionWorld collision;
+        Entity player;
+        Player playerData;
+        KeyboardState oldState;
+        KeyboardState newState;
 
         public BuildMode(Game game, GameWindow window) : base(game)
         {
@@ -45,10 +54,43 @@ namespace Demo.Scenes
             map = LoadNextMap();
             mapRenderer.SwapMap(map);
             gridLine = Content.Load<Texture2D>(@"tilesets\gridbox");
-            Game.IsMouseVisible = true;
+            horizontal_wall_wood = Content.Load<Texture2D>(@"tilesets\horizontal_wall_wood");
+            buildMenu = Content.Load<Texture2D>(@"interface\buildMenu");
+            cursor = Content.Load<Texture2D>(@"interface\cursor");
+
             Mouse.SetPosition((int)mousePosition.X, (int)mousePosition.Y);
             camera.LookAt(mousePosition);
+            int x = 900;
+            int y = 400;
 
+            for (int i = 0; i < 15; ++i)
+            {
+                for (int j = 0; j < 15; ++j)
+                {
+                    BuildingComponent xComponent = new BuildingComponent(16, 16, gridLine, new Vector2(x, y));
+                    buildingComponents.Add(xComponent);
+                    x += map.TileWidth - 1;
+                }
+
+                x = 900;
+
+                BuildingComponent yComponent = new BuildingComponent(16, 16, gridLine, new Vector2(x, y));
+                buildingComponents.Add(yComponent);
+                y += map.TileWidth - 1;
+
+            }
+
+            playerData = new Player();
+            playerData.LoadContent(Content);
+            var playerTexture = Content.Load<Texture2D>(@"tilesets\null");
+            var playerAtlas = TextureAtlas.Create(playerTexture, 16, 16);
+            var playerAnimations = new SpriteSheetAnimationFactory(playerAtlas);
+            playerAnimations.Add("idle", new SpriteSheetAnimationData(new[] { 1 }));
+            player = new Entity(playerAnimations);
+            player.Position = mousePosition;
+            collision = new CollisionWorld(new Vector2(0));
+            collision.CreateGrid(map.GetLayer<TiledTileLayer>("Collision"));
+            collision.CreateActor(player);
 
             base.LoadContent();
         }
@@ -62,86 +104,85 @@ namespace Demo.Scenes
             return map;
         }
 
-        Rectangle bounds = new Rectangle(100, 100, 2000, 1000);
 
-        public static float GetHorizontalIntersectionDepth(Rectangle rectA, Rectangle rectB)
-        {
-            // Calculate half sizes.
-            float halfWidthA = rectA.Width / 2.0f;
-            float halfWidthB = rectB.Width / 2.0f;
 
-            // Calculate centers.
-            float centerA = rectA.Left + halfWidthA;
-            float centerB = rectB.Left + halfWidthB;
-
-            // Calculate current and minimum-non-intersecting distances between centers.
-            float distanceX = centerA - centerB;
-            float minDistanceX = halfWidthA + halfWidthB;
-
-            // If we are not intersecting at all, return (0, 0).
-            if (Math.Abs(distanceX) >= minDistanceX)
-                return 0f;
-
-            // Calculate and return intersection depths.
-            return distanceX > 0 ? minDistanceX - distanceX : -minDistanceX - distanceX;
-        }
+        Rectangle mouseTexture;
+        Rectangle mouseBounds;
+        Rectangle buildMenuBounds;
 
         public override void Update(GameTime gameTime)
         {
+
+            
             mouseState = Mouse.GetState();
-
+            newState = Keyboard.GetState();
+            player.Update(gameTime);
             camera.Zoom = 3;
+           // camera.LookAt(player.Position);
+            Player controls = new Player();
+            controls.HandleInput(gameTime, player, false, newState, oldState);
 
-            if (mouseState.RightButton == ButtonState.Pressed)
+            mouseTexture = new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 16, 16);
+            mouseBounds = new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 4, 4);
+            buildMenuBounds = new Rectangle((int)player.Position.X - 180, (int)player.Position.Y + 70, buildMenu.Width, buildMenu.Height);
+
+            if (mouseState.LeftButton == ButtonState.Pressed)
             {
-                //if (camera.BoundingRectangle.Intersects(bounds.ToRectangleF()))
-                //{
-                //    Console.WriteLine("true");
-
-                //    //float x =  GetHorizontalIntersectionDepth(camera.BoundingRectangle.ToRectangle(), bounds);
-                //    // camera.Position = new Vector2(x, camera.Position.Y);
-
-                //}
-                //else
-                //{
-                    camera.Position = Vector2.Lerp(camera.Position, mousePosition, 0.025f);
-                //}
-
+                foreach (BuildingComponent component in buildingComponents)
+                {
+                    if (component.Bounds.Intersects(mouseBounds))
+                    {
+                        component.Tile = horizontal_wall_wood;
+                    }
+                }
             }
 
-            mousePosition.X = mouseState.X;
+            if (newState.IsKeyDown(Keys.W) || newState.IsKeyDown(Keys.A) || newState.IsKeyDown(Keys.S) || newState.IsKeyDown(Keys.D))
+            {
+                Mouse.SetPosition((int)player.Position.X, (int)player.Position.Y);
+            }
+
             mousePosition.Y = mouseState.Y;
+                mousePosition.X = mouseState.X;
+            
+        
+            //  camera.Position = Vector2.Lerp(new Vector2(camera.Position.X - 50, camera.Position.Y - 50), player.Position, 0.1f);
+            camera.LookAt(player.Position);
+
             mapRenderer.Update(gameTime);
+            collision.Update(gameTime);
+            oldState = newState;
+            
+
             base.Update(gameTime);
         }
-
-
 
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
             mapRenderer.Draw(camera.GetViewMatrix());
+            player.Draw(spriteBatch);
+            Vector2 menuPosition = new Vector2(player.Position.X - 180, player.Position.Y + 70);
+            
 
-            spriteBatch.Draw(gridLine, bounds, Color.White);
-
-            int x = 900;
-            int y = 400;
-
-            for (int i = 0; i < 15; ++i)
+            foreach (BuildingComponent component in buildingComponents)
             {
-                for (int j = 0; j < 15; ++j)
-                {
-                    //    spriteBatch.Draw(gridLine, new Vector2(x, y), Color.White);
-                    x += map.TileWidth - 1;
-                }
-
-                x = 900;
-
-                //   spriteBatch.Draw(gridLine, new Vector2(x, y), Color.White);
-                y += map.TileWidth - 1;
-
+                spriteBatch.Draw(component.Tile, component.Position);
             }
 
+            spriteBatch.Draw(buildMenu, menuPosition);
+  
+            if (mouseTexture.Intersects(buildMenuBounds))
+            {
+                Console.WriteLine("true");
+                spriteBatch.Draw(cursor, mouseTexture, Color.White);
+            }
+            else
+            {
+                spriteBatch.Draw(horizontal_wall_wood, mouseTexture, Color.White);
+            }
+           
+           
             spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -158,6 +199,20 @@ namespace Demo.Scenes
             base.Hide();
             Enabled = false;
             Visible = false;
+        }
+    }
+
+    public class BuildingComponent 
+    {
+        public Rectangle Bounds { get; set; }
+        public Texture2D Tile { get; set; }
+        public Vector2 Position { get; set; }
+
+        public BuildingComponent(int width, int height, Texture2D tile, Vector2 position)
+        {
+            Bounds = new Rectangle((int)position.X, (int)position.Y, width, height);
+            Tile = tile;
+            Position = position;
         }
     }
 }

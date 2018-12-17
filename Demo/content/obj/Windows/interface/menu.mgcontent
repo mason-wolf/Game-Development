@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Mason/Documents/mgframework/Demo/Content/interface/menu.png</SourceFile>
-  <SourceTime>2018-12-15T15:20:58.4463758-06:00</SourceTime>
-  <DestFile>C:/Users/Mason/Documents/mgframework/Demo/Content/bin/Windows/interface/menu.xnb</DestFile>
-  <DestTime>2018-12-16T13:30:45.6164753-06:00</DestTime>
+  <SourceFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/menu.png</SourceFile>
+  <SourceTime>2017-06-25T13:31:26-05:00</SourceTime>
+  <DestFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/bin/Windows/interface/menu.xnb</DestFile>
+  <DestTime>2018-12-17T16:40:04.8343797-06:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

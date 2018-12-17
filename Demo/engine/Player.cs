@@ -44,7 +44,7 @@ namespace Demo
             Vector2 motion = new Vector2();
 
             motion = player.Position;
-            int speed = 1;
+            int speed = 4;
 
             if (newState.IsKeyDown(Keys.W))
             {
@@ -52,19 +52,19 @@ namespace Demo
                 {
                     motion.Y -= speed;
                     player.Position = motion;
-                    player.State = Action.WalkEast;
+                 //   player.State = Action.WalkEast;
                 }
                 else if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.A))
                 {
                     motion.Y -= speed;
                     player.Position = motion;
-                    player.State = Action.WalkWest;
+                  //  player.State = Action.WalkWest;
                 }
                 else
                 {
                     motion.Y -= speed;
                     player.Position = motion;
-                    player.State = Action.WalkNorth;
+                  //  player.State = Action.WalkNorth;
                 }
             }
 
@@ -74,20 +74,20 @@ namespace Demo
                 {
                     motion.Y += speed;
                     player.Position = motion;
-                    player.State = Action.WalkEast;
+                //    player.State = Action.WalkEast;
 
                 }
                 else if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.A))
                 {
                     motion.Y += speed;
                     player.Position = motion;
-                    player.State = Action.WalkWest;
+                 //   player.State = Action.WalkWest;
                 }
                 else
                 {
                     motion.Y += speed;
                     player.Position = motion;
-                    player.State = Action.WalkSouth;
+                //    player.State = Action.WalkSouth;
                 }
             }
 
@@ -95,14 +95,14 @@ namespace Demo
             {
                 motion.X += speed;
                 player.Position = motion;
-                player.State = Action.WalkEast;
+              //  player.State = Action.WalkEast;
             }
 
             if (newState.IsKeyDown(Keys.A))
             {
                 motion.X -= speed;
                 player.Position = motion;
-                player.State = Action.WalkWest;
+             //   player.State = Action.WalkWest;
             }
         }
     }

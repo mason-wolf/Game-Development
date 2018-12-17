@@ -4,16 +4,21 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/interface/button.png</File>
-    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/characters/character_1.png</File>
-    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/player/player.png</File>
-    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/music/chopping_block.mp3</File>
-    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/interface/font.spritefont</File>
-    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/interface/menu.png</File>
-    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/interface/statusbar.png</File>
-    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/tilesets/tileset_1.png</File>
-    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/interface/titlescreen.png</File>
-    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/tilesets/gridbox.png</File>
-    <File>C:/Users/Mason/Documents/mgframework/Demo/Content/maps/build_mode.tmx</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/button.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/characters/character_1.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/player/player.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/music/chopping_block.mp3</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/font.spritefont</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/menu.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/statusbar.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/tilesets/tileset_1.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/titlescreen.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/tilesets/gridbox.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/maps/build_mode.tmx</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/tilesets/component.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/tilesets/null.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/buildMenu.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/interface/cursor.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/MONOGAME DEMO/Demo/Content/tilesets/horizontal_wall_wood.png</File>
   </SourceFiles>
 </SourceFileCollection>
