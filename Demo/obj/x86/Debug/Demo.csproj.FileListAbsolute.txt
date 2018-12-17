@@ -210,3 +210,4 @@ C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Projects\MONOGAME DEMO\Demo\bin\Windows
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Projects\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\interface\buildMenu.xnb
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Projects\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\interface\cursor.xnb
 C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Projects\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Content\tilesets\horizontal_wall_wood.xnb
+C:\Users\Mason.LAPTOP-RJFK2H6N\Documents\Projects\MONOGAME DEMO\Demo\bin\Windows\x86\Debug\Humper.dll

@@ -14,7 +14,8 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
 using System;
 using MonoGame.Extended.Shapes;
-
+using Humper;
+using Humper.Responses;
 
 namespace Demo.Scenes
 {
@@ -92,6 +93,10 @@ namespace Demo.Scenes
             collision.CreateGrid(map.GetLayer<TiledTileLayer>("Collision"));
             collision.CreateActor(player);
 
+            world = new World(1500, 900);
+
+            wall = world.Create(0, 300, 700, 1000);
+            m = world.Create(mousePosition.X, mousePosition.Y, 16, 16);
             base.LoadContent();
         }
 
@@ -109,15 +114,21 @@ namespace Demo.Scenes
         Rectangle mouseTexture;
         Rectangle mouseBounds;
         Rectangle buildMenuBounds;
+        World world;
+        IBox wall;
+        IBox m;
+        Rectangle wallT;
 
         public override void Update(GameTime gameTime)
         {
-
+            Console.WriteLine(mousePosition.ToString());
+            var result = m.Move(mouseState.X, mouseState.Y, (collision) => CollisionResponses.Slide);
             
+        
             mouseState = Mouse.GetState();
             newState = Keyboard.GetState();
             player.Update(gameTime);
-            camera.Zoom = 3;
+            camera.Zoom = 1;
            // camera.LookAt(player.Position);
             Player controls = new Player();
             controls.HandleInput(gameTime, player, false, newState, oldState);
@@ -137,13 +148,14 @@ namespace Demo.Scenes
                 }
             }
 
-            if (newState.IsKeyDown(Keys.W) || newState.IsKeyDown(Keys.A) || newState.IsKeyDown(Keys.S) || newState.IsKeyDown(Keys.D))
+  
+            if (result.HasCollided)
             {
-                Mouse.SetPosition((int)player.Position.X, (int)player.Position.Y);
+                Console.WriteLine("Body collided!");
             }
-
-            mousePosition.Y = mouseState.Y;
-                mousePosition.X = mouseState.X;
+            
+            mousePosition.Y = m.Y;
+            mousePosition.X = m.X;
             
         
             //  camera.Position = Vector2.Lerp(new Vector2(camera.Position.X - 50, camera.Position.Y - 50), player.Position, 0.1f);
@@ -159,11 +171,18 @@ namespace Demo.Scenes
 
         public override void Draw(GameTime gameTime)
         {
+
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
             mapRenderer.Draw(camera.GetViewMatrix());
             player.Draw(spriteBatch);
             Vector2 menuPosition = new Vector2(player.Position.X - 180, player.Position.Y + 70);
-            
+
+            wallT.Width = (int)wall.Width;
+            wallT.Height = (int)wall.Height;
+            Texture2D texture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            texture.SetData<Color>(new Color[] { Color.White });
+
+            spriteBatch.Draw(texture, wallT, Color.White);
 
             foreach (BuildingComponent component in buildingComponents)
             {
