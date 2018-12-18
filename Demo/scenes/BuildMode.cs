@@ -33,11 +33,10 @@ namespace Demo.Scenes
         Texture2D cursor;
 
         MouseState mouseState;
-        Vector2 mousePosition = new Vector2(1050, 500);
+        Vector2 mousePosition = new Vector2(250, 250);
         List<BuildingComponent> buildingComponents = new List<BuildingComponent>();
-        CollisionWorld collision;
-        Entity player;
-        Player playerData;
+   
+
         KeyboardState oldState;
         KeyboardState newState;
 
@@ -60,9 +59,10 @@ namespace Demo.Scenes
             cursor = Content.Load<Texture2D>(@"interface\cursor");
 
             Mouse.SetPosition((int)mousePosition.X, (int)mousePosition.Y);
-            camera.LookAt(mousePosition);
-            int x = 900;
-            int y = 400;
+    
+      
+            int x = 100;
+            int y = 50;
 
             for (int i = 0; i < 15; ++i)
             {
@@ -73,7 +73,7 @@ namespace Demo.Scenes
                     x += map.TileWidth - 1;
                 }
 
-                x = 900;
+                x = 100;
 
                 BuildingComponent yComponent = new BuildingComponent(16, 16, gridLine, new Vector2(x, y));
                 buildingComponents.Add(yComponent);
@@ -81,24 +81,31 @@ namespace Demo.Scenes
 
             }
 
-            playerData = new Player();
-            playerData.LoadContent(Content);
-            var playerTexture = Content.Load<Texture2D>(@"tilesets\null");
-            var playerAtlas = TextureAtlas.Create(playerTexture, 16, 16);
-            var playerAnimations = new SpriteSheetAnimationFactory(playerAtlas);
-            playerAnimations.Add("idle", new SpriteSheetAnimationData(new[] { 1 }));
-            player = new Entity(playerAnimations);
-            player.Position = mousePosition;
-            collision = new CollisionWorld(new Vector2(0));
-            collision.CreateGrid(map.GetLayer<TiledTileLayer>("Collision"));
-            collision.CreateActor(player);
+    
+            var collisionLayer = map.GetLayer<TiledTileLayer>("Collision");
+            
+            collisionTiles = new List<Vector2>();
 
-            world = new World(1500, 900);
 
-            wall = world.Create(0, 300, 700, 1000);
-            m = world.Create(mousePosition.X, mousePosition.Y, 16, 16);
+            world = new World(map.Width * 16, map.Height * 16);
+
+            foreach (TiledTile tile in collisionLayer.Tiles)
+            {
+                if(!tile.IsBlank)
+                {
+                    collisionTiles.Add(new Vector2(tile.Position.X * 16, tile.Position.Y * 16));
+                    world.Create(tile.Position.X * 16, tile.Position.Y * 16, 16, 16);
+                }
+
+            }
+
+            
+            playerCollision = world.Create(100, 100, 16, 16);
+            camera.Position = new Vector2(playerCollision.X, playerCollision.Y);
             base.LoadContent();
         }
+
+        List<Vector2> collisionTiles;
 
 
         private TiledMap LoadNextMap()
@@ -115,54 +122,116 @@ namespace Demo.Scenes
         Rectangle mouseBounds;
         Rectangle buildMenuBounds;
         World world;
-        IBox wall;
-        IBox m;
-        Rectangle wallT;
+        IBox playerCollision;
+  
+        public Vector2 Input()
+        {
+            Vector2 motion = new Vector2(playerCollision.X, playerCollision.Y);
+
+            int speed = 4;
+
+            if (newState.IsKeyDown(Keys.W))
+            {
+                if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.D))
+                {
+                    motion.Y -= speed;
+
+                }
+                else if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.A))
+                {
+                    motion.Y -= speed;
+
+                }
+                else
+                {
+                    motion.Y -= speed;
+                }
+            }
+
+            if (newState.IsKeyDown(Keys.S))
+            {
+                if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.D))
+                {
+                    motion.Y += speed;
+
+                }
+                else if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.A))
+                {
+                    motion.Y += speed;
+                }
+                else
+                {
+                    motion.Y += speed;
+                }
+            }
+
+            if (newState.IsKeyDown(Keys.D))
+            {
+                motion.X += speed;
+            }
+
+            if (newState.IsKeyDown(Keys.A))
+            {
+                motion.X -= speed;
+            }
+
+            return motion;
+        }
 
         public override void Update(GameTime gameTime)
         {
-            Console.WriteLine(mousePosition.ToString());
-            var result = m.Move(mouseState.X, mouseState.Y, (collision) => CollisionResponses.Slide);
-            
-        
+
+             Vector2 position = Input();
+             playerCollision.Move(position.X, position.Y, (collision) => CollisionResponses.Slide);
+
+   
             mouseState = Mouse.GetState();
             newState = Keyboard.GetState();
-            player.Update(gameTime);
-            camera.Zoom = 1;
-           // camera.LookAt(player.Position);
-            Player controls = new Player();
-            controls.HandleInput(gameTime, player, false, newState, oldState);
+   
+            camera.Zoom = 3;
+         
 
-            mouseTexture = new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 16, 16);
-            mouseBounds = new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 4, 4);
-            buildMenuBounds = new Rectangle((int)player.Position.X - 180, (int)player.Position.Y + 70, buildMenu.Width, buildMenu.Height);
+         
+            mouseBounds = new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 1, 1);
+            buildMenuBounds = new Rectangle((int)position.X - 180, (int)position.Y + 70, buildMenu.Width, buildMenu.Height);
 
             if (mouseState.LeftButton == ButtonState.Pressed)
             {
                 foreach (BuildingComponent component in buildingComponents)
                 {
-                    if (component.Bounds.Intersects(mouseBounds))
+                    Rectangle bounds = new Rectangle(mouseBounds.X, mouseBounds.Y, mouseBounds.Width / 2, mouseBounds.Height);
+                    if (component.Bounds.Intersects(bounds))
                     {
                         component.Tile = horizontal_wall_wood;
                     }
                 }
             }
 
-  
-            if (result.HasCollided)
+            if (mouseState.RightButton == ButtonState.Pressed)
             {
-                Console.WriteLine("Body collided!");
+                foreach (BuildingComponent component in buildingComponents)
+                {
+                    Rectangle bounds = new Rectangle(mouseBounds.X, mouseBounds.Y, mouseBounds.Width / 2, mouseBounds.Height);
+                    if (component.Bounds.Intersects(bounds))
+                    {
+                        component.Tile = gridLine;
+                    }
+                }
             }
-            
-            mousePosition.Y = m.Y;
-            mousePosition.X = m.X;
-            
-        
-            //  camera.Position = Vector2.Lerp(new Vector2(camera.Position.X - 50, camera.Position.Y - 50), player.Position, 0.1f);
-            camera.LookAt(player.Position);
 
+
+            if (mousePosition.X > 0 && mousePosition.X < viewPortAdapter.ViewportWidth && mousePosition.Y > 0 && mousePosition.Y < viewPortAdapter.ViewportHeight)
+            {
+                mouseTexture = new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 16, 16);
+            }
+     
+
+
+            mousePosition.X = mouseState.X;
+            mousePosition.Y = mouseState.Y;
+
+            camera.LookAt(new Vector2(playerCollision.X, playerCollision.Y));
             mapRenderer.Update(gameTime);
-            collision.Update(gameTime);
             oldState = newState;
             
 
@@ -174,16 +243,9 @@ namespace Demo.Scenes
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
             mapRenderer.Draw(camera.GetViewMatrix());
-            player.Draw(spriteBatch);
-            Vector2 menuPosition = new Vector2(player.Position.X - 180, player.Position.Y + 70);
-
-            wallT.Width = (int)wall.Width;
-            wallT.Height = (int)wall.Height;
-            Texture2D texture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            texture.SetData<Color>(new Color[] { Color.White });
-
-            spriteBatch.Draw(texture, wallT, Color.White);
-
+     
+            Vector2 menuPosition = new Vector2(camera.Position.X + 360 , camera.Position.Y + 430);    
+ 
             foreach (BuildingComponent component in buildingComponents)
             {
                 spriteBatch.Draw(component.Tile, component.Position);
@@ -193,7 +255,6 @@ namespace Demo.Scenes
   
             if (mouseTexture.Intersects(buildMenuBounds))
             {
-                Console.WriteLine("true");
                 spriteBatch.Draw(cursor, mouseTexture, Color.White);
             }
             else
