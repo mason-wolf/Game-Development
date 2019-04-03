@@ -13,14 +13,15 @@ using MonoGame.Extended.Collisions;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
 using System;
+using Demo.Engine;
 
 namespace Demo.Scenes
 {
     class Area_1 : SceneManager
     {
-        private TiledMap map;
+        //  private TiledMap map;
+        Map map;
         public static ViewportAdapter viewPortAdapter;
-        private FullMapRenderer mapRenderer;
         private Queue<string> maps;
 
         public static Entity player;
@@ -32,8 +33,10 @@ namespace Demo.Scenes
 
         public static KeyboardState oldState;
         public static KeyboardState newState;
-
-        Entity water;
+        Texture2D gridLine;
+        MouseState mouseState;
+        Vector2 startingPosition = new Vector2(1050, 500);
+        Vector2 viewportPosition;
 
         public Area_1(Game game, GameWindow window) : base(game)
         {
@@ -45,39 +48,36 @@ namespace Demo.Scenes
 
         protected override void LoadContent()
         {
+            map = new Map();
+            map.LoadMap("Content/maps/area_1.tmx");
+       //     map = Map.Load("Content/maps/area_1.tmx", Content);
             maps = new Queue<string>(new[] { @"maps\area_1" });
-            map = LoadNextMap();
-            mapRenderer.SwapMap(map);
+          //  map = LoadNextMap();
+         //   mapRenderer.SwapMap(map);
             playerData = new Player();
             playerData.LoadContent(Content);
             player = new Entity(playerData.CombatAnimations);
             player.Position = new Vector2(1050, 500);
             player.State = Action.IdleWest;
             collision = new CollisionWorld(new Vector2(0));
-            collision.CreateGrid(map.GetLayer<TiledTileLayer>("Collision"));
+          //  collision.CreateGrid(map.GetLayer<TiledTileLayer>("Collision"));
             collision.CreateActor(player);
-
-            var waterTexture = Content.Load<Texture2D>(@"objects\water");
-            var waterAtlas = TextureAtlas.Create(waterTexture, 16, 16);
-            var waterAnimation = new SpriteSheetAnimationFactory(waterAtlas);
-            waterAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, (float)(.2), isLooping: true));
-            waterAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 0, 1, 2}, (float)(.2), isLooping: true));
-
-            water = new Entity(waterAnimation);
-            water.Position = new Vector2(900, 500);
-            water.State = Action.WalkSouth;
-
+            Mouse.SetPosition((int)player.Position.X, (int)player.Position.Y);
+         //   gridLine = new Texture2D(spriteBatch.GraphicsDevice, map.TileWidth, map.TileHeight);
+         gridLine = Content.Load<Texture2D>(@"tilesets\gridbox");
+            //   gridLine.SetData<Color>(new Color[] { Color.White });
+            Game.IsMouseVisible = true;
             base.LoadContent();
         }
 
 
-        private TiledMap LoadNextMap()
-        {
-            var name = maps.Dequeue();
-            map = Content.Load<TiledMap>(name);
-            maps.Enqueue(name);
-            return map;
-        }
+        //private TiledMap LoadNextMap()
+        //{
+        //    var name = maps.Dequeue();
+        //  //  map = Content.Load<TiledMap>(name);
+        //    maps.Enqueue(name);
+        //    return map;
+        //}
 
         public override void Update(GameTime gameTime)
         {
@@ -85,22 +85,28 @@ namespace Demo.Scenes
             player.Update(gameTime);
             collision.Update(gameTime);       
             camera.Zoom = 4;
-            camera.LookAt(player.Position);
+            camera.LookAt(new Vector2(1000, 575));
             Player controls = new Player();
             controls.HandleInput(gameTime, player, false, newState, oldState);
             oldState = newState;
             mapRenderer.Update(gameTime);
-            water.Update(gameTime);
             base.Update(gameTime);
         }
+
 
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
-            mapRenderer.Draw(camera.GetViewMatrix());
+      //      map.Draw(spriteBatch, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), viewportPosition);
             player.Draw(spriteBatch);
-            playerData.DrawHUD(spriteBatch, camera.Position);
-            water.Draw(spriteBatch);
+          //  CreateBorder(gridLine, .01f, Color.White);
+
+
+
+
+
+
+            //   playerData.DrawHUD(spriteBatch, camera.Position);
             spriteBatch.End();
             base.Draw(gameTime);
         }

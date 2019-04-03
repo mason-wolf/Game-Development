@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/maps/village.tmx</SourceFile>
-  <SourceTime>2017-06-25T14:29:20.1529985-05:00</SourceTime>
-  <DestFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/bin/Windows/maps/village.xnb</DestFile>
-  <DestTime>2017-06-25T14:29:27.2663399-05:00</DestTime>
+  <SourceFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/maps/village.tmx</SourceFile>
+  <SourceTime>2017-06-25T12:31:26-05:00</SourceTime>
+  <DestFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/bin/Windows/maps/village.xnb</DestFile>
+  <DestTime>2019-03-31T14:59:17.5482415-05:00</DestTime>
   <Importer>TiledMapImporter</Importer>
-  <ImporterTime>2017-01-20T05:59:58-06:00</ImporterTime>
+  <ImporterTime>2017-06-25T12:31:26-05:00</ImporterTime>
   <Processor>TiledMapProcessor</Processor>
-  <ProcessorTime>2017-01-20T05:59:58-06:00</ProcessorTime>
+  <ProcessorTime>2017-06-25T12:31:26-05:00</ProcessorTime>
   <Dependencies />
   <BuildAsset />
   <BuildOutput />

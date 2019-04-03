@@ -40,6 +40,8 @@
   <ItemGroup>
     <Compile Include="Engine\CollisionHandler.cs" />
     <Compile Include="Engine\EnemyAI.cs" />
+    <Compile Include="Engine\Layer.cs" />
+    <Compile Include="Engine\Map.cs" />
     <Compile Include="Interface\Dialog.cs" />
     <Compile Include="Interface\Background.cs" />
     <Compile Include="Game1.cs" />

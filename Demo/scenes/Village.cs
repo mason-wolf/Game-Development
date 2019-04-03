@@ -38,7 +38,7 @@ namespace Demo
 
         Entity npc;
         Entity westernExit;
- //     Entity wolf;
+             Entity wolf;
 
         Camera2D camera;
 
@@ -52,8 +52,8 @@ namespace Demo
         public static int enemyHitCount;
         public static int enemyMovementTimer;
         public static int enemyBehaviorTimer;
- //       public static bool enemyIsMoving;
- //       public static bool enemyIsAttacking;
+       public static bool enemyIsMoving;
+       public static bool enemyIsAttacking;
 
         Song song;
 
@@ -83,7 +83,7 @@ namespace Demo
             mapRenderer.SwapMap(map);
             song = Content.Load<Song>(@"music\chopping_block");
             swordSFX = Content.Load<SoundEffect>(@"sfx\sfx_sword");
-            //          MediaPlayer.Play(song);
+         //   MediaPlayer.Play(song);
 
             playerData = new Player();
             playerData.LoadContent(Content);
@@ -135,15 +135,15 @@ namespace Demo
             westernExit.Position = new Vector2(710, 525);
             westernExit.State = Action.Idle;
 
-   //         wolf = new Entity(wolfAnimations);
-   //         wolf.Position = new Vector2(600, 300);
-  //          wolf.State = Action.Idle;
+            wolf = new Entity(wolfAnimations);
+            wolf.Position = new Vector2(600, 300);
+            wolf.State = Action.Idle;
 
             collision = new CollisionWorld(new Vector2(0));
             collision.CreateGrid(map.GetLayer<TiledTileLayer>("Collision"));
             collision.CreateActor(player);
             collision.CreateActor(npc);
-  //          collision.CreateActor(wolf);
+           collision.CreateActor(wolf);
 
             dialog = new DialogBox(game) { Text = "" };
 
@@ -166,8 +166,8 @@ namespace Demo
         }
 
 
- //               private float DirectionTimer;
-//                private float MovementTimer;
+                private float DirectionTimer;
+                private float MovementTimer;
  
         public override void Update(GameTime gameTime)
         {
@@ -178,7 +178,7 @@ namespace Demo
             newState = Keyboard.GetState();
             player.Update(gameTime);
             npc.Update(gameTime);
-   //         wolf.Update(gameTime);
+            wolf.Update(gameTime);
             collision.Update(gameTime);
 
             camera.Zoom = 4;
@@ -200,42 +200,46 @@ namespace Demo
 
             Player controls = new Player();
             controls.HandleInput(gameTime, player, inDialog, newState, oldState);
-          /*
+          
             EnemyAI wolfAI = new EnemyAI(player, wolf);
             
             Random random = new Random();
 
-            if(EnemyIsMoving)
+            enemyIsMoving = true;
+            enemyIsAttacking = true;
+
+            if(enemyIsMoving)
             {
                 wolfAI.RandomMovement(gameTime, wolf);
             }
 
-            if(EnemyIsAttacking)
+            if(enemyIsAttacking)
             {
                 wolfAI.Attack(gameTime, player, wolf, controls);
             }
 
-            if (EnemyBehaviorTimer > 50)
+            if (enemyBehaviorTimer > 50)
             {
-                EnemyIsMoving = false;
-                EnemyIsAttacking = false;
+                enemyIsMoving = false;
+                enemyIsAttacking = false;
 
                 switch (random.Next(0, 3))
                 {
                     case 0:
-                        EnemyIsMoving = true;
+                        enemyIsMoving = true;
                         break;
                     case 1:
-                        EnemyIsAttacking = true;
+                        enemyIsAttacking = true;
                         break;
                     case 2:
-                        EnemyIsAttacking = true;
+                        enemyIsAttacking = true;
                         break;
                 }
-                EnemyBehaviorTimer = 0;
-            }
-            */
 
+                enemyBehaviorTimer = 0;
+            }
+            
+            
             float player_npc_distance = Vector2.Distance(player.Position, npc.Position);
 
             if (!inDialog) {
@@ -264,7 +268,7 @@ namespace Demo
             mapRenderer.Draw(camera.GetViewMatrix());
             player.Draw(spriteBatch);
             npc.Draw(spriteBatch);
-     //       wolf.Draw(spriteBatch);
+            wolf.Draw(spriteBatch);
             playerData.DrawHUD(spriteBatch, camera.Position);
             dialog.Draw(spriteBatch);
             westernExit.Draw(spriteBatch);

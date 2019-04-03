@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/healthbar.png</SourceFile>
-  <SourceTime>2017-01-20T05:59:58-06:00</SourceTime>
-  <DestFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/bin/Windows/interface/healthbar.xnb</DestFile>
-  <DestTime>2017-06-25T14:16:44.208358-05:00</DestTime>
+  <SourceFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/interface/healthbar.png</SourceFile>
+  <SourceTime>2017-06-25T12:31:26-05:00</SourceTime>
+  <DestFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/bin/Windows/interface/healthbar.xnb</DestFile>
+  <DestTime>2019-03-31T14:59:17.5542251-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

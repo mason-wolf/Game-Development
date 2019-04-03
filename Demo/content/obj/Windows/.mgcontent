@@ -4,22 +4,23 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/button.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/characters/character_1.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/player/player.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/music/chopping_block.mp3</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/font.spritefont</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/maps/village.tmx</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/healthbar.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/menu.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/staminabar.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/statusbar.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/objects/teleporter.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/tilesets/tileset_1.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/enemies/wolf.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/interface/titlescreen.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/sfx/sfx_sword.wav</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/maps/area_1.tmx</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/PROJECTS/MONOGAME DEMO/Demo/Content/objects/water.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/interface/button.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/characters/character_1.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/player/player.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/music/chopping_block.mp3</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/interface/font.spritefont</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/maps/village.tmx</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/interface/healthbar.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/interface/menu.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/interface/staminabar.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/interface/statusbar.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/objects/teleporter.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/tilesets/tileset_1.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/enemies/wolf.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/interface/titlescreen.png</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/sfx/sfx_sword.wav</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/maps/area_1.tmx</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/maps/very-large.tmx</File>
+    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/tilesets/gridbox.png</File>
   </SourceFiles>
 </SourceFileCollection>

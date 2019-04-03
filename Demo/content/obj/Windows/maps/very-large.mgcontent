@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/maps/very-large.tmx</SourceFile>
+  <SourceTime>2017-06-25T15:47:58-05:00</SourceTime>
+  <DestFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Monogame Demo/Monogame Demo/Demo/Content/bin/Windows/maps/very-large.xnb</DestFile>
+  <DestTime>2019-03-31T14:59:18.0808159-05:00</DestTime>
+  <Importer>TiledMapImporter</Importer>
+  <ImporterTime>2017-06-25T12:31:26-05:00</ImporterTime>
+  <Processor>TiledMapProcessor</Processor>
+  <ProcessorTime>2017-06-25T12:31:26-05:00</ProcessorTime>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

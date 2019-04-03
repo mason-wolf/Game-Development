@@ -176,7 +176,12 @@
 /processor:TiledMapProcessor
 /build:maps/area_1.tmx
 
-#begin objects/water.png
+#begin maps/very-large.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:maps/very-large.tmx
+
+#begin tilesets/gridbox.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -186,5 +191,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:objects/water.png
+/build:tilesets/gridbox.png
 

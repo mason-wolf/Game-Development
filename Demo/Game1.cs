@@ -69,9 +69,9 @@ namespace Demo
 
             area_1 = new Area_1(this, Window);
             Components.Add(area_1);
-            area_1.Hide();
+           // area_1.Hide();
             area_1.Show();
-         //   main.Show();
+          // main.Show();
 
         }
 
