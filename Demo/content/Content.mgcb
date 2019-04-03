@@ -112,18 +112,6 @@
 /processorParam:TextureFormat=Color
 /build:interface/titlescreen.png
 
-#begin tilesets/gridbox.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:tilesets/gridbox.png
-
 #begin maps/build_mode.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
@@ -176,11 +164,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:interface/cursor.png
-
-#begin maps/very-large.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:maps/very-large.tmx
 
 #begin tilesets/gridbox.png
 /importer:TextureImporter

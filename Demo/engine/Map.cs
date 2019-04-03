@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.TextureAtlases;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,18 +15,34 @@ namespace Demo.Engine
 {
     public class Map
     {
-     
-        public void LoadMap(string filePath)
+        Texture2D mapTexture;
+        TextureAtlas mapAtlas;
+        List<Layer> layers;
+        int mapWidth;
+        int mapHeight;
+
+        public void LoadMap(ContentManager content, string filePath)
         {
-            List<Layer> layers = new List<Layer>();
+            layers = new List<Layer>();
 
             using (XmlReader reader = XmlReader.Create(filePath))
             {
                 while (reader.Read())
                 {
+                    if (reader.LocalName == "map")
+                    {
+                        if (reader.GetAttribute("width") != null && reader.GetAttribute("height") != null)
+                        {
+                            mapWidth = Int32.Parse(reader.GetAttribute("width"));
+                            mapHeight = Int32.Parse(reader.GetAttribute("height"));
+                        }
+                        Console.WriteLine("Width: " + mapWidth + "Height: " + mapHeight);
+                    }
                     if (reader.LocalName == "image")
                     {
-                        Console.WriteLine(reader.GetAttribute("source"));
+                        string tilesetFilePath = "tilesets/" + Path.GetFileNameWithoutExtension(reader.GetAttribute("source"));
+                        mapTexture = content.Load<Texture2D>(tilesetFilePath);
+                        mapAtlas = TextureAtlas.Create(mapTexture, 16, 16);
                     }
 
                     if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "layer")
@@ -37,12 +57,18 @@ namespace Demo.Engine
                 }
             }
 
-            foreach (Layer layer in layers)
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            foreach (int tile in layers[0].Tiles)
             {
-                Console.WriteLine(layer.Name);
-                Console.WriteLine(layer.Tiles);
+                TextureRegion2D region = mapAtlas.GetRegion(tile);
+                Rectangle sourceRectangle = region.Bounds;
+                Rectangle destinationRectangle = new Rectangle(1050, 500, region.Width, region.Height);
+                spriteBatch.Draw(region.Texture, destinationRectangle, sourceRectangle, Color.White);
             }
-            
+
         }
     }
 }

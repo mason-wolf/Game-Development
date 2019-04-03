@@ -28,6 +28,7 @@ namespace Demo
         {
             playerTexture = content.Load<Texture2D>(@"player\player");
             playerAtlas = TextureAtlas.Create(playerTexture, 32, 32);
+   
             animation = new SpriteSheetAnimationFactory(playerAtlas);
             animation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }));
             animation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, (float)(0.1), isLooping: true));
@@ -44,7 +45,7 @@ namespace Demo
             Vector2 motion = new Vector2();
 
             motion = player.Position;
-            int speed = 4;
+            int speed = 1;
 
             if (newState.IsKeyDown(Keys.W))
             {
@@ -52,19 +53,19 @@ namespace Demo
                 {
                     motion.Y -= speed;
                     player.Position = motion;
-                 //   player.State = Action.WalkEast;
+                    player.State = Action.WalkEast;
                 }
                 else if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.A))
                 {
                     motion.Y -= speed;
                     player.Position = motion;
-                  //  player.State = Action.WalkWest;
+                    player.State = Action.WalkWest;
                 }
                 else
                 {
                     motion.Y -= speed;
                     player.Position = motion;
-                  //  player.State = Action.WalkNorth;
+                    player.State = Action.WalkNorth;
                 }
             }
 
@@ -74,20 +75,20 @@ namespace Demo
                 {
                     motion.Y += speed;
                     player.Position = motion;
-                //    player.State = Action.WalkEast;
+                    player.State = Action.WalkEast;
 
                 }
                 else if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.A))
                 {
                     motion.Y += speed;
                     player.Position = motion;
-                 //   player.State = Action.WalkWest;
+                    player.State = Action.WalkWest;
                 }
                 else
                 {
                     motion.Y += speed;
                     player.Position = motion;
-                //    player.State = Action.WalkSouth;
+                    player.State = Action.WalkSouth;
                 }
             }
 
@@ -95,14 +96,14 @@ namespace Demo
             {
                 motion.X += speed;
                 player.Position = motion;
-              //  player.State = Action.WalkEast;
+                player.State = Action.WalkEast;
             }
 
             if (newState.IsKeyDown(Keys.A))
             {
                 motion.X -= speed;
                 player.Position = motion;
-             //   player.State = Action.WalkWest;
+                player.State = Action.WalkWest;
             }
         }
     }

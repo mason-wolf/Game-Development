@@ -15,7 +15,7 @@ namespace Demo
         SpriteBatch spriteBatch;
         public static SpriteFont font;
         public static SceneManager start;
-        public static SceneManager buildMode;
+        public static SceneManager testMap;
         public static KeyboardState oldState;
         public static KeyboardState newState;
         public static SpriteBatch tileSpriteBatch;
@@ -61,21 +61,10 @@ namespace Demo
             Components.Add(start);
             start.Hide();
 
-            main = new Village(this, Window);
-            Components.Add(main);
-            main.Hide();
+            testMap = new TestMap(this, Window);
+            Components.Add(testMap);
+            testMap.Show();
 
-            area_1 = new Area_1(this, Window);
-            Components.Add(area_1);
-           // area_1.Hide();
-            area_1.Show();
-          // main.Show();
-
-        }
-
-            buildMode = new BuildMode(this, Window);
-            Components.Add(buildMode);
-            buildMode.Show();
         }
 
         protected override void Update(GameTime gameTime)
