@@ -64,23 +64,6 @@
 /processorParam:TextureFormat=Compressed
 /build:interface/font.spritefont
 
-#begin maps/village.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:maps/village.tmx
-
-#begin interface/healthbar.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:interface/healthbar.png
-
 #begin interface/menu.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -92,18 +75,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:interface/menu.png
-
-#begin interface/staminabar.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:interface/staminabar.png
 
 #begin interface/statusbar.png
 /importer:TextureImporter
@@ -117,18 +88,6 @@
 /processorParam:TextureFormat=Color
 /build:interface/statusbar.png
 
-#begin objects/teleporter.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:objects/teleporter.png
-
 #begin tilesets/tileset_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -140,18 +99,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:tilesets/tileset_1.png
-
-#begin enemies/wolf.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:enemies/wolf.png
 
 #begin interface/titlescreen.png
 /importer:TextureImporter
@@ -165,16 +112,70 @@
 /processorParam:TextureFormat=Color
 /build:interface/titlescreen.png
 
-#begin sfx/sfx_sword.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sfx/sfx_sword.wav
+#begin tilesets/gridbox.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:tilesets/gridbox.png
 
-#begin maps/area_1.tmx
+#begin maps/build_mode.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
-/build:maps/area_1.tmx
+/build:maps/build_mode.tmx
+
+#begin tilesets/component.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:tilesets/component.png
+
+#begin tilesets/null.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:tilesets/null.png
+
+#begin interface/buildMenu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:interface/buildMenu.png
+
+#begin interface/cursor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:interface/cursor.png
 
 #begin maps/very-large.tmx
 /importer:TiledMapImporter
