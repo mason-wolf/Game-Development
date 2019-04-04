@@ -20,6 +20,8 @@ namespace Demo.Engine
         List<Layer> layers;
         int mapWidth;
         int mapHeight;
+        int tileWidth = 16;
+        int tileHeight = 16;
 
         public void LoadMap(ContentManager content, string filePath)
         {
@@ -36,8 +38,8 @@ namespace Demo.Engine
                             mapWidth = Int32.Parse(reader.GetAttribute("width"));
                             mapHeight = Int32.Parse(reader.GetAttribute("height"));
                         }
-                        Console.WriteLine("Width: " + mapWidth + "Height: " + mapHeight);
                     }
+     
                     if (reader.LocalName == "image")
                     {
                         string tilesetFilePath = "tilesets/" + Path.GetFileNameWithoutExtension(reader.GetAttribute("source"));
@@ -56,19 +58,21 @@ namespace Demo.Engine
                     }
                 }
             }
-
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (int tile in layers[0].Tiles)
             {
-                TextureRegion2D region = mapAtlas.GetRegion(tile);
-                Rectangle sourceRectangle = region.Bounds;
-                Rectangle destinationRectangle = new Rectangle(1050, 500, region.Width, region.Height);
-                spriteBatch.Draw(region.Texture, destinationRectangle, sourceRectangle, Color.White);
+   
+                        TextureRegion2D region = mapAtlas.GetRegion(tile);
+                        Rectangle sourceRectangle = region.Bounds;
+                        Rectangle destinationRectangle = new Rectangle(0, 0, region.Width, region.Height);
+                        spriteBatch.Draw(region.Texture, destinationRectangle, sourceRectangle, Color.White);
+
             }
 
         }
     }
 }
+

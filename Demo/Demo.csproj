@@ -41,6 +41,7 @@
     <Compile Include="Engine\CollisionHandler.cs" />
     <Compile Include="Engine\Layer.cs" />
     <Compile Include="Engine\Map.cs" />
+    <Compile Include="Engine\Tile.cs" />
     <Compile Include="Interface\Background.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Engine\Entity.cs" />

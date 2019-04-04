@@ -27,7 +27,7 @@ namespace Demo.Scenes
         public static Player playerData;
         public static Camera2D camera;
         public static Map map;
-        public static Vector2 startingPosition = new Vector2(1050, 500);
+        public static Vector2 startingPosition = new Vector2(0, 0);
 
 
         public TestMap(Game game, GameWindow window) : base(game)
@@ -46,7 +46,7 @@ namespace Demo.Scenes
             playerData = new Player();
             playerData.LoadContent(Content);
             playerEntity = new Entity(playerData.animation);
-            playerEntity.Position = new Vector2(1050, 500);
+            playerEntity.Position = startingPosition;
             playerEntity.State = Action.IdleWest;
 
             base.LoadContent();
