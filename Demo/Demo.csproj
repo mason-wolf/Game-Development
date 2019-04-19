@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\Camera.cs" />
     <Compile Include="Engine\CollisionHandler.cs" />
     <Compile Include="Engine\Layer.cs" />
     <Compile Include="Engine\Map.cs" />

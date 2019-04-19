@@ -18,7 +18,8 @@ namespace Demo.Engine
         Texture2D mapTexture;
         TextureAtlas mapAtlas;
         List<Layer> layers;
-        List<Tile> tileMap;
+        List<Tile> firstLayer;
+        List<Tile> secondLayer;
 
         int mapWidth;
         int mapHeight;
@@ -33,28 +34,31 @@ namespace Demo.Engine
             {
                 while (reader.Read())
                 {
+ 
                     if (reader.LocalName == "map")
                     {
                         if (reader.GetAttribute("width") != null && reader.GetAttribute("height") != null)
                         {
                             mapWidth = Int32.Parse(reader.GetAttribute("width"));
                             mapHeight = Int32.Parse(reader.GetAttribute("height"));
+ 
                         }
                     }
      
-                    if (reader.LocalName == "image")
+                    if (reader.LocalName == "tileset")
                     {
                         string tilesetFilePath = "tilesets/" + Path.GetFileNameWithoutExtension(reader.GetAttribute("source"));
                         mapTexture = content.Load<Texture2D>(tilesetFilePath);
                         mapAtlas = TextureAtlas.Create(mapTexture, 16, 16);
                     }
 
+
                     if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "layer")
                     {
                         Layer newLayer = new Layer();
                         newLayer.Name = reader.GetAttribute("name");
                         reader.ReadToFollowing("data");
-                        string[] tiles = reader.ReadElementContentAsString().Split(',');
+                        string[] tiles = reader.ReadElementContentAsString().Split(',');               
                         newLayer.AddTiles(tiles);
                         layers.Add(newLayer);
                     }
@@ -62,7 +66,8 @@ namespace Demo.Engine
             }
 
 
-            tileMap = new List<Tile>();
+            firstLayer = new List<Tile>();
+            secondLayer = new List<Tile>();
 
             int tileRowCount = mapWidth;
             int tileColumnCount = mapHeight;
@@ -71,36 +76,55 @@ namespace Demo.Engine
             {
                 for (int columnIndex = 0; columnIndex < tileColumnCount; columnIndex++)
                 {
-                    tileMap.Add(new Tile(new Vector2(columnIndex * tileWidth, rowIndex * tileHeight)));
+                    firstLayer.Add(new Tile(new Vector2(columnIndex * tileWidth, rowIndex * tileHeight)));
+                    secondLayer.Add(new Tile(new Vector2(columnIndex * tileWidth, rowIndex * tileHeight)));
                 }
             }
 
-            foreach(int tile in layers[0].Tiles)
+ 
+            int count = 0;
+
+            foreach (Tile tile in firstLayer)
             {
-                foreach (Tile tiles in tileMap)
-                {
-                    tiles.TileID = tile;
-                }
+                tile.TileID = layers[0].Tiles[count];
+                count++;
             }
 
-            Console.WriteLine(tileMap.Count);
+            int secondCount = 0;
 
+            foreach (Tile tile in secondLayer)
+            {
+                tile.TileID = layers[1].Tiles[secondCount];
+                secondCount++;
+            }
 
+            
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
 
-
-            foreach (Tile tile in tileMap)
+            foreach (Tile tile in firstLayer)
             {
-                TextureRegion2D region = mapAtlas.GetRegion(tile.TileID);
-                Rectangle sourceRectangle = region.Bounds;
-                Rectangle destinationRectangle = new Rectangle((int)tile.Position.X, (int)tile.Position.Y, region.Width, region.Height);
-                spriteBatch.Draw(region.Texture, destinationRectangle, sourceRectangle, Color.White);
-
+                if (tile.TileID != 0)
+                {
+                    TextureRegion2D region = mapAtlas.GetRegion(tile.TileID - 1);
+                    Rectangle sourceRectangle = region.Bounds;
+                    Rectangle destinationRectangle = new Rectangle((int)tile.Position.X, (int)tile.Position.Y, region.Width, region.Height);
+                    spriteBatch.Draw(region.Texture, destinationRectangle, sourceRectangle, Color.White);
+                }
             }
 
+            foreach (Tile tile in secondLayer)
+            {
+                if (tile.TileID != 0)
+                {
+                    TextureRegion2D region = mapAtlas.GetRegion(tile.TileID - 1);
+                    Rectangle sourceRectangle = region.Bounds;
+                    Rectangle destinationRectangle = new Rectangle((int)tile.Position.X, (int)tile.Position.Y, region.Width, region.Height);
+                    spriteBatch.Draw(region.Texture, destinationRectangle, sourceRectangle, Color.White);
+                }
+            }
 
         }
     }

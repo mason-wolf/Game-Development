@@ -26,6 +26,7 @@ namespace Demo
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.IsFullScreen = false;
+            graphics.PreferMultiSampling = false;
             graphics.PreferredBackBufferWidth = 1080;
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Game-Development/Demo/Content/tilesets/gridbox.png</SourceFile>
-  <SourceTime>2018-12-14T15:25:30-06:00</SourceTime>
-  <DestFile>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Game-Development/Demo/Content/bin/Windows/tilesets/gridbox.xnb</DestFile>
-  <DestTime>2019-04-03T16:33:08.341928-05:00</DestTime>
+  <SourceFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/tilesets/gridbox.png</SourceFile>
+  <SourceTime>2019-04-19T10:52:54.8635341-05:00</SourceTime>
+  <DestFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/bin/Windows/tilesets/gridbox.xnb</DestFile>
+  <DestTime>2019-04-19T14:13:00.1486019-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
