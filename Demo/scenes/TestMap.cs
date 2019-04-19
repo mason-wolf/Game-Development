@@ -41,7 +41,7 @@ namespace Demo.Scenes
         protected override void LoadContent()
         {
             map = new Map();
-            map.LoadMap(Content, "Content/maps/area_1.tmx");
+            map.LoadMap(Content, "Content/maps/testMap.tmx");
 
             playerData = new Player();
             playerData.LoadContent(Content);
@@ -73,7 +73,7 @@ namespace Demo.Scenes
         {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
             map.Draw(spriteBatch);
-            playerEntity.Draw(spriteBatch);
+         //   playerEntity.Draw(spriteBatch);
             //   playerData.DrawHUD(spriteBatch, camera.Position);
             spriteBatch.End();
             base.Draw(gameTime);
