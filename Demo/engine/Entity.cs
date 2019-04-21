@@ -62,14 +62,23 @@ namespace Demo
                         case Action.WalkSouth:
                             sprite.Play("walkSouth", () => State = Action.Idle);
                             break;
+                        case Action.AttackSouth:
+                            sprite.Play("attackSouth", () => State = Action.Idle);
+                            break;
                         case Action.WalkWest:
                             sprite.Play("walkWest", () => State = Action.IdleWest);
+                            break;
+                        case Action.AttackWest:
+                            sprite.Play("attackWest", () => State = Action.IdleWest);
                             break;
                         case Action.IdleWest:
                             sprite.Play("idleWest");
                             break;
                         case Action.WalkEast:
                             sprite.Play("walkEast", () => State = Action.IdleEast);
+                            break;
+                        case Action.AttackEast:
+                            sprite.Play("attackEast", () => State = Action.IdleEast);
                             break;
                         case Action.IdleEast:
                             sprite.Play("idleEast");

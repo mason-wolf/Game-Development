@@ -110,7 +110,8 @@ namespace Demo.Engine
                 {
                     TextureRegion2D region = mapAtlas.GetRegion(tile.TileID - 1);
                     Rectangle sourceRectangle = region.Bounds;
-                    Rectangle destinationRectangle = new Rectangle((int)tile.Position.X, (int)tile.Position.Y, region.Width, region.Height);
+                    Vector2 position = new Vector2((int)Math.Round(tile.Position.X), (int)Math.Round(tile.Position.Y));
+                    Rectangle destinationRectangle = new Rectangle((int)position.X, (int)position.Y, region.Width, region.Height);
                     spriteBatch.Draw(region.Texture, destinationRectangle, sourceRectangle, Color.White);
                 }
             }

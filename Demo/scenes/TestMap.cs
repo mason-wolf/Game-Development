@@ -23,7 +23,7 @@ namespace Demo.Scenes
         public static ViewportAdapter viewPortAdapter;
         public static KeyboardState oldState;
         public static KeyboardState newState;
-        public static Entity playerEntity;
+        public static Entity player;
         public static Player playerData;
         public static Camera2D camera;
         public static Map map;
@@ -43,26 +43,25 @@ namespace Demo.Scenes
             map.LoadMap(Content, "Content/maps/testMap.tmx");
             playerData = new Player();
             playerData.LoadContent(Content);
-            playerEntity = new Entity(playerData.animation);
-            playerEntity.Position = startingPosition;
-            playerEntity.State = Action.IdleWest;
+            player = new Entity(playerData.animation);
+            player.Position = startingPosition;
+            player.State = Action.Idle;
    
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
-            Console.WriteLine(camera.Position);
-            Console.WriteLine(startingPosition);
+
             newState = Keyboard.GetState();
 
-            playerEntity.Update(gameTime);
+            player.Update(gameTime);
 
             camera.Zoom = 4;
-  
-            camera.LookAt(playerEntity.Position);
-
-            playerData.HandleInput(gameTime, playerEntity, false, newState, oldState);
+            camera.Position = Vector2.Lerp(camera.Position, player.Position, .5f);
+            camera.LookAt(camera.Position);
+            camera.LookAt(player.Position);
+            playerData.HandleInput(gameTime, player, false, newState, oldState);
 
             oldState = newState;
 
@@ -74,8 +73,8 @@ namespace Demo.Scenes
         {
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
-            map.Draw(spriteBatch);
-            playerEntity.Draw(spriteBatch);
+           // map.Draw(spriteBatch);
+            player.Draw(spriteBatch);
             //   playerData.DrawHUD(spriteBatch, camera.Position);
             spriteBatch.End();
             base.Draw(gameTime);
@@ -94,5 +93,9 @@ namespace Demo.Scenes
             Enabled = false;
             Visible = false;
         }
+
+
     }
+
+
 }
