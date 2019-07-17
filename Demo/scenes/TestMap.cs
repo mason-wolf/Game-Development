@@ -27,7 +27,7 @@ namespace Demo.Scenes
         public static Player playerData;
         public static Camera2D camera;
         public static Map map;
-        public static Vector2 startingPosition = new Vector2(100, 100);
+        public static Vector2 startingPosition = new Vector2(150, 150);
 
 
         public TestMap(Game game, GameWindow window) : base(game)
@@ -73,7 +73,7 @@ namespace Demo.Scenes
         {
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
-           // map.Draw(spriteBatch);
+            map.Draw(spriteBatch);
             player.Draw(spriteBatch);
             //   playerData.DrawHUD(spriteBatch, camera.Position);
             spriteBatch.End();

@@ -25,8 +25,7 @@ namespace Demo
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.IsFullScreen = false ;
-     
+            graphics.IsFullScreen = true;   
             graphics.PreferredBackBufferWidth = 1080;
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
