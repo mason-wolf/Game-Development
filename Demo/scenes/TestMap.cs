@@ -32,7 +32,8 @@ namespace Demo.Scenes
         public static Camera2D camera;
         public static Map map;
         public static Vector2 startingPosition = new Vector2(120, 170);
-
+        // Stores pathfinding waypoints.
+        List<Vector2> AIWayPoints;
         public static World collisionWorld;
         public static IBox playerCollision;
 
@@ -61,7 +62,7 @@ namespace Demo.Scenes
                 {
                     collisionWorld.Create(tile.Position.X, tile.Position.Y, 16, 16);
 
-
+                    // Populate the AI movement grid to avoid obstacles.
                     int x = (int)tile.Position.X;
                     int y = (int)tile.Position.Y;
 
@@ -94,28 +95,26 @@ namespace Demo.Scenes
             playerEntity.State = Action.Idle;
 
             AIEntity = new Entity(player.animation);
-            AIEntity.Position = new Vector2(225, 200);
+            AIEntity.Position = new Vector2(200, 250);
             AIEntity.State = Action.Idle;
 
             // Attach player IBox to collision world.
             playerCollision = collisionWorld.Create(0, 0, 16, 16);
 
-            Position[] path;
-            path = AIMovementGrid.GetPath(new Position((int)AIEntity.Position.X, (int)AIEntity.Position.Y), new Position((int)playerEntity.Position.X, (int)playerEntity.Position.Y));
+            // Find closest path to the player.
+ 
+            Position[] path = AIMovementGrid.GetPath(new Position((int)AIEntity.Position.X, (int)AIEntity.Position.Y), new Position((int)playerEntity.Position.X, (int)playerEntity.Position.Y));
 
-            vectorList = new List<Vector2>();
+            AIWayPoints = new List<Vector2>();
 
             foreach (Position position in path)
             {
-                vectorList.Add(new Vector2(position.X, position.Y));
+                AIWayPoints.Add(new Vector2(position.X, position.Y));
             }
 
             base.LoadContent();
         }
 
-        List<Vector2> vectorList;
-  
-   
         public override void Update(GameTime gameTime)
         {
 
@@ -124,52 +123,21 @@ namespace Demo.Scenes
             playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
             playerEntity.Update(gameTime);
             
-            if (vectorList.Count > 0)
+            if (AIWayPoints.Count > 0)
             {
-                MoveTo(gameTime, AIEntity, vectorList, 0.1f);
+                AIEntity.MoveTo(gameTime, AIEntity, AIWayPoints, 0.1f);
             }
             
 
             AIEntity.Update(gameTime);
 
-            camera.Zoom = 4;
+            camera.Zoom = 3;
 
             player.HandleInput(gameTime, playerEntity, playerCollision, newState, oldState);
             camera.LookAt(playerEntity.Position);
             oldState = newState;
 
             base.Update(gameTime);
-        }
-
-
-        public int WayPointIndex;
-        public bool ReachedDestination;
-
-        public void MoveTo(GameTime gameTime, Entity unit, List<Vector2> DestinationWaypoint, float Speed)
-        {
-            if (DestinationWaypoint.Count > 0)
-            {
-                if (!ReachedDestination)
-                {
-                    float Distance = Vector2.Distance(unit.Position, DestinationWaypoint[WayPointIndex]);
-                    Vector2 Direction = DestinationWaypoint[WayPointIndex] - unit.Position;
-                    Direction.Normalize();
-
-                    if (Distance > Direction.Length())
-                        unit.Position += Direction * (float)(Speed * gameTime.ElapsedGameTime.TotalMilliseconds);
-                    else
-                    {
-                        if (WayPointIndex >= DestinationWaypoint.Count - 1)
-                        {
-                            unit.Position += Direction;
-                            ReachedDestination = true;
-                            Console.WriteLine("true");
-                        }
-                        else
-                            WayPointIndex++;
-                    }
-                }
-            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -193,37 +161,37 @@ namespace Demo.Scenes
             AIEntity.Draw(spriteBatch);
 
 
-            foreach (Tile t in map.GetCollisionLayer())
-            {
-                if (t.TileID != 0)
-                {
-                    spriteBatch.Draw(collision, new Rectangle((int)t.Position.X, (int)t.Position.Y, 1, 1), Color.White);
+            //foreach (Tile t in map.GetCollisionLayer())
+            //{
+            //    if (t.TileID != 0)
+            //    {
+            //        spriteBatch.Draw(collision, new Rectangle((int)t.Position.X, (int)t.Position.Y, 1, 1), Color.White);
 
-                    int x = (int)t.Position.X;
-                    int y = (int)t.Position.Y;
+            //        int x = (int)t.Position.X;
+            //        int y = (int)t.Position.Y;
 
-                    for (int i = 0; i < 16; ++i)
-                    {
-                        for (int j = 0; j < 16; ++j)
-                        {
-                            spriteBatch.Draw(collision, new Rectangle((int)x, (int)y, 1, 1), Color.White);
-                            x++;
-                        }
+            //        for (int i = 0; i < 16; ++i)
+            //        {
+            //            for (int j = 0; j < 16; ++j)
+            //            {
+            //                spriteBatch.Draw(collision, new Rectangle((int)x, (int)y, 1, 1), Color.White);
+            //                x++;
+            //            }
 
-                        x = (int)t.Position.X;
+            //            x = (int)t.Position.X;
 
-                        spriteBatch.Draw(collision, new Rectangle((int)x, (int)y, 1, 1), Color.White);
+            //            spriteBatch.Draw(collision, new Rectangle((int)x, (int)y, 1, 1), Color.White);
 
-                        y++;
+            //            y++;
 
-                    }
-                }
-            }
+            //        }
+            //    }
+            //}
 
-            foreach (Vector2 v in vectorList)
-            {
-                spriteBatch.Draw(path, new Rectangle((int)v.X, (int)v.Y, 1, 1), Color.White);
-            }
+            //foreach (Vector2 v in vectorList)
+            //{
+            //    spriteBatch.Draw(path, new Rectangle((int)v.X, (int)v.Y, 1, 1), Color.White);
+            //}
 
  
             spriteBatch.End();
