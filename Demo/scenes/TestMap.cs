@@ -14,6 +14,8 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
 using System;
 using Demo.Engine;
+using Humper;
+using Humper.Responses;
 
 namespace Demo.Scenes
 {
@@ -23,12 +25,14 @@ namespace Demo.Scenes
         public static ViewportAdapter viewPortAdapter;
         public static KeyboardState oldState;
         public static KeyboardState newState;
-        public static Entity player;
-        public static Player playerData;
+        public static Entity playerEntity;
+        public static Player player;
         public static Camera2D camera;
         public static Map map;
         public static Vector2 startingPosition = new Vector2(150, 150);
 
+        public static World collisionWorld;
+        public static IBox playerCollision;
 
         public TestMap(Game game, GameWindow window) : base(game)
         {
@@ -40,13 +44,34 @@ namespace Demo.Scenes
         protected override void LoadContent()
         {
             map = new Map();
+
             map.LoadMap(Content, "Content/maps/testMap.tmx");
-            playerData = new Player();
-            playerData.LoadContent(Content);
-            player = new Entity(playerData.animation);
-            player.Position = startingPosition;
-            player.State = Action.Idle;
-   
+
+            // Generate collision world.
+            collisionWorld = new World(map.Width() * 16, map.Height() * 16);
+
+            // Find the tiles in the collision layer and add them to the collision world.
+            foreach (Tile tile in map.GetCollisionLayer())
+            {
+                if (tile.TileID != 0)
+                {
+                    collisionWorld.Create(tile.Position.X, tile.Position.Y, 16, 16);
+                }
+
+            }
+
+            // Create player to manage animations and movement.
+            player = new Player();
+            player.LoadContent(Content);
+
+            // Create player entity for movement and player states.
+            playerEntity = new Entity(player.animation);
+            playerEntity.Position = startingPosition;
+            playerEntity.State = Action.Idle;
+
+            // Attach player IBox to collision world.
+            playerCollision = collisionWorld.Create(0, 0, 16, 16);
+
             base.LoadContent();
         }
 
@@ -54,15 +79,14 @@ namespace Demo.Scenes
         {
 
             newState = Keyboard.GetState();
-
-            player.Update(gameTime);
+            playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
+            playerEntity.Update(gameTime);
 
             camera.Zoom = 4;
-            camera.Position = Vector2.Lerp(camera.Position, player.Position, .5f);
-            camera.LookAt(camera.Position);
-            camera.LookAt(player.Position);
-            playerData.HandleInput(gameTime, player, false, newState, oldState);
 
+            camera.LookAt(playerEntity.Position);
+            player.HandleInput(gameTime, playerEntity, playerCollision, newState, oldState);
+  
             oldState = newState;
 
             base.Update(gameTime);
@@ -74,8 +98,7 @@ namespace Demo.Scenes
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
             map.Draw(spriteBatch);
-            player.Draw(spriteBatch);
-            //   playerData.DrawHUD(spriteBatch, camera.Position);
+            playerEntity.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }

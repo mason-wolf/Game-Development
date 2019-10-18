@@ -276,7 +276,6 @@ C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\til
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\teleporter.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\enemies\wolf.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\maps\area_1.tmx
-C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\maps\build_mode.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\maps\rpg_maker_vx_rtp_tileset_by_telles0808.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\maps\village.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\sfx\sfx_sword.xnb

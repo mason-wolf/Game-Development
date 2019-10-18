@@ -86,6 +86,9 @@ namespace Demo
                         case Action.WalkNorth:
                             sprite.Play("walkNorth", () => State = Action.IdleNorth);
                             break;
+                        case Action.AttackNorth:
+                            sprite.Play("attackNorth", () => State = Action.IdleNorth);
+                            break;
                         case Action.IdleNorth:
                             sprite.Play("idleNorth");
                             break;

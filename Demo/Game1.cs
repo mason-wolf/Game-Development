@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Demo
 {
-
+    // Monogame Version 3.5.1.1679
     public class Game1 : Game
     {
         public static GraphicsDeviceManager graphics;
@@ -25,7 +25,7 @@ namespace Demo
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.IsFullScreen = true;   
+            graphics.IsFullScreen = false;   
             graphics.PreferredBackBufferWidth = 1080;
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";

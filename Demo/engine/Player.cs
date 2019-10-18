@@ -16,6 +16,7 @@ using MonoGame.Extended.SceneGraphs;
 using MonoGame.Extended.ViewportAdapters;
 using Microsoft.Xna.Framework.Audio;
 using System.Timers;
+using Humper;
 
 namespace Demo
 {
@@ -43,16 +44,16 @@ namespace Demo
             animation.Add("attackEast", new SpriteSheetAnimationData(new[] { 21, 22, 23, 24, 25, 26 }, animationSpeed, isLooping: true));
             animation.Add("idleEast", new SpriteSheetAnimationData(new[] { 20 }));
             animation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 27, 28, 29, 28 }, .07f, isLooping: true));
+            animation.Add("attackNorth", new SpriteSheetAnimationData(new[] { 30, 31, 32, 33, 34, 35 }, .07f, isLooping: true));
             animation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 28 }));
         }
 
 
-        public void HandleInput(GameTime gameTime, Entity player, bool inDialog, KeyboardState newState, KeyboardState oldState)
+        public void HandleInput(GameTime gameTime, Entity player, IBox playerCollision, KeyboardState newState, KeyboardState oldState)
         {
 
-            Vector2 motion = new Vector2();
+            Vector2 motion = new Vector2(playerCollision.X, playerCollision.Y);
 
-            motion = player.Position;
             int speed = 1;
 
             newMouseState = Mouse.GetState();
@@ -61,9 +62,7 @@ namespace Demo
             if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkSouth ||
                 newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.Idle)
             {
-                player.State = Action.AttackSouth;
-               
-                
+                player.State = Action.AttackSouth;            
             }
             else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkWest ||
                 newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleWest)
@@ -76,16 +75,24 @@ namespace Demo
 
                 player.State = Action.AttackEast;
             }
+            else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkNorth ||
+                newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleNorth)
+            {
+
+                player.State = Action.AttackNorth;
+            }
             else
             {
-                if (newState.IsKeyDown(Keys.W))
+                if (newState.IsKeyDown(Keys.W) && player.State != Action.AttackNorth)
                 {
+                    // Walk east if W and D are pressed
                     if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.D))
                     {
                         motion.Y -= speed;
                         player.Position = motion;
                         player.State = Action.WalkEast;
                     }
+                    // Walk west if W and A are pressed.
                     else if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.A))
                     {
                         motion.Y -= speed;
@@ -94,6 +101,7 @@ namespace Demo
                     }
                     else
                     {
+                        // Walk north.
                         motion.Y -= speed;
                         player.Position = motion;
                         player.State = Action.WalkNorth;
@@ -102,6 +110,7 @@ namespace Demo
 
                 if (newState.IsKeyDown(Keys.S) && player.State != Action.AttackSouth)
                 {
+                    // Walk east if S and D are pressed.
                     if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.D))
                     {
                         motion.Y += speed;
@@ -109,6 +118,8 @@ namespace Demo
                         player.State = Action.WalkEast;
 
                     }
+
+                    // Walk west if S and A are pressed.
                     else if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.A))
                     {
                         motion.Y += speed;
@@ -117,12 +128,14 @@ namespace Demo
                     }
                     else
                     {
+                        // Walk south
                         motion.Y += speed;
                         player.Position = motion;
                         player.State = Action.WalkSouth;
                     }
                 }
 
+                // Walk east
                 if (newState.IsKeyDown(Keys.D) && player.State != Action.AttackEast)
                 {
                     motion.X += speed;
@@ -130,6 +143,7 @@ namespace Demo
                     player.State = Action.WalkEast;
                 }
 
+                // Walk west
                 if (newState.IsKeyDown(Keys.A) && player.State != Action.AttackWest)
                 {
                     motion.X -= speed;

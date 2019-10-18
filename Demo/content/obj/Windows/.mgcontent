@@ -4,16 +4,16 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Game-Development/Demo/Content/interface/button.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Game-Development/Demo/Content/characters/character_1.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Game-Development/Demo/Content/player/player.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Game-Development/Demo/Content/music/chopping_block.mp3</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Game-Development/Demo/Content/interface/font.spritefont</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Game-Development/Demo/Content/interface/menu.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Game-Development/Demo/Content/interface/statusbar.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Game-Development/Demo/Content/tilesets/tileset_1.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Game-Development/Demo/Content/interface/titlescreen.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Game-Development/Demo/Content/interface/buildMenu.png</File>
-    <File>C:/Users/Mason.LAPTOP-RJFK2H6N/Documents/Projects/Game-Development/Demo/Content/interface/cursor.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/button.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/characters/character_1.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/player/player.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/music/chopping_block.mp3</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/font.spritefont</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/menu.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/statusbar.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/tilesets/tileset_1.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/titlescreen.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/buildMenu.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/cursor.png</File>
   </SourceFiles>
 </SourceFileCollection>

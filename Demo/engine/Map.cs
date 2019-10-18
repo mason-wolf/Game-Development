@@ -13,6 +13,7 @@ using System.Xml;
 
 namespace Demo.Engine
 {
+    // NOTE: Does not use Monogame Content pipeline.
     public class Map
     {
         Texture2D mapTexture;
@@ -21,20 +22,36 @@ namespace Demo.Engine
         List<Tile> firstLayer;
         List<Tile> secondLayer;
 
-        int mapWidth;
-        int mapHeight;
         int tileWidth = 16;
         int tileHeight = 16;
+
+        public int mapWidth;
+        public int mapHeight;
+
+        public int Width()
+        {
+            return mapWidth;
+        }
+
+        public int Height()
+        {
+            return mapHeight;
+        }
+
+        public List<Tile> GetCollisionLayer()
+        {
+            return secondLayer;
+        }
 
         public void LoadMap(ContentManager content, string filePath)
         {
             layers = new List<Layer>();
 
+            // Load map from file.
             using (XmlReader reader = XmlReader.Create(filePath))
             {
                 while (reader.Read())
                 {
- 
                     if (reader.LocalName == "map")
                     {
                         if (reader.GetAttribute("width") != null && reader.GetAttribute("height") != null)
@@ -72,6 +89,7 @@ namespace Demo.Engine
             int tileRowCount = mapWidth;
             int tileColumnCount = mapHeight;
 
+            // Create map dimensions.
             for (int rowIndex = 0; rowIndex < tileRowCount; rowIndex++)
             {
                 for (int columnIndex = 0; columnIndex < tileColumnCount; columnIndex++)
@@ -84,6 +102,7 @@ namespace Demo.Engine
  
             int count = 0;
 
+            // Assign tile ID for each tile in each layer.
             foreach (Tile tile in firstLayer)
             {
                 tile.TileID = layers[0].Tiles[count];
