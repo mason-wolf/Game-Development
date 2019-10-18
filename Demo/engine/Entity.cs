@@ -8,6 +8,7 @@ using MonoGame.Extended.Collisions;
 using MonoGame.Extended.Shapes;
 using MonoGame.Extended.Sprites;
 using Microsoft.Xna.Framework.Content;
+using System.Collections.Generic;
 
 namespace Demo
 {
@@ -33,7 +34,9 @@ namespace Demo
     public class Entity : IUpdate, IActorTarget
     {
         private readonly AnimatedSprite sprite;
-        private float direction = -1.0f;
+   
+        List<Vector2> path;
+
         private Action state;
         public RectangleF BoundingBox => sprite.BoundingRectangle;
 
@@ -96,9 +99,10 @@ namespace Demo
                 }
             }
         }
-        
 
-        public Vector2 Velocity { get; set; }
+        public Vector2 Velocity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+
 
         public Entity(SpriteSheetAnimationFactory animations)
         {
@@ -113,18 +117,11 @@ namespace Demo
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite);
-        } 
-
-        public void Walk(float direction)
-        {
-            sprite.Effect = this.direction > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            this.direction = direction;
-            Velocity = new Vector2(200f * this.direction, Velocity.Y);
         }
 
-        public void OnCollision(CollisionInfo c)
+        public void OnCollision(CollisionInfo collisionInfo)
         {
-            Position -= c.PenetrationVector;
+            throw new NotImplementedException();
         }
     }
 }
