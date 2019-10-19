@@ -31,9 +31,10 @@ namespace Demo.Scenes
         public static Player player;
         public static Camera2D camera;
         public static Map map;
-        public static Vector2 startingPosition = new Vector2(120, 170);
+        public static Vector2 startingPosition = new Vector2(100, 150);
         // Stores pathfinding waypoints.
         List<Vector2> AIWayPoints;
+        RoyT.AStar.Grid AIMovementGrid;
         public static World collisionWorld;
         public static IBox playerCollision;
 
@@ -53,7 +54,7 @@ namespace Demo.Scenes
             // Generate collision world.
             collisionWorld = new World(map.Width() * 16, map.Height() * 16);
 
-            var AIMovementGrid = new RoyT.AStar.Grid(map.Width() * 16, map.Height() * 16, 1);
+            AIMovementGrid = new RoyT.AStar.Grid(map.Width() * 16, map.Height() * 16, 1);
 
             // Find the tiles in the collision layer and add them to the collision world.
             foreach (Tile tile in map.GetCollisionLayer())
@@ -101,9 +102,17 @@ namespace Demo.Scenes
             // Attach player IBox to collision world.
             playerCollision = collisionWorld.Create(0, 0, 16, 16);
 
+
+            base.LoadContent();
+        }
+
+        Position[] path;
+
+        public override void Update(GameTime gameTime)
+        {
             // Find closest path to the player.
- 
-            Position[] path = AIMovementGrid.GetPath(new Position((int)AIEntity.Position.X, (int)AIEntity.Position.Y), new Position((int)playerEntity.Position.X, (int)playerEntity.Position.Y));
+            var movementPattern = new[] { new Offset(-1, 0), new Offset(0, -1), new Offset(1, 0), new Offset(0, 1) };
+            path = AIMovementGrid.GetPath(new Position((int)AIEntity.Position.X, (int)AIEntity.Position.Y), new Position((int)playerEntity.Position.X, (int)playerEntity.Position.Y), movementPattern);
 
             AIWayPoints = new List<Vector2>();
 
@@ -112,12 +121,6 @@ namespace Demo.Scenes
                 AIWayPoints.Add(new Vector2(position.X, position.Y));
             }
 
-            base.LoadContent();
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-
             newState = Keyboard.GetState();
 
             playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
@@ -125,7 +128,7 @@ namespace Demo.Scenes
             
             if (AIWayPoints.Count > 0)
             {
-                AIEntity.MoveTo(gameTime, AIEntity, AIWayPoints, 0.1f);
+                AIEntity.MoveTo(gameTime, AIEntity, AIWayPoints, .05f);
             }
             
 
@@ -188,12 +191,12 @@ namespace Demo.Scenes
             //    }
             //}
 
-            //foreach (Vector2 v in vectorList)
-            //{
-            //    spriteBatch.Draw(path, new Rectangle((int)v.X, (int)v.Y, 1, 1), Color.White);
-            //}
+            foreach (Vector2 v in AIWayPoints)
+            {
+                spriteBatch.Draw(path, new Rectangle((int)v.X, (int)v.Y, 1, 1), Color.White);
+            }
 
- 
+
             spriteBatch.End();
             base.Draw(gameTime);
         }

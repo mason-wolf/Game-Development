@@ -106,23 +106,48 @@ namespace Demo
         public int WayPointIndex;
         public bool ReachedDestination;
 
-        public void MoveTo(GameTime gameTime, Entity unit, List<Vector2> DestinationWaypoint, float Speed)
+        public void MoveTo(GameTime gameTime, Entity entity, List<Vector2> DestinationWaypoint, float Speed)
         {
             if (DestinationWaypoint.Count > 0)
             {
                 if (!ReachedDestination)
                 {
-                    float Distance = Vector2.Distance(unit.Position, DestinationWaypoint[WayPointIndex]);
-                    Vector2 Direction = DestinationWaypoint[WayPointIndex] - unit.Position;
+                    float Distance = Vector2.Distance(entity.Position, DestinationWaypoint[WayPointIndex]);
+                    Vector2 Direction = DestinationWaypoint[WayPointIndex] - entity.Position;
                     Direction.Normalize();
+                    Double angle = Math.Atan2(Direction.X, Direction.Y);
+                    double rotation = (float)(angle * (180 / Math.PI));
+
+                    Console.WriteLine(rotation);
+
+                    if (rotation < -179)
+                    {
+                        entity.State = Action.WalkNorth;
+                    }
+
+                    if (rotation > 89)
+                    {
+                        entity.State = Action.WalkEast;
+                    }
+
+                    if (rotation <= -90 && rotation > -179)
+                    {
+                        entity.State = Action.WalkWest;
+                    }
+
+
+                    if (rotation == 0)
+                    {
+                        entity.State = Action.WalkSouth;
+                    }
 
                     if (Distance > Direction.Length())
-                        unit.Position += Direction * (float)(Speed * gameTime.ElapsedGameTime.TotalMilliseconds);
+                        entity.Position += Direction * (float)(Speed * gameTime.ElapsedGameTime.TotalMilliseconds);
                     else
                     {
                         if (WayPointIndex >= DestinationWaypoint.Count - 1)
                         {
-                            unit.Position += Direction;
+                            entity.Position += Direction;
                             ReachedDestination = true;
                             Console.WriteLine("true");
                         }
