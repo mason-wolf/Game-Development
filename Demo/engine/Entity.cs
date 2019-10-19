@@ -120,12 +120,12 @@ namespace Demo
 
                     Console.WriteLine(rotation);
 
-                    if (rotation < -179)
+                    if (rotation < -179 || rotation == 180)
                     {
                         entity.State = Action.WalkNorth;
                     }
 
-                    if (rotation > 89)
+                    if (rotation >= 90 && rotation < 180)
                     {
                         entity.State = Action.WalkEast;
                     }
@@ -135,8 +135,12 @@ namespace Demo
                         entity.State = Action.WalkWest;
                     }
 
-
                     if (rotation == 0)
+                    {
+                        entity.State = Action.WalkSouth;
+                    }
+
+                    if (rotation < -0 && rotation > -90)
                     {
                         entity.State = Action.WalkSouth;
                     }
@@ -149,7 +153,6 @@ namespace Demo
                         {
                             entity.Position += Direction;
                             ReachedDestination = true;
-                            Console.WriteLine("true");
                         }
                         else
                             WayPointIndex++;

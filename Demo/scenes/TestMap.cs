@@ -31,7 +31,7 @@ namespace Demo.Scenes
         public static Player player;
         public static Camera2D camera;
         public static Map map;
-        public static Vector2 startingPosition = new Vector2(100, 150);
+        public static Vector2 startingPosition = new Vector2(300, 150);
         // Stores pathfinding waypoints.
         List<Vector2> AIWayPoints;
         RoyT.AStar.Grid AIMovementGrid;
@@ -61,11 +61,11 @@ namespace Demo.Scenes
             {
                 if (tile.TileID != 0)
                 {
-                    collisionWorld.Create(tile.Position.X, tile.Position.Y, 16, 16);
+                    collisionWorld.Create(tile.Position.X + 1, tile.Position.Y + 1, 16, 16);
 
                     // Populate the AI movement grid to avoid obstacles.
-                    int x = (int)tile.Position.X;
-                    int y = (int)tile.Position.Y;
+                    int x = (int)tile.Position.X - 1;
+                    int y = (int)tile.Position.Y - 1;
 
                     for (int i = 0; i < 16; ++i)
                     {
@@ -98,8 +98,7 @@ namespace Demo.Scenes
             AIEntity = new Entity(player.animation);
             AIEntity.Position = new Vector2(200, 250);
             AIEntity.State = Action.Idle;
-
-            // Attach player IBox to collision world.
+            // Attach player to collision world.
             playerCollision = collisionWorld.Create(0, 0, 16, 16);
 
 
@@ -110,10 +109,11 @@ namespace Demo.Scenes
 
         public override void Update(GameTime gameTime)
         {
-            // Find closest path to the player.
+           // Find AI's closest path to the player.
             var movementPattern = new[] { new Offset(-1, 0), new Offset(0, -1), new Offset(1, 0), new Offset(0, 1) };
             path = AIMovementGrid.GetPath(new Position((int)AIEntity.Position.X, (int)AIEntity.Position.Y), new Position((int)playerEntity.Position.X, (int)playerEntity.Position.Y), movementPattern);
 
+            // Add way points for AI.
             AIWayPoints = new List<Vector2>();
 
             foreach (Position position in path)
@@ -123,14 +123,17 @@ namespace Demo.Scenes
 
             newState = Keyboard.GetState();
 
+            // Handle collision.
             playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
+   
             playerEntity.Update(gameTime);
-            
-            if (AIWayPoints.Count > 0)
+
+            // AI to follow player.
+            if (AIWayPoints.Count > 25)
             {
                 AIEntity.MoveTo(gameTime, AIEntity, AIWayPoints, .05f);
             }
-            
+  
 
             AIEntity.Update(gameTime);
 
@@ -145,30 +148,27 @@ namespace Demo.Scenes
 
         public override void Draw(GameTime gameTime)
         {
-            Texture2D collision;
-            Texture2D path;
+            //Texture2D collision;
+            //Texture2D path;
 
-            collision = new Texture2D(GraphicsDevice, 1, 1);
-            collision.SetData(new Color[] { Color.Blue });
+            //collision = new Texture2D(GraphicsDevice, 1, 1);
+            //collision.SetData(new Color[] { Color.Blue });
 
-            path = new Texture2D(GraphicsDevice, 1, 1);
-            path.SetData(new Color[] { Color.Red });
-
-
+            //path = new Texture2D(GraphicsDevice, 1, 1);
+            //path.SetData(new Color[] { Color.Red });
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
 
 
             map.Draw(spriteBatch);
-            playerEntity.Draw(spriteBatch);
             AIEntity.Draw(spriteBatch);
+            playerEntity.Draw(spriteBatch);
 
 
             //foreach (Tile t in map.GetCollisionLayer())
             //{
             //    if (t.TileID != 0)
             //    {
-            //        spriteBatch.Draw(collision, new Rectangle((int)t.Position.X, (int)t.Position.Y, 1, 1), Color.White);
 
             //        int x = (int)t.Position.X;
             //        int y = (int)t.Position.Y;
@@ -191,10 +191,10 @@ namespace Demo.Scenes
             //    }
             //}
 
-            foreach (Vector2 v in AIWayPoints)
-            {
-                spriteBatch.Draw(path, new Rectangle((int)v.X, (int)v.Y, 1, 1), Color.White);
-            }
+            //foreach (Vector2 v in AIWayPoints)
+            //{
+            //    spriteBatch.Draw(path, new Rectangle((int)v.X, (int)v.Y, 1, 1), Color.White);
+            //}
 
 
             spriteBatch.End();

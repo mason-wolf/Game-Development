@@ -34,17 +34,18 @@ namespace Demo
             playerAtlas = TextureAtlas.Create(playerTexture, 32, 32);
             animation = new SpriteSheetAnimationFactory(playerAtlas);
             float animationSpeed = .09f;
+            float attackSpeed = .04f;
             animation.Add("idle", new SpriteSheetAnimationData(new[] { 0}));
             animation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 1, 2}, .1f, isLooping: true));
-            animation.Add("attackSouth", new SpriteSheetAnimationData(new[] { 3, 4, 5, 6, 7, 8 }, animationSpeed, isLooping: true));
+            animation.Add("attackSouth", new SpriteSheetAnimationData(new[] { 3, 4, 5, 6, 7, 8 }, attackSpeed, isLooping: true));
             animation.Add("walkWest", new SpriteSheetAnimationData(new[] { 9, 10, 9, 11}, animationSpeed, isLooping: true));
-            animation.Add("attackWest", new SpriteSheetAnimationData(new[] { 12, 13, 14, 15, 16, 17 }, animationSpeed, isLooping: true));
+            animation.Add("attackWest", new SpriteSheetAnimationData(new[] { 12, 13, 14, 15, 16, 17 }, attackSpeed, isLooping: true));
             animation.Add("idleWest", new SpriteSheetAnimationData(new[] { 9 }));
             animation.Add("walkEast", new SpriteSheetAnimationData(new[] { 20, 19, 20, 18 }, animationSpeed, isLooping: true));
-            animation.Add("attackEast", new SpriteSheetAnimationData(new[] { 21, 22, 23, 24, 25, 26 }, animationSpeed, isLooping: true));
+            animation.Add("attackEast", new SpriteSheetAnimationData(new[] { 21, 22, 23, 24, 25, 26 }, attackSpeed, isLooping: true));
             animation.Add("idleEast", new SpriteSheetAnimationData(new[] { 20 }));
             animation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 27, 28, 29, 28 }, .07f, isLooping: true));
-            animation.Add("attackNorth", new SpriteSheetAnimationData(new[] { 30, 31, 32, 33, 34, 35 }, .07f, isLooping: true));
+            animation.Add("attackNorth", new SpriteSheetAnimationData(new[] { 30, 31, 32, 33, 34, 35, 34, 33, 32, 31 }, attackSpeed, isLooping: true));
             animation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 28 }));
         }
 
