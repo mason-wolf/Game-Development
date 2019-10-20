@@ -29,14 +29,16 @@ namespace Demo.Scenes
         public static Entity playerEntity;
         public static Entity AIEntity;
         public static Player player;
+        public static Enemy enemy;
         public static Camera2D camera;
         public static Map map;
-        public static Vector2 startingPosition = new Vector2(300, 150);
+        public static Vector2 startingPosition = new Vector2(250, 150);
         // Stores pathfinding waypoints.
         List<Vector2> AIWayPoints;
         RoyT.AStar.Grid AIMovementGrid;
         public static World collisionWorld;
         public static IBox playerCollision;
+        public static IBox AICollision;
 
         public TestMap(Game game, GameWindow window) : base(game)
         {
@@ -98,9 +100,10 @@ namespace Demo.Scenes
             AIEntity = new Entity(player.animation);
             AIEntity.Position = new Vector2(200, 250);
             AIEntity.State = Action.Idle;
+            enemy = new Enemy();
             // Attach player to collision world.
             playerCollision = collisionWorld.Create(0, 0, 16, 16);
-
+            AICollision = collisionWorld.Create(0, 0, 16, 16);
 
             base.LoadContent();
         }
@@ -125,15 +128,17 @@ namespace Demo.Scenes
 
             // Handle collision.
             playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
-   
+            AICollision.Move(AIEntity.Position.X, AIEntity.Position.Y, (collision) => CollisionResponses.Slide);
+
             playerEntity.Update(gameTime);
 
             // AI to follow player.
-            if (AIWayPoints.Count > 25)
+            if (AIWayPoints.Count > 15)
             {
-                AIEntity.MoveTo(gameTime, AIEntity, AIWayPoints, .05f);
+                AIEntity.MoveTo(gameTime, AIEntity, AIWayPoints, .04f);
             }
-  
+
+            enemy.Attack(AIEntity, playerEntity);
 
             AIEntity.Update(gameTime);
 
@@ -161,10 +166,9 @@ namespace Demo.Scenes
 
 
             map.Draw(spriteBatch);
+
             AIEntity.Draw(spriteBatch);
             playerEntity.Draw(spriteBatch);
-
-
             //foreach (Tile t in map.GetCollisionLayer())
             //{
             //    if (t.TileID != 0)

@@ -38,14 +38,14 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Engine\CollisionHandler.cs" />
-    <Compile Include="Engine\Layer.cs" />
-    <Compile Include="Engine\Map.cs" />
-    <Compile Include="Engine\Tile.cs" />
+    <Compile Include="Game\Enemy.cs" />
+    <Compile Include="Game\Layer.cs" />
+    <Compile Include="Game\Map.cs" />
+    <Compile Include="Game\Tile.cs" />
     <Compile Include="Interface\Background.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="Engine\Entity.cs" />
-    <Compile Include="Engine\Player.cs" />
+    <Compile Include="Game\Entity.cs" />
+    <Compile Include="Game\Player.cs" />
     <Compile Include="Interface\Dialog.cs" />
     <Compile Include="Scenes\TestMap.cs" />
     <Compile Include="Scenes\BuildMode.cs" />

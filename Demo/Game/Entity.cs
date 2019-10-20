@@ -16,15 +16,19 @@ namespace Demo
     {
         Idle,
         WalkSouth,
-        AttackSouth,
+        AttackSouthPattern1,
+        AttackSouthPattern2,
         WalkWest,
-        AttackWest,
+        AttackWestPattern1,
+        AttackWestPattern2,
         IdleWest,
         WalkEast,
-        AttackEast,
+        AttackEastPattern1,
+        AttackEastPattern2,
         IdleEast,
         WalkNorth,
-        AttackNorth,
+        AttackNorthPattern1,
+        AttackNorthPattern2,
         IdleNorth,
         HurtSouth,
         HurtEast,
@@ -65,14 +69,20 @@ namespace Demo
                         case Action.WalkSouth:
                             sprite.Play("walkSouth", () => State = Action.Idle);
                             break;
-                        case Action.AttackSouth:
-                            sprite.Play("attackSouth", () => State = Action.Idle);
+                        case Action.AttackSouthPattern1:
+                            sprite.Play("attackSouthPattern1", () => State = Action.Idle);
+                            break;
+                        case Action.AttackSouthPattern2:
+                            sprite.Play("attackSouthPattern2", () => State = Action.Idle);
                             break;
                         case Action.WalkWest:
                             sprite.Play("walkWest", () => State = Action.IdleWest);
                             break;
-                        case Action.AttackWest:
-                            sprite.Play("attackWest", () => State = Action.IdleWest);
+                        case Action.AttackWestPattern1:
+                            sprite.Play("attackWestPattern1", () => State = Action.IdleWest);
+                            break;
+                        case Action.AttackWestPattern2:
+                            sprite.Play("attackWestPattern2", () => State = Action.IdleWest);
                             break;
                         case Action.IdleWest:
                             sprite.Play("idleWest");
@@ -80,8 +90,11 @@ namespace Demo
                         case Action.WalkEast:
                             sprite.Play("walkEast", () => State = Action.IdleEast);
                             break;
-                        case Action.AttackEast:
-                            sprite.Play("attackEast", () => State = Action.IdleEast);
+                        case Action.AttackEastPattern1:
+                            sprite.Play("attackEastPattern1", () => State = Action.IdleEast);
+                            break;
+                        case Action.AttackEastPattern2:
+                            sprite.Play("attackEastPattern2", () => State = Action.IdleEast);
                             break;
                         case Action.IdleEast:
                             sprite.Play("idleEast");
@@ -89,8 +102,11 @@ namespace Demo
                         case Action.WalkNorth:
                             sprite.Play("walkNorth", () => State = Action.IdleNorth);
                             break;
-                        case Action.AttackNorth:
-                            sprite.Play("attackNorth", () => State = Action.IdleNorth);
+                        case Action.AttackNorthPattern1:
+                            sprite.Play("attackNorthPattern1", () => State = Action.IdleNorth);
+                            break;
+                        case Action.AttackNorthPattern2:
+                            sprite.Play("attackNorthPattern2", () => State = Action.IdleNorth);
                             break;
                         case Action.IdleNorth:
                             sprite.Play("idleNorth");
@@ -118,7 +134,7 @@ namespace Demo
                     Double angle = Math.Atan2(Direction.X, Direction.Y);
                     double rotation = (float)(angle * (180 / Math.PI));
 
-                    Console.WriteLine(rotation);
+                 
 
                     if (rotation < -179 || rotation == 180)
                     {
