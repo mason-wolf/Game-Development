@@ -38,8 +38,7 @@ namespace Demo
     public class Entity : IUpdate, IActorTarget
     {
         private readonly AnimatedSprite sprite;
-   
-        List<Vector2> path;
+  
 
         private Action state;
         public RectangleF BoundingBox => sprite.BoundingRectangle;
@@ -50,6 +49,17 @@ namespace Demo
             set { sprite.Position = value; }
         }
 
+        Texture2D statusBar;
+        Texture2D healthBar;
+
+        public double MaxHealth { get; set; } = 0;
+        public double CurrentHealth { get; set; } = 0;
+
+        public void LoadContent(ContentManager content)
+        {
+            statusBar = content.Load<Texture2D>(@"interface\statusbar");
+            healthBar = content.Load<Texture2D>(@"interface\healthbar");
+        }
 
         public Action State
         {
@@ -134,8 +144,7 @@ namespace Demo
                     Double angle = Math.Atan2(Direction.X, Direction.Y);
                     double rotation = (float)(angle * (180 / Math.PI));
 
-                 
-
+                
                     if (rotation < -179 || rotation == 180)
                     {
                         entity.State = Action.WalkNorth;
@@ -190,6 +199,12 @@ namespace Demo
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite);
+        }
+
+        public void DrawHUD(SpriteBatch spriteBatch, Vector2 position)
+        {
+            spriteBatch.Draw(statusBar, position, new Rectangle(0, 0, Convert.ToInt32(MaxHealth), 2), Color.Black);
+            spriteBatch.Draw(healthBar, position, new Rectangle(10, 10, Convert.ToInt32(CurrentHealth), 2), Color.White);
         }
 
         public void OnCollision(CollisionInfo collisionInfo)

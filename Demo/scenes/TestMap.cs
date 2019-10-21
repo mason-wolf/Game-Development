@@ -27,18 +27,19 @@ namespace Demo.Scenes
         public static KeyboardState oldState;
         public static KeyboardState newState;
         public static Entity playerEntity;
-        public static Entity AIEntity;
+        public static Entity enemyEntity;
         public static Player player;
         public static Enemy enemy;
         public static Camera2D camera;
         public static Map map;
         public static Vector2 startingPosition = new Vector2(250, 150);
         // Stores pathfinding waypoints.
-        List<Vector2> AIWayPoints;
-        RoyT.AStar.Grid AIMovementGrid;
+        public static List<Vector2> AIWayPoints;
+        public static List<Entity> enemyList = new List<Entity>();
+        public static RoyT.AStar.Grid AIMovementGrid;
         public static World collisionWorld;
         public static IBox playerCollision;
-        public static IBox AICollision;
+        public static IBox enemyCollision;
 
         public TestMap(Game game, GameWindow window) : base(game)
         {
@@ -88,22 +89,32 @@ namespace Demo.Scenes
             }
 
 
-            // Create player to manage animations and movement.
+            // Create player to manage animations and controls.
             player = new Player();
             player.LoadContent(Content);
+            
 
             // Create player entity for movement and player states.
-            playerEntity = new Entity(player.animation);
+            playerEntity = new Entity(player.playerAnimation);
+            playerEntity.LoadContent(Content);
             playerEntity.Position = startingPosition;
             playerEntity.State = Action.Idle;
+            playerEntity.MaxHealth = 150;
+            playerEntity.CurrentHealth = 150;
 
-            AIEntity = new Entity(player.animation);
-            AIEntity.Position = new Vector2(200, 250);
-            AIEntity.State = Action.Idle;
+            enemyEntity = new Entity(player.playerAnimation);
+            enemyEntity.LoadContent(Content);
+            enemyEntity.Position = new Vector2(200, 250);
+            enemyEntity.State = Action.Idle;
+            enemyEntity.MaxHealth = 15;
+            enemyEntity.CurrentHealth = 15;
             enemy = new Enemy();
+            enemyList.Add(enemyEntity);
+
             // Attach player to collision world.
             playerCollision = collisionWorld.Create(0, 0, 16, 16);
-            AICollision = collisionWorld.Create(0, 0, 16, 16);
+            enemyCollision = collisionWorld.Create(0, 0, 16, 16);
+            player.EnemyList = enemyList;
 
             base.LoadContent();
         }
@@ -114,7 +125,7 @@ namespace Demo.Scenes
         {
            // Find AI's closest path to the player.
             var movementPattern = new[] { new Offset(-1, 0), new Offset(0, -1), new Offset(1, 0), new Offset(0, 1) };
-            path = AIMovementGrid.GetPath(new Position((int)AIEntity.Position.X, (int)AIEntity.Position.Y), new Position((int)playerEntity.Position.X, (int)playerEntity.Position.Y), movementPattern);
+            path = AIMovementGrid.GetPath(new Position((int)enemyEntity.Position.X, (int)enemyEntity.Position.Y), new Position((int)playerEntity.Position.X, (int)playerEntity.Position.Y), movementPattern);
 
             // Add way points for AI.
             AIWayPoints = new List<Vector2>();
@@ -128,19 +139,19 @@ namespace Demo.Scenes
 
             // Handle collision.
             playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
-            AICollision.Move(AIEntity.Position.X, AIEntity.Position.Y, (collision) => CollisionResponses.Slide);
+         //   enemyCollision.Move(enemyEntity.Position.X, enemyEntity.Position.Y, (collision) => CollisionResponses.Slide);
 
             playerEntity.Update(gameTime);
 
             // AI to follow player.
             if (AIWayPoints.Count > 15)
             {
-                AIEntity.MoveTo(gameTime, AIEntity, AIWayPoints, .04f);
+                     enemyEntity.MoveTo(gameTime, enemyEntity, AIWayPoints, .04f);
             }
 
-            enemy.Attack(AIEntity, playerEntity);
+            enemy.Attack(enemyEntity, playerEntity);
 
-            AIEntity.Update(gameTime);
+            enemyEntity.Update(gameTime);
 
             camera.Zoom = 3;
 
@@ -151,24 +162,54 @@ namespace Demo.Scenes
             base.Update(gameTime);
         }
 
+        public void SortSprites(SpriteBatch spriteBatch, Entity playerEntity, Entity enemyEntity)
+        {
+            Vector2 destination = playerEntity.Position - enemyEntity.Position;
+            destination.Normalize();
+            Double angle = Math.Atan2(destination.X, destination.Y);
+            double direction = Math.Ceiling(angle);
+
+
+            if (direction == -3 || direction == 4 || direction == -2)
+            {
+                playerEntity.Draw(spriteBatch);
+                enemyEntity.Draw(spriteBatch); ;
+            }
+            else if (direction == 0 || direction == 1)
+            {
+                enemyEntity.Draw(spriteBatch);
+                playerEntity.Draw(spriteBatch);
+            }
+            else
+            {
+                playerEntity.Draw(spriteBatch);
+                enemyEntity.Draw(spriteBatch);
+            }
+        }
+
         public override void Draw(GameTime gameTime)
         {
-            //Texture2D collision;
-            //Texture2D path;
+            Texture2D collision;
+            Texture2D path;
 
-            //collision = new Texture2D(GraphicsDevice, 1, 1);
-            //collision.SetData(new Color[] { Color.Blue });
+            collision = new Texture2D(GraphicsDevice, 1, 1);
+            collision.SetData(new Color[] { Color.Blue });
 
-            //path = new Texture2D(GraphicsDevice, 1, 1);
-            //path.SetData(new Color[] { Color.Red });
+            path = new Texture2D(GraphicsDevice, 1, 1);
+            path.SetData(new Color[] { Color.Red });
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
 
-
             map.Draw(spriteBatch);
 
-            AIEntity.Draw(spriteBatch);
-            playerEntity.Draw(spriteBatch);
+            Vector2 playerHealthPosition = new Vector2(playerEntity.Position.X - 170, playerEntity.Position.Y - 110);
+            Vector2 AIHealthPosition = new Vector2(enemyEntity.Position.X - 7, enemyEntity.Position.Y - 20);
+
+            SortSprites(spriteBatch, playerEntity, enemyEntity);
+
+            playerEntity.DrawHUD(spriteBatch, playerHealthPosition);
+            enemyEntity.DrawHUD(spriteBatch, AIHealthPosition);
+
             //foreach (Tile t in map.GetCollisionLayer())
             //{
             //    if (t.TileID != 0)

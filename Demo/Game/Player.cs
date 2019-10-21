@@ -24,40 +24,54 @@ namespace Demo
     {
         public Texture2D playerTexture;
         public TextureAtlas playerAtlas;
-        public SpriteSheetAnimationFactory animation;
+        public SpriteSheetAnimationFactory playerAnimation;
         MouseState oldMouseState;
         MouseState newMouseState;
-       
+        Entity playerEntity;
+
+        public List<Entity> EnemyList { get; set; } 
+
         public void LoadContent(ContentManager content)
         {
             playerTexture = content.Load<Texture2D>(@"player\player");
             playerAtlas = TextureAtlas.Create(playerTexture, 32, 32);
-            animation = new SpriteSheetAnimationFactory(playerAtlas);
+            playerAnimation = new SpriteSheetAnimationFactory(playerAtlas);
             float animationSpeed = .09f;
-            float attackSpeed = .04f;
-            animation.Add("idle", new SpriteSheetAnimationData(new[] { 0}));
-            animation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 1, 2}, .1f, isLooping: true));
-            animation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 3, 4, 5, 6, 7, 8, 7, 6, 5}, attackSpeed, isLooping: true));
-            animation.Add("attackSouthPattern2", new SpriteSheetAnimationData(new[] { 9, 10, 11 }, attackSpeed, isLooping: true));
-            animation.Add("walkWest", new SpriteSheetAnimationData(new[] { 12, 13, 12, 14}, animationSpeed, isLooping: true));
-            animation.Add("attackWestPattern1", new SpriteSheetAnimationData(new[] { 15, 16, 17, 18, 19, 20, 18, 17, 16 }, attackSpeed, isLooping: true));
-            animation.Add("attackWestPattern2", new SpriteSheetAnimationData(new[] { 21, 22, 23 }, attackSpeed, isLooping: true));
-            animation.Add("idleWest", new SpriteSheetAnimationData(new[] { 12 }));
-            animation.Add("walkEast", new SpriteSheetAnimationData(new[] { 26, 25, 26, 24 }, animationSpeed, isLooping: true));
-            animation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 27, 28, 29, 30, 31, 32, 30, 29, 28}, attackSpeed, isLooping: true));
-            animation.Add("attackEastPattern2", new SpriteSheetAnimationData(new[] { 33, 34, 35 }, attackSpeed, isLooping: true));
-            animation.Add("idleEast", new SpriteSheetAnimationData(new[] { 26 }));
-            animation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 36, 37, 38, 37}, .07f, isLooping: true));
-            animation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 39, 40, 41, 42, 43, 44 }, attackSpeed, isLooping: true));
-            animation.Add("attackNorthPattern2", new SpriteSheetAnimationData(new[] { 45, 46, 47 }, attackSpeed, isLooping: true));
-            animation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 37 }));
+            float attackSpeed = .07f;
+            playerAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0}));
+            playerAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 1, 2}, .1f, isLooping: true));
+            playerAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 3, 4, 5, 6, 7, 8, 7, 6, 5}, attackSpeed, isLooping: true));
+            playerAnimation.Add("attackSouthPattern2", new SpriteSheetAnimationData(new[] { 9, 10, 11, 10 }, attackSpeed, isLooping: true));
+            playerAnimation.Add("walkWest", new SpriteSheetAnimationData(new[] { 12, 13, 12, 14}, animationSpeed, isLooping: true));
+            playerAnimation.Add("attackWestPattern1", new SpriteSheetAnimationData(new[] { 15, 16, 17, 18, 19, 20, 18, 17, 16 }, attackSpeed, isLooping: true));
+            playerAnimation.Add("attackWestPattern2", new SpriteSheetAnimationData(new[] { 21, 22, 23 }, attackSpeed, isLooping: true));
+            playerAnimation.Add("idleWest", new SpriteSheetAnimationData(new[] { 12 }));
+            playerAnimation.Add("walkEast", new SpriteSheetAnimationData(new[] { 26, 25, 26, 24 }, animationSpeed, isLooping: true));
+            playerAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 27, 28, 29, 30, 31, 32, 30, 29, 28}, attackSpeed, isLooping: true));
+            playerAnimation.Add("attackEastPattern2", new SpriteSheetAnimationData(new[] { 33, 34, 35 }, attackSpeed, isLooping: true));
+            playerAnimation.Add("idleEast", new SpriteSheetAnimationData(new[] { 26 }));
+            playerAnimation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 36, 37, 38, 37}, .07f, isLooping: true));
+            playerAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 39, 40, 41, 42, 43, 44 }, attackSpeed, isLooping: true));
+            playerAnimation.Add("attackNorthPattern2", new SpriteSheetAnimationData(new[] { 45, 46, 47 }, attackSpeed, isLooping: true));
+            playerAnimation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 37 }));
         }
 
         Random random = new Random();
-        public void HandleInput(GameTime gameTime, Entity player, IBox playerCollision, KeyboardState newState, KeyboardState oldState)
-        {
 
-            Vector2 motion = new Vector2(playerCollision.X, playerCollision.Y);
+        public void Attack()
+        {
+            foreach (Entity enemy in EnemyList)
+            {
+                if (playerEntity.BoundingBox.Intersects(enemy.BoundingBox))
+                {
+                    enemy.CurrentHealth--;
+                }
+            }
+        }
+        public void HandleInput(GameTime gameTime, Entity player, IBox playerBox, KeyboardState newState, KeyboardState oldState)
+        {
+            playerEntity = player;
+            Vector2 motion = new Vector2(playerBox.X, playerBox.Y);
 
             int speed = 1;
 
@@ -76,10 +90,12 @@ namespace Demo
                     motion.Y -= speed;
                     player.Position = motion;
                     player.State = Action.AttackSouthPattern1;
+                    Attack();
                 }
               else
                 {
                     player.State = Action.AttackSouthPattern2;
+                    Attack();
                 }        
             }
 
@@ -93,10 +109,12 @@ namespace Demo
                 {
 
                     player.State = Action.AttackWestPattern1;
+                    Attack();
                 }
                 else
                 {
                     player.State = Action.AttackWestPattern2;
+                    Attack();
                 }
             }
 
@@ -109,10 +127,12 @@ namespace Demo
                 if (attackPattern < 3)
                 {
                     player.State = Action.AttackEastPattern1;
+                    Attack();
                 }
                 else
                 {
                     player.State = Action.AttackEastPattern2;
+                    Attack();
                 }
             }
 
@@ -126,10 +146,12 @@ namespace Demo
                 if (attackPattern < 3)
                 {
                     player.State = Action.AttackNorthPattern1;
+                    Attack();
                 }
                 else
                 {
                     player.State = Action.AttackNorthPattern2;
+                    Attack();
                 }
             }
             else

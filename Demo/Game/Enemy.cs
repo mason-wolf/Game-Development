@@ -11,40 +11,39 @@ namespace Demo.Engine
     public class Enemy 
     {
 
-  
-
         public void Attack(Entity entity, Entity target)
         {
     
             float distance = Vector2.Distance(entity.Position, target.Position);
            
-            if (distance < 25)
+            if (distance < 15)
             {
 
                 Vector2 destination = entity.Position - target.Position;
                 destination.Normalize();
                 Double angle = Math.Atan2(destination.X, destination.Y);                                           
                 double direction = Math.Ceiling(angle);
-                Console.WriteLine(direction);
+     
 
                 if (direction == -3 || direction == 4 || direction == -2)
                 {
-                    entity.State = Action.AttackSouthPattern1;
+                    entity.State = Action.AttackSouthPattern2;
                 }
 
                 if (direction == -1)
                 {
-                    entity.State = Action.AttackEastPattern1;
+                    entity.State = Action.AttackEastPattern2;
+                    target.CurrentHealth -= .09;
                 }
 
                 if (direction == 0 || direction == 1)
                 {
-                    entity.State = Action.AttackNorthPattern1;
+                    entity.State = Action.AttackNorthPattern2;
                 }
 
                 if (direction == 2 || direction == 3)
                 {
-                    entity.State = Action.AttackWestPattern1;
+                    entity.State = Action.AttackWestPattern2;
                 }
             }
         }
