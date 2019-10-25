@@ -40,6 +40,8 @@ namespace Demo.Scenes
         public static IBox playerCollision;
         public static IBox enemyCollision;
 
+        private SpriteFont font;
+        
         public TestMap(Game game, GameWindow window) : base(game)
         {
             viewPortAdapter = new BoxingViewportAdapter(window, GraphicsDevice, 1080, 720);
@@ -94,13 +96,14 @@ namespace Demo.Scenes
             player.LoadContent(Content);
             enemy.LoadContent(Content);
 
-            // Create player entity for movement and player states.
+            // Create player entity to manage interactions with AI.
             playerEntity = new Entity(player.playerAnimation);
             playerEntity.LoadContent(Content);
             playerEntity.Position = new Vector2(350, 200);
             playerEntity.State = Action.Idle;
             playerEntity.MaxHealth = 150;
             playerEntity.CurrentHealth = 150;
+            player.AttackDamage = 4;
 
             enemyEntity = new Entity(enemy.militiaAnimation);
             enemyEntity.LoadContent(Content);
@@ -108,12 +111,15 @@ namespace Demo.Scenes
             enemyEntity.State = Action.Idle;
             enemyEntity.MaxHealth = 15;
             enemyEntity.CurrentHealth = 15;
+            enemyEntity.AttackDamage = .05;
             enemyList.Add(enemyEntity);
 
             // Attach player to collision world.
             playerCollision = collisionWorld.Create(0, 0, 16, 16);
             enemyCollision = collisionWorld.Create(0, 0, 16, 16);
             player.EnemyList = enemyList;
+
+            font = Content.Load<SpriteFont>(@"interface\font");
 
             base.LoadContent();
         }
@@ -143,9 +149,13 @@ namespace Demo.Scenes
             playerEntity.Update(gameTime);
 
             // AI to follow player.
-            if (AIWayPoints.Count > 15)
+            if (AIWayPoints.Count > 15 && enemyEntity.CurrentHealth > 0)
             {
                      enemyEntity.MoveTo(gameTime, enemyEntity, AIWayPoints, .04f);
+            }
+            else if (enemyEntity.CurrentHealth <= 0)
+            {
+                enemyEntity.State = Action.Die;
             }
 
             enemy.Attack(enemyEntity, playerEntity);
@@ -179,6 +189,11 @@ namespace Demo.Scenes
                 enemyEntity.Draw(spriteBatch);
                 playerEntity.Draw(spriteBatch);
             }
+            else if (enemyEntity.CurrentHealth <= 0)
+            {
+                enemyEntity.Draw(spriteBatch);
+                playerEntity.Draw(spriteBatch);
+            }
             else
             {
                 playerEntity.Draw(spriteBatch);
@@ -205,10 +220,10 @@ namespace Demo.Scenes
             Vector2 AIHealthPosition = new Vector2(enemyEntity.Position.X - 7, enemyEntity.Position.Y - 20);
 
             SortSprites(spriteBatch, playerEntity, enemyEntity);
+            playerEntity.DrawHUD(spriteBatch, playerHealthPosition, true);
+            enemyEntity.DrawHUD(spriteBatch, AIHealthPosition, false);
 
-            playerEntity.DrawHUD(spriteBatch, playerHealthPosition);
-            enemyEntity.DrawHUD(spriteBatch, AIHealthPosition);
-
+          //  spriteBatch.DrawString(font, "Test", playerEntity.Position, Color.White);
             //foreach (Tile t in map.GetCollisionLayer())
             //{
             //    if (t.TileID != 0)

@@ -30,16 +30,13 @@ namespace Demo
         AttackNorthPattern1,
         AttackNorthPattern2,
         IdleNorth,
-        HurtSouth,
-        HurtEast,
-        HurtWest
+        Die
     }
 
     public class Entity : IUpdate, IActorTarget
     {
         private readonly AnimatedSprite sprite;
-  
-
+ 
         private Action state;
         public RectangleF BoundingBox => sprite.BoundingRectangle;
 
@@ -51,14 +48,17 @@ namespace Demo
 
         Texture2D statusBar;
         Texture2D healthBar;
+        Texture2D staminaBar;
 
         public double MaxHealth { get; set; } = 0;
         public double CurrentHealth { get; set; } = 0;
+        public double AttackDamage { get; set; } = 0;
 
         public void LoadContent(ContentManager content)
         {
             statusBar = content.Load<Texture2D>(@"interface\statusbar");
             healthBar = content.Load<Texture2D>(@"interface\healthbar");
+            staminaBar = content.Load<Texture2D>(@"interface\staminabar");
         }
 
         public Action State
@@ -121,6 +121,9 @@ namespace Demo
                         case Action.IdleNorth:
                             sprite.Play("idleNorth");
                             break;
+                        case Action.Die:
+                            sprite.Play("die");
+                            break;
                     }
                 }
             }
@@ -131,6 +134,14 @@ namespace Demo
 
         public int WayPointIndex;
         public bool ReachedDestination;
+
+        /// <summary>
+        /// Moves an entity through a list of vectors.
+        /// </summary>
+        /// <param name="gameTime">GameTime</param>
+        /// <param name="entity">Entity to move.</param>
+        /// <param name="DestinationWaypoint">List of vectors to move through (destination).</param>
+        /// <param name="Speed">Speed of movement.</param>
 
         public void MoveTo(GameTime gameTime, Entity entity, List<Vector2> DestinationWaypoint, float Speed)
         {
@@ -201,10 +212,31 @@ namespace Demo
             spriteBatch.Draw(sprite);
         }
 
-        public void DrawHUD(SpriteBatch spriteBatch, Vector2 position)
+        /// <summary>
+        /// Draws HUD depending on entity type.
+        /// </summary>
+        /// <param name="spriteBatch">SpriteBatch</param>
+        /// <param name="position">Entity's position</param>
+        /// <param name="isPlayer">Flag for player</param>
+
+        public void DrawHUD(SpriteBatch spriteBatch, Vector2 position, bool isPlayer)
         {
-            spriteBatch.Draw(statusBar, position, new Rectangle(0, 0, Convert.ToInt32(MaxHealth), 2), Color.Black);
-            spriteBatch.Draw(healthBar, position, new Rectangle(10, 10, Convert.ToInt32(CurrentHealth), 2), Color.White);
+            if (isPlayer)
+            {
+                if (CurrentHealth > 0)
+                {
+                    spriteBatch.Draw(statusBar, position, new Rectangle(0, 0, Convert.ToInt32(MaxHealth), 3), Color.Black);
+                    spriteBatch.Draw(healthBar, position, new Rectangle(10, 10, Convert.ToInt32(CurrentHealth), 3), Color.White);
+                }
+            }
+            else
+            {
+                if (CurrentHealth > 0)
+                {
+                    spriteBatch.Draw(statusBar, position, new Rectangle(0, 0, Convert.ToInt32(MaxHealth), 2), Color.Black);
+                    spriteBatch.Draw(staminaBar, position, new Rectangle(10, 10, Convert.ToInt32(CurrentHealth), 2), Color.White);
+                }
+            }
         }
 
         public void OnCollision(CollisionInfo collisionInfo)

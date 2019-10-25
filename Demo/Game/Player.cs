@@ -29,7 +29,8 @@ namespace Demo
         MouseState newMouseState;
         Entity playerEntity;
 
-        public List<Entity> EnemyList { get; set; } 
+        public List<Entity> EnemyList { get; set; }
+        public double AttackDamage { get; set; } = 0;
 
         public void LoadContent(ContentManager content)
         {
@@ -38,19 +39,19 @@ namespace Demo
             playerAnimation = new SpriteSheetAnimationFactory(playerAtlas);
             float animationSpeed = .09f;
             float attackSpeed = 0.06f;
-            playerAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0}));
-            playerAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 1, 2}, animationSpeed, isLooping: true));
-            playerAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 3, 4, 5, 6, 7, 8, 7, 6, 5}, attackSpeed, isLooping: true));
+            playerAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }));
+            playerAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 1, 2 }, animationSpeed, isLooping: true));
+            playerAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 3, 4, 5, 6, 7, 8, 7, 6, 5 }, attackSpeed, isLooping: true));
             playerAnimation.Add("attackSouthPattern2", new SpriteSheetAnimationData(new[] { 9, 10, 11, 10 }, attackSpeed, isLooping: true));
-            playerAnimation.Add("walkWest", new SpriteSheetAnimationData(new[] { 12, 13, 12, 14}, animationSpeed, isLooping: true));
+            playerAnimation.Add("walkWest", new SpriteSheetAnimationData(new[] { 12, 13, 12, 14 }, animationSpeed, isLooping: true));
             playerAnimation.Add("attackWestPattern1", new SpriteSheetAnimationData(new[] { 15, 16, 17, 18, 19, 20, 18, 17, 16 }, attackSpeed, isLooping: true));
             playerAnimation.Add("attackWestPattern2", new SpriteSheetAnimationData(new[] { 21, 22, 23 }, attackSpeed, isLooping: true));
             playerAnimation.Add("idleWest", new SpriteSheetAnimationData(new[] { 12 }));
             playerAnimation.Add("walkEast", new SpriteSheetAnimationData(new[] { 26, 25, 26, 24 }, animationSpeed, isLooping: true));
-            playerAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 27, 28, 29, 30, 31, 32, 30, 29, 28}, attackSpeed, isLooping: true));
+            playerAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 27, 28, 29, 30, 31, 32, 30, 29, 28 }, attackSpeed, isLooping: true));
             playerAnimation.Add("attackEastPattern2", new SpriteSheetAnimationData(new[] { 33, 34, 35 }, attackSpeed, isLooping: true));
             playerAnimation.Add("idleEast", new SpriteSheetAnimationData(new[] { 26 }));
-            playerAnimation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 36, 38}, animationSpeed, isLooping: true));
+            playerAnimation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 36, 38 }, animationSpeed, isLooping: true));
             playerAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 39, 40, 41, 42, 43, 44 }, attackSpeed, isLooping: true));
             playerAnimation.Add("attackNorthPattern2", new SpriteSheetAnimationData(new[] { 45, 46, 47, 46 }, attackSpeed, isLooping: true));
             playerAnimation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 37 }));
@@ -58,16 +59,19 @@ namespace Demo
 
         Random random = new Random();
 
+        // Loop through list of enemies and do damage if close.
         public void Attack()
         {
             foreach (Entity enemy in EnemyList)
             {
                 if (playerEntity.BoundingBox.Intersects(enemy.BoundingBox))
                 {
-                    enemy.CurrentHealth--;
+                    enemy.CurrentHealth -= AttackDamage;
                 }
             }
         }
+
+        // Handle attacking and movement animations.
         public void HandleInput(GameTime gameTime, Entity player, IBox playerBox, KeyboardState newState, KeyboardState oldState)
         {
             playerEntity = player;
@@ -82,21 +86,21 @@ namespace Demo
                 newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.Idle)
             {
 
-
+                // Randomly select an attack pattern.
                 int attackPattern = random.Next(1, 4);
-              //  Console.WriteLine(attackMotion.ToString());
-              if (attackPattern < 3)
+
+                if (attackPattern < 3)
                 {
                     motion.Y -= speed;
                     player.Position = motion;
                     player.State = Action.AttackSouthPattern1;
                     Attack();
                 }
-              else
+                else
                 {
                     player.State = Action.AttackSouthPattern2;
                     Attack();
-                }        
+                }
             }
 
             // Attacking West
@@ -138,7 +142,7 @@ namespace Demo
 
             // Attacking North
             else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkNorth ||
-                newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleNorth )
+                newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleNorth)
             {
 
                 int attackPattern = random.Next(1, 4);
