@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/characters/character_1.png</SourceFile>
-  <SourceTime>2019-04-19T10:52:54.7697328-05:00</SourceTime>
-  <DestFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/bin/Windows/characters/character_1.xnb</DestFile>
-  <DestTime>2019-10-21T11:19:15.414621-05:00</DestTime>
+  <SourceFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/militia.png</SourceFile>
+  <SourceTime>2019-10-24T21:06:42.8727918-05:00</SourceTime>
+  <DestFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/bin/Windows/spritesheets/militia.xnb</DestFile>
+  <DestTime>2019-10-24T21:07:12.891697-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

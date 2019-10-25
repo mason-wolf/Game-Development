@@ -289,8 +289,6 @@ C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\int
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\staminabar.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\statusbar.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\titlescreen.xnb
-C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\player\player.xnb
-C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\characters\character_1.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Demo.exe
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Demo.pdb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Humper.dll
@@ -322,3 +320,5 @@ C:\Users\Mason\Documents\Game-Development\Demo\obj\x86\Debug\Demo.pdb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\RoyT.AStar.dll
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\RoyT.AStar.xml
+C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\player.xnb
+C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\militia.xnb

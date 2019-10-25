@@ -32,7 +32,6 @@ namespace Demo.Scenes
         public static Enemy enemy;
         public static Camera2D camera;
         public static Map map;
-        public static Vector2 startingPosition = new Vector2(250, 150);
         // Stores pathfinding waypoints.
         public static List<Vector2> AIWayPoints;
         public static List<Entity> enemyList = new List<Entity>();
@@ -91,24 +90,24 @@ namespace Demo.Scenes
 
             // Create player to manage animations and controls.
             player = new Player();
+            enemy = new Enemy();
             player.LoadContent(Content);
-            
+            enemy.LoadContent(Content);
 
             // Create player entity for movement and player states.
             playerEntity = new Entity(player.playerAnimation);
             playerEntity.LoadContent(Content);
-            playerEntity.Position = startingPosition;
+            playerEntity.Position = new Vector2(350, 200);
             playerEntity.State = Action.Idle;
             playerEntity.MaxHealth = 150;
             playerEntity.CurrentHealth = 150;
 
-            enemyEntity = new Entity(player.playerAnimation);
+            enemyEntity = new Entity(enemy.militiaAnimation);
             enemyEntity.LoadContent(Content);
             enemyEntity.Position = new Vector2(200, 250);
             enemyEntity.State = Action.Idle;
             enemyEntity.MaxHealth = 15;
             enemyEntity.CurrentHealth = 15;
-            enemy = new Enemy();
             enemyList.Add(enemyEntity);
 
             // Attach player to collision world.

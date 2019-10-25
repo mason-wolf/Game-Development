@@ -33,13 +33,13 @@ namespace Demo
 
         public void LoadContent(ContentManager content)
         {
-            playerTexture = content.Load<Texture2D>(@"player\player");
+            playerTexture = content.Load<Texture2D>(@"spritesheets\player");
             playerAtlas = TextureAtlas.Create(playerTexture, 32, 32);
             playerAnimation = new SpriteSheetAnimationFactory(playerAtlas);
             float animationSpeed = .09f;
-            float attackSpeed = .07f;
+            float attackSpeed = 0.06f;
             playerAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0}));
-            playerAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 1, 2}, .1f, isLooping: true));
+            playerAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 1, 2}, animationSpeed, isLooping: true));
             playerAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 3, 4, 5, 6, 7, 8, 7, 6, 5}, attackSpeed, isLooping: true));
             playerAnimation.Add("attackSouthPattern2", new SpriteSheetAnimationData(new[] { 9, 10, 11, 10 }, attackSpeed, isLooping: true));
             playerAnimation.Add("walkWest", new SpriteSheetAnimationData(new[] { 12, 13, 12, 14}, animationSpeed, isLooping: true));
@@ -50,9 +50,9 @@ namespace Demo
             playerAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 27, 28, 29, 30, 31, 32, 30, 29, 28}, attackSpeed, isLooping: true));
             playerAnimation.Add("attackEastPattern2", new SpriteSheetAnimationData(new[] { 33, 34, 35 }, attackSpeed, isLooping: true));
             playerAnimation.Add("idleEast", new SpriteSheetAnimationData(new[] { 26 }));
-            playerAnimation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 36, 37, 38, 37}, .07f, isLooping: true));
+            playerAnimation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 36, 38}, animationSpeed, isLooping: true));
             playerAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 39, 40, 41, 42, 43, 44 }, attackSpeed, isLooping: true));
-            playerAnimation.Add("attackNorthPattern2", new SpriteSheetAnimationData(new[] { 45, 46, 47 }, attackSpeed, isLooping: true));
+            playerAnimation.Add("attackNorthPattern2", new SpriteSheetAnimationData(new[] { 45, 46, 47, 46 }, attackSpeed, isLooping: true));
             playerAnimation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 37 }));
         }
 
