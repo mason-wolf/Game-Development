@@ -9,6 +9,10 @@ using System.Collections.Generic;
 namespace Demo
 {
     // Monogame Version 3.5.1.1679
+    // http://www.monogame.net/2016/03/17/monogame-3-5/
+    // Visual C++ Redistributable for Visual Studio 2012 Update 4 
+    // https://www.microsoft.com/en-nz/download/confirmation.aspx?id=30679
+
     public class Game1 : Game
     {
         public static GraphicsDeviceManager graphics;
