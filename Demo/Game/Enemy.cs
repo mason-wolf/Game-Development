@@ -38,7 +38,7 @@ namespace Demo.Engine
             militiaAnimation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 36, 38 }, animationSpeed, isLooping: true));
             militiaAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 39, 40, 41, 42, 43, 42, 41, 42, 45, 46, 47, 46 }, attackSpeed, isLooping: true));
             militiaAnimation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 37 }));
-            militiaAnimation.Add("die", new SpriteSheetAnimationData(new[] { 48, 49, 50 }, .2f, isLooping: false));
+            militiaAnimation.Add("dead", new SpriteSheetAnimationData(new[] { 48, 49, 50 }, .2f, isLooping: false));
         }
 
         public void Attack(Entity entity, Entity target)

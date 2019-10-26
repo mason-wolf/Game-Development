@@ -30,7 +30,7 @@ namespace Demo
         AttackNorthPattern1,
         AttackNorthPattern2,
         IdleNorth,
-        Die
+        Dead
     }
 
     public class Entity : IUpdate, IActorTarget
@@ -121,8 +121,8 @@ namespace Demo
                         case Action.IdleNorth:
                             sprite.Play("idleNorth");
                             break;
-                        case Action.Die:
-                            sprite.Play("die");
+                        case Action.Dead:
+                            sprite.Play("dead");
                             break;
                     }
                 }
@@ -148,7 +148,7 @@ namespace Demo
             if (DestinationWaypoint.Count > 0)
             {
                 if (!ReachedDestination)
-                {
+                {                 
                     float Distance = Vector2.Distance(entity.Position, DestinationWaypoint[WayPointIndex]);
                     Vector2 Direction = DestinationWaypoint[WayPointIndex] - entity.Position;
                     Direction.Normalize();
@@ -201,6 +201,8 @@ namespace Demo
         {
             sprite = new AnimatedSprite(animations);
         }
+
+
 
         public void Update(GameTime gameTime)
         {

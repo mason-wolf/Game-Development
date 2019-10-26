@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Game\PathFinder.cs" />
     <Compile Include="Game\Enemy.cs" />
     <Compile Include="Game\Layer.cs" />
     <Compile Include="Game\Map.cs" />

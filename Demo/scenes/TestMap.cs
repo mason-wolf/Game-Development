@@ -100,11 +100,11 @@ namespace Demo.Scenes
             // Create player entity to manage interactions with AI.
             playerEntity = new Entity(player.playerAnimation);
             playerEntity.LoadContent(Content);
-            playerEntity.Position = new Vector2(525,660);
+            playerEntity.Position = new Vector2(525,700);
             playerEntity.State = Action.Idle;
             playerEntity.MaxHealth = 150;
             playerEntity.CurrentHealth = 150;
-            player.AttackDamage = 2;
+            player.AttackDamage = 4;
 
             enemyEntity = new Entity(enemy.militiaAnimation);
             enemyEntity.LoadContent(Content);
@@ -117,14 +117,14 @@ namespace Demo.Scenes
             enemyList.Add(enemyEntity);
 
             // Create five enemies.
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 30; i++)
             {
                 Entity e = new Entity(enemy.militiaAnimation);
                 e.LoadContent(Content);
                 e.State = Action.Idle;
                 e.MaxHealth = 15;
                 e.CurrentHealth = 15;
-                e.AttackDamage = 0.9;
+                e.AttackDamage = 0.4;
                 enemyList.Add(e);
             }
 
@@ -150,8 +150,49 @@ namespace Demo.Scenes
 
         Position[] path;
 
+        void Avoidence(GameTime gameTime, List<Entity> Units, Entity entity)
+        {
+            for (int i = 0; i < Units.Count; i++)
+            {
+                if (Units[i].BoundingBox.Intersects(entity.BoundingBox) && Units[i].State != Action.Dead)
+                {
+                    float Distance1 = Vector2.Distance(entity.Position, AIWayPoints[AIWayPoints.Count - 1]);
+                    float Distance2 = Vector2.Distance(Units[i].Position, AIWayPoints[AIWayPoints.Count - 1]);
+
+                    if (Distance1 > Distance2)
+                    {
+                        Vector2 OppositeDirection = Units[i].Position - entity.Position;
+                        OppositeDirection.Normalize();
+                        entity.Position -= OppositeDirection * (float)(0.05f * gameTime.ElapsedGameTime.TotalMilliseconds);
+                    }
+                }
+            }
+        }
+
+        //public double FindPath()
+        //{
+        //    Vector2 min = new Vector2();
+        //    Vector2 max = new Vector2();
+
+        //    for (int i = 0; i < enemyList.Count; i++)
+        //    {
+        //        float Distance = Vector2.Distance(enemyList[i].Position, playerEntity.Position);
+
+        //        if (Distance < min)
+
+        //            min = enemyList[i].Position;
+          
+        //        if (Distance > max)
+                   
+        //            max = Distance;
+        //    }
+
+        //    return min;
+        //}
+
         public override void Update(GameTime gameTime)
         {
+            //Console.WriteLine(FindPath());
            // Find AI's closest path to the player.
 
             var movementPattern = new[] { new Offset(-1, 0), new Offset(0, -1), new Offset(1, 0), new Offset(0, 1) };
@@ -169,23 +210,27 @@ namespace Demo.Scenes
 
             // Handle collision.
             playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
-          //  enemyCollision.Move(enemyEntity.Position.X, enemyEntity.Position.Y, (collision) => CollisionResponses.Slide);
-
+          
             playerEntity.Update(gameTime);
 
             // AI to follow player.
-            if (AIWayPoints.Count > 15 && enemyEntity.CurrentHealth > 0)
-            {
-             //        enemyEntity.MoveTo(gameTime, enemyEntity, AIWayPoints, .05f);
-            }
-            else if (enemyEntity.CurrentHealth <= 0)
-            {
-                enemyEntity.State = Action.Die;
-            }
 
-            enemy.Attack(enemyEntity, playerEntity);
+            foreach (Entity e in enemyList)
+            {
+                if (AIWayPoints.Count > 15 && e.CurrentHealth > 0)
+                {
+                    Avoidence(gameTime, enemyList, e);
+                    enemyCollision.Move(e.Position.X, e.Position.Y, (collision) => CollisionResponses.Slide);
+                    e.MoveTo(gameTime, e, AIWayPoints, .04f);
+                }
+                else if (e.CurrentHealth <= 0)
+                {
+                    e.State = Action.Dead;
+                }
 
-            enemyEntity.Update(gameTime);
+                e.Update(gameTime);
+                enemy.Attack(e, playerEntity);
+            }
 
             camera.Zoom = 3;
 
@@ -195,7 +240,7 @@ namespace Demo.Scenes
 
             base.Update(gameTime);
         }
-
+ 
         public void SortSprites(SpriteBatch spriteBatch, Entity playerEntity, List<Entity> enemyList)
         {
             foreach (Entity e in enemyList)
