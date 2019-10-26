@@ -21,7 +21,7 @@ namespace Demo.Engine
 
         public void LoadContent(ContentManager content)
         {
-            militiaTexture = content.Load<Texture2D>(@"spritesheets\militia");
+            militiaTexture = content.Load<Texture2D>(@"spritesheets\militia2");
             militiaAtlas = TextureAtlas.Create(militiaTexture, 32, 32);
             militiaAnimation = new SpriteSheetAnimationFactory(militiaAtlas);
             float animationSpeed = .09f;

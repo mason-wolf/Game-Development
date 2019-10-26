@@ -99,11 +99,11 @@ namespace Demo.Scenes
             // Create player entity to manage interactions with AI.
             playerEntity = new Entity(player.playerAnimation);
             playerEntity.LoadContent(Content);
-            playerEntity.Position = new Vector2(350, 200);
+            playerEntity.Position = new Vector2(250,350);
             playerEntity.State = Action.Idle;
             playerEntity.MaxHealth = 150;
             playerEntity.CurrentHealth = 150;
-            player.AttackDamage = 4;
+            player.AttackDamage = 2;
 
             enemyEntity = new Entity(enemy.militiaAnimation);
             enemyEntity.LoadContent(Content);
@@ -111,7 +111,7 @@ namespace Demo.Scenes
             enemyEntity.State = Action.Idle;
             enemyEntity.MaxHealth = 15;
             enemyEntity.CurrentHealth = 15;
-            enemyEntity.AttackDamage = .05;
+            enemyEntity.AttackDamage = .09;
             enemyList.Add(enemyEntity);
 
             // Attach player to collision world.
@@ -151,7 +151,7 @@ namespace Demo.Scenes
             // AI to follow player.
             if (AIWayPoints.Count > 15 && enemyEntity.CurrentHealth > 0)
             {
-                     enemyEntity.MoveTo(gameTime, enemyEntity, AIWayPoints, .04f);
+                     enemyEntity.MoveTo(gameTime, enemyEntity, AIWayPoints, .05f);
             }
             else if (enemyEntity.CurrentHealth <= 0)
             {
@@ -223,7 +223,10 @@ namespace Demo.Scenes
             playerEntity.DrawHUD(spriteBatch, playerHealthPosition, true);
             enemyEntity.DrawHUD(spriteBatch, AIHealthPosition, false);
 
-          //  spriteBatch.DrawString(font, "Test", playerEntity.Position, Color.White);
+            int health = (int)playerEntity.CurrentHealth;
+            Vector2 healthStatus = new Vector2(playerHealthPosition.X + 57, playerHealthPosition.Y);
+            spriteBatch.DrawString(font, health.ToString() + " / 150", healthStatus, Color.White);
+
             //foreach (Tile t in map.GetCollisionLayer())
             //{
             //    if (t.TileID != 0)
