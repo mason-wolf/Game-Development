@@ -50,9 +50,11 @@ namespace Demo
         Texture2D healthBar;
         Texture2D staminaBar;
 
+        public int ID { get; set; } = 0;
         public double MaxHealth { get; set; } = 0;
         public double CurrentHealth { get; set; } = 0;
         public double AttackDamage { get; set; } = 0;
+        public bool Dead { get; set; } = false;
 
         public void LoadContent(ContentManager content)
         {
@@ -130,32 +132,28 @@ namespace Demo
         }
 
         public Vector2 Velocity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
+  
+        public Entity(SpriteSheetAnimationFactory animations)
+        {
+            sprite = new AnimatedSprite(animations);
+        }
 
         public int WayPointIndex;
         public bool ReachedDestination;
-
-        /// <summary>
-        /// Moves an entity through a list of vectors.
-        /// </summary>
-        /// <param name="gameTime">GameTime</param>
-        /// <param name="entity">Entity to move.</param>
-        /// <param name="DestinationWaypoint">List of vectors to move through (destination).</param>
-        /// <param name="Speed">Speed of movement.</param>
-
-        public void MoveTo(GameTime gameTime, Entity entity, List<Vector2> DestinationWaypoint, float Speed)
+        public void FollowPath(GameTime gameTime, Entity entity, List<Vector2> DestinationWaypoint, float Speed)
         {
             if (DestinationWaypoint.Count > 0)
             {
                 if (!ReachedDestination)
-                {                 
+                {
+
                     float Distance = Vector2.Distance(entity.Position, DestinationWaypoint[WayPointIndex]);
                     Vector2 Direction = DestinationWaypoint[WayPointIndex] - entity.Position;
                     Direction.Normalize();
                     Double angle = Math.Atan2(Direction.X, Direction.Y);
                     double rotation = (float)(angle * (180 / Math.PI));
 
-                
+
                     if (rotation < -179 || rotation == 180)
                     {
                         entity.State = Action.WalkNorth;
@@ -197,13 +195,48 @@ namespace Demo
             }
         }
 
-        public Entity(SpriteSheetAnimationFactory animations)
+
+        public void Attack(Entity entity, Entity target)
         {
-            sprite = new AnimatedSprite(animations);
+
+            Vector2 currentPosition = entity.Position;
+
+            float distance = Vector2.Distance(entity.Position, target.Position);
+
+            if (distance < 20 && entity.CurrentHealth > 0)
+            {
+
+                Vector2 destination = entity.Position - target.Position;
+                destination.Normalize();
+                Double angle = Math.Atan2(destination.X, destination.Y);
+                double direction = Math.Ceiling(angle);
+
+
+                if (direction == -3 || direction == 4 || direction == -2)
+                {
+                    entity.State = Action.AttackSouthPattern1;
+                    target.CurrentHealth -= entity.AttackDamage;
+                }
+
+                if (direction == -1)
+                {
+                    entity.State = Action.AttackEastPattern1;
+                    target.CurrentHealth -= entity.AttackDamage;
+                }
+
+                if (direction == 0 || direction == 1)
+                {
+                    entity.State = Action.AttackNorthPattern1;
+                    target.CurrentHealth -= entity.AttackDamage;
+                }
+
+                if (direction == 2 || direction == 3)
+                {
+                    entity.State = Action.AttackWestPattern1;
+                    target.CurrentHealth -= entity.AttackDamage;
+                }
+            }
         }
-
-
-
         public void Update(GameTime gameTime)
         {
             sprite.Update(gameTime);

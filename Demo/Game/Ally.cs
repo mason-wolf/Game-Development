@@ -13,7 +13,7 @@ using MonoGame.Extended.TextureAtlases;
 namespace Demo.Engine
 {
 
-    public class Enemy 
+    public class Ally
     {
         public Texture2D militiaTexture;
         public TextureAtlas militiaAtlas;
@@ -21,7 +21,7 @@ namespace Demo.Engine
 
         public void LoadContent(ContentManager content)
         {
-            militiaTexture = content.Load<Texture2D>(@"spritesheets\militia2");
+            militiaTexture = content.Load<Texture2D>(@"spritesheets\militia");
             militiaAtlas = TextureAtlas.Create(militiaTexture, 32, 32);
             militiaAnimation = new SpriteSheetAnimationFactory(militiaAtlas);
             float animationSpeed = .09f;
@@ -40,5 +40,48 @@ namespace Demo.Engine
             militiaAnimation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 37 }));
             militiaAnimation.Add("dead", new SpriteSheetAnimationData(new[] { 48, 49, 50 }, .2f, isLooping: false));
         }
+
+        public void Attack(Entity entity, Entity target)
+        {
+
+            Vector2 currentPosition = entity.Position;
+
+            float distance = Vector2.Distance(entity.Position, target.Position);
+
+            if (distance < 15 && entity.CurrentHealth > 0)
+            {
+
+                Vector2 destination = entity.Position - target.Position;
+                destination.Normalize();
+                Double angle = Math.Atan2(destination.X, destination.Y);
+                double direction = Math.Ceiling(angle);
+
+
+                if (direction == -3 || direction == 4 || direction == -2)
+                {
+                    entity.State = Action.AttackSouthPattern1;
+                    target.CurrentHealth -= entity.AttackDamage;
+                }
+
+                if (direction == -1)
+                {
+                    entity.State = Action.AttackEastPattern1;
+                    target.CurrentHealth -= entity.AttackDamage;
+                }
+
+                if (direction == 0 || direction == 1)
+                {
+                    entity.State = Action.AttackNorthPattern1;
+                    target.CurrentHealth -= entity.AttackDamage;
+                }
+
+                if (direction == 2 || direction == 3)
+                {
+                    entity.State = Action.AttackWestPattern1;
+                    target.CurrentHealth -= entity.AttackDamage;
+                }
+            }
+        }
+
     }
 }

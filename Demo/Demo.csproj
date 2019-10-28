@@ -38,11 +38,13 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Game\Ally.cs" />
     <Compile Include="Game\PathFinder.cs" />
     <Compile Include="Game\Enemy.cs" />
     <Compile Include="Game\Layer.cs" />
     <Compile Include="Game\Map.cs" />
     <Compile Include="Game\Tile.cs" />
+    <Compile Include="Game\Waypoint.cs" />
     <Compile Include="Interface\Background.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Game\Entity.cs" />

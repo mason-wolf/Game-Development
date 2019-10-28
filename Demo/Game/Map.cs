@@ -13,7 +13,6 @@ using System.Xml;
 
 namespace Demo.Engine
 {
-    // NOTE: Does not use Monogame Content pipeline.
     public class Map
     {
         Texture2D mapTexture;
@@ -145,7 +144,76 @@ namespace Demo.Engine
                     spriteBatch.Draw(region.Texture, destinationRectangle, sourceRectangle, Color.White);
                 }
             }
+        }
 
+        public void SortSprites(SpriteBatch spriteBatch, Entity playerEntity, List<Entity> enemyList, List<Entity> allyList)
+        {
+            foreach (Entity e in enemyList)
+            {
+                Vector2 AIHealthPosition = new Vector2(e.Position.X - 8, e.Position.Y - 20);
+                e.DrawHUD(spriteBatch, AIHealthPosition, false);
+
+                Vector2 destination = playerEntity.Position - e.Position;
+                destination.Normalize();
+                Double angle = Math.Atan2(destination.X, destination.Y);
+                double direction = Math.Ceiling(angle);
+
+
+                if (direction == -3 || direction == 4 || direction == -2)
+                {
+                    playerEntity.Draw(spriteBatch);
+                    e.Draw(spriteBatch); ;
+                }
+                else if (direction == 0 || direction == 1)
+                {
+                    e.Draw(spriteBatch);
+                    playerEntity.Draw(spriteBatch);
+                }
+                else if (e.CurrentHealth <= 0)
+                {
+                    e.Draw(spriteBatch);
+                    playerEntity.Draw(spriteBatch);
+                }
+                else
+                {
+                    playerEntity.Draw(spriteBatch);
+                    e.Draw(spriteBatch);
+                }
+            }
+
+            foreach (Entity a in allyList)
+            {
+
+                Vector2 AIHealthPosition = new Vector2(a.Position.X - 8, a.Position.Y - 20);
+                a.DrawHUD(spriteBatch, AIHealthPosition, false);
+
+                Vector2 destination = playerEntity.Position - a.Position;
+                destination.Normalize();
+                Double angle = Math.Atan2(destination.X, destination.Y);
+                double direction = Math.Ceiling(angle);
+
+
+                if (direction == -3 || direction == 4 || direction == -2)
+                {
+                    playerEntity.Draw(spriteBatch);
+                    a.Draw(spriteBatch); ;
+                }
+                else if (direction == 0 || direction == 1)
+                {
+                    a.Draw(spriteBatch);
+                    playerEntity.Draw(spriteBatch);
+                }
+                else if (a.CurrentHealth <= 0)
+                {
+                    a.Draw(spriteBatch);
+                    playerEntity.Draw(spriteBatch);
+                }
+                else
+                {
+                    playerEntity.Draw(spriteBatch);
+                    a.Draw(spriteBatch);
+                }
+            }
         }
     }
 }
