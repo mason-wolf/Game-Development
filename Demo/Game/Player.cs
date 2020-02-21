@@ -34,11 +34,11 @@ namespace Demo
 
         public void LoadContent(ContentManager content)
         {
-            playerTexture = content.Load<Texture2D>(@"spritesheets\player");
+            playerTexture = content.Load<Texture2D>(@"spritesheets\militia");
             playerAtlas = TextureAtlas.Create(playerTexture, 32, 32);
             playerAnimation = new SpriteSheetAnimationFactory(playerAtlas);
             float animationSpeed = .09f;
-            float attackSpeed = 0.06f;
+            float attackSpeed = 0.03f;
             playerAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }));
             playerAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 1, 2 }, animationSpeed, isLooping: true));
             playerAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 3, 4, 5, 6, 7, 8, 7, 6, 5 }, attackSpeed, isLooping: true));

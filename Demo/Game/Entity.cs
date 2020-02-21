@@ -140,6 +140,7 @@ namespace Demo
 
         public int WayPointIndex;
         public bool ReachedDestination;
+
         public void FollowPath(GameTime gameTime, Entity entity, List<Vector2> DestinationWaypoint, float Speed)
         {
             if (DestinationWaypoint.Count > 0)

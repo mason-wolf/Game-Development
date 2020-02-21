@@ -42,7 +42,7 @@ namespace Demo
                 if (wayPoints.Count > 15 && unit.CurrentHealth > 0)
                 {
                     Avoid(gameTime, unitList, unit);
-                    unit.FollowPath(gameTime, unit, wayPoints, .04f);
+                    unit.FollowPath(gameTime, unit, wayPoints, .05f);
                 }
                 else if (unit.CurrentHealth <= 0)
                 {

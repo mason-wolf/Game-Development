@@ -9,18 +9,21 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Storage;
 using System.Collections.Specialized;
-
+using Demo.Scenes;
+using MonoGame.Extended.ViewportAdapters;
+using MonoGame.Extended;
 
 namespace Demo.Interface
 {
 
-    public class Menu : Microsoft.Xna.Framework.DrawableGameComponent
+    public class Menu : SceneManager
     {
+        private BoxingViewportAdapter viewPortAdapter;
+        private Camera2D camera;
         SpriteFont spriteFont;
-        SpriteBatch spriteBatch;
         Texture2D buttonImage;
 
-        Color normalColor = Color.Black;
+        Color normalColor = Color.Yellow;
         Color hiliteColor = Color.White;
 
         Vector2 position = new Vector2();
@@ -31,12 +34,13 @@ namespace Demo.Interface
 
         int width, height;
 
-        public Menu(Game game, SpriteFont spriteFont, Texture2D buttonImage)
+        public Menu(Game game, GameWindow window, SpriteFont spriteFont, Texture2D buttonImage)
             : base(game)
         {
+            viewPortAdapter = new BoxingViewportAdapter(window, GraphicsDevice, 1080, 720);
+            camera = new Camera2D(viewPortAdapter);
             this.spriteFont = spriteFont;
             this.buttonImage = buttonImage;
-
             spriteBatch =
                 (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
         }
@@ -86,6 +90,7 @@ namespace Demo.Interface
         {
             menuItems.Clear();
             menuItems.AddRange(items);
+
             CalculateBounds();
         }
 
@@ -105,30 +110,35 @@ namespace Demo.Interface
             base.Initialize();
         }
 
+        KeyboardState oldState = Keyboard.GetState();
+
         public override void Update(GameTime gameTime)
         {
-            if (Game1.CheckKey(Keys.Down))
+            KeyboardState newState = Keyboard.GetState();
+
+            if (newState.IsKeyDown(Keys.Down) && oldState.IsKeyDown(Keys.Down))
             {
-                selectedIndex++;
-                if (selectedIndex == menuItems.Count)
-                    selectedIndex = 0;
+                selectedIndex = 1;
             }
 
-            if (Game1.CheckKey(Keys.Up))
+            if (newState.IsKeyDown(Keys.Up) && oldState.IsKeyDown(Keys.Up))
             {
-                selectedIndex--;
-                if (selectedIndex == -1)
-                {
-                    selectedIndex = menuItems.Count - 1;
-                }
+                selectedIndex = 0;
             }
+
+            camera.Zoom = 4;
+            Vector2 cameraPosition = new Vector2(textPosition.X, textPosition.Y - 50);
+            camera.LookAt(cameraPosition);
+            oldState = newState;
             base.Update(gameTime);
         }
 
+        Vector2 textPosition;
+
         public override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin();
-            Vector2 textPosition = Position;
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
+            textPosition = Position;
             Rectangle buttonRectangle = new Rectangle(
                 (int)Position.X,
                 (int)Position.Y,
@@ -137,12 +147,13 @@ namespace Demo.Interface
 
             Color myColor;
 
+
             for (int i = 0; i < menuItems.Count; i++)
             {
                 if (i == SelectedIndex)
-                    myColor = HiliteColor;
+                    myColor = normalColor;
                 else
-                    myColor = NormalColor;
+                    myColor = hiliteColor;
 
                 spriteBatch.Draw(buttonImage,
                     buttonRectangle,

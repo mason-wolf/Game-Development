@@ -6,31 +6,39 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Demo.Scenes;
 using Demo.Interface;
+using Microsoft.Xna.Framework.Input;
 
 namespace Demo
 {
     class Start : SceneManager
     {
-        Menu buttonMenu;
+        public Menu buttonMenu;
         SpriteFont spriteFont;
         Texture2D background;
         Texture2D buttonImage;
-        
-        public Start(Game game)
+        GameWindow window;
+
+
+        public Start(Game game, GameWindow window)
             : base(game)
         {
             LoadContent();
-            Components.Add(new Background(game, background, true));
 
-            string[] items = { "start" };
+            this.window = window;
+            this.game = game;
+
+            string[] items = { "START", "QUIT" };
 
             buttonMenu = new Menu(
                 game,
+                window,
                 spriteFont,
                 buttonImage);
 
             buttonMenu.SetMenuItems(items);
+            
             Components.Add(buttonMenu);
+            buttonMenu.Show();
         }
 
         public int SelectedIndex
@@ -45,6 +53,22 @@ namespace Demo
             spriteFont = Content.Load<SpriteFont>(@"interface\font");
             base.LoadContent();
         }
+
+        public override void Update(GameTime gameTime)
+        {
+            KeyboardState keyboardState = Keyboard.GetState();
+
+            if (keyboardState.IsKeyDown(Keys.Enter) && SelectedIndex == 0)
+            {
+                buttonMenu.Hide();
+                TestMap testMap = new TestMap(game, window);
+                Components.Add(testMap);
+                testMap.Show();
+            }
+
+            base.Update(gameTime);
+        }
+
         public override void Show()
         {
             buttonMenu.Position = new Vector2((Game.Window.ClientBounds.Width -

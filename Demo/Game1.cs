@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Demo.Scenes;
 using MonoGame.Extended;
 using System.Collections.Generic;
+using System;
 
 namespace Demo
 {
@@ -18,14 +19,7 @@ namespace Demo
     {
         public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        public static SpriteFont font;
         public static SceneManager start;
-        public static SceneManager testMap;
-        public static KeyboardState oldState;
-        public static KeyboardState newState;
-        public static SpriteBatch tileSpriteBatch;
-        public static Camera2D Camera;
-
 
         public Game1()
         {
@@ -36,40 +30,22 @@ namespace Demo
             Content.RootDirectory = "Content";
         }
 
-
-        public static bool CheckKey(Keys theKey)
-        {
-            return oldState.IsKeyDown(theKey) && newState.IsKeyUp(theKey);
-        }
-
-        public static SpriteBatch TileSpriteBatch
-        {
-            get { return tileSpriteBatch; }
-        }
-
         protected override void Initialize()
         {
-
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            tileSpriteBatch = new SpriteBatch(GraphicsDevice);
 
             Services.AddService(typeof(SpriteBatch), spriteBatch);
             Services.AddService(typeof(ContentManager), Content);
  
-            font = Content.Load<SpriteFont>(@"interface\font");
-            start = new Start(this);
+            start = new Start(this, Window);
             Components.Add(start);
-            start.Hide();
-
-            testMap = new TestMap(this, Window);
-            Components.Add(testMap);
-            testMap.Show();
-
+            start.Show();
+                    
         }
 
         protected override void Update(GameTime gameTime)

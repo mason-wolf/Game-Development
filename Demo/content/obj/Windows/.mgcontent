@@ -4,19 +4,19 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/button.png</File>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/music/chopping_block.mp3</File>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/font.spritefont</File>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/menu.png</File>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/statusbar.png</File>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/tilesets/tileset_1.png</File>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/titlescreen.png</File>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/buildMenu.png</File>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/cursor.png</File>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/player.png</File>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/militia.png</File>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/staminabar.png</File>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/militia2.png</File>
-    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/healthbar.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/button.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/music/chopping_block.mp3</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/font.spritefont</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/menu.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/statusbar.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/tilesets/tileset_1.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/titlescreen.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/buildMenu.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/cursor.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/player.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/militia.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/staminabar.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/militia2.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/healthbar.png</File>
   </SourceFiles>
 </SourceFileCollection>

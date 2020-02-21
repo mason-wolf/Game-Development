@@ -71,6 +71,7 @@ namespace Demo.Scenes
             }
             base.Draw(gameTime);
         }
+
         public virtual void Show()
         {
             Visible = true;

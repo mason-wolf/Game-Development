@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/buildMenu.png</SourceFile>
-  <SourceTime>2019-10-25T11:17:52.742657-05:00</SourceTime>
-  <DestFile>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/bin/Windows/interface/buildMenu.xnb</DestFile>
-  <DestTime>2019-10-26T11:40:59.5525846-05:00</DestTime>
+  <SourceFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/buildMenu.png</SourceFile>
+  <SourceTime>2019-04-19T10:52:54.7697328-05:00</SourceTime>
+  <DestFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/bin/Windows/interface/buildMenu.xnb</DestFile>
+  <DestTime>2020-02-21T14:19:03.4636882-06:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

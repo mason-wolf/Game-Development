@@ -136,17 +136,17 @@ namespace Demo.Scenes
             allyList.Add(allyEntity);
 
             // Create five enemies.
-            for (int i = 1; i < 10; i++)
-            {
-                Entity enemyEntity = new Entity(enemy.militiaAnimation);
-                enemyEntity.LoadContent(Content);
-                enemyEntity.ID = i;
-                enemyEntity.State = Action.Idle;
-                enemyEntity.MaxHealth = 15;
-                enemyEntity.CurrentHealth = 15;
-                enemyEntity.AttackDamage = 0.1;
-                enemyList.Add(enemyEntity);
-            }
+            //for (int i = 1; i < 50; i++)
+            //{
+            //    Entity enemyEntity = new Entity(enemy.militiaAnimation);
+            //    enemyEntity.LoadContent(Content);
+            //    enemyEntity.ID = i;
+            //    enemyEntity.State = Action.Idle;
+            //    enemyEntity.MaxHealth = 15;
+            //    enemyEntity.CurrentHealth = 15;
+            //    enemyEntity.AttackDamage = 0.1;
+            //    enemyList.Add(enemyEntity);
+            //}
 
             // Assign enemy positions.
             for (int i = 0; i < enemyList.Count; i++)
@@ -158,7 +158,7 @@ namespace Demo.Scenes
             }
 
             // Create five allies.
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 50; i++)
             {
                 allyEntity = new Entity(ally.militiaAnimation);
                 allyEntity.LoadContent(Content);
@@ -166,7 +166,7 @@ namespace Demo.Scenes
                 allyEntity.State = Action.IdleNorth;
                 allyEntity.MaxHealth = 15;
                 allyEntity.CurrentHealth = 15;
-                allyEntity.AttackDamage = 0.1;
+                allyEntity.AttackDamage = 0.12;
                 allyList.Add(allyEntity);
             }
 
@@ -223,10 +223,10 @@ namespace Demo.Scenes
 
             if (!gameOver)
             {
-                enemyPathFinder.FindPathToUnit(grid, enemyList, playerEntity);
-                enemyPathFinder.MoveUnits(enemyList, gameTime);
-                allyPathFinder.FindPathToUnit(grid, allyList, enemyList[5]);
-                allyPathFinder.MoveUnits(allyList, gameTime);
+                //enemyPathFinder.FindPathToUnit(grid, enemyList, playerEntity);
+                //enemyPathFinder.MoveUnits(enemyList, gameTime);
+                //allyPathFinder.FindPathToUnit(grid, allyList, enemyList[3]);
+                //allyPathFinder.MoveUnits(allyList, gameTime);
             }
             else
             {
@@ -245,7 +245,7 @@ namespace Demo.Scenes
                 {
                     if (ally.State != Action.Dead)
                     {
-                       // enemyCollision.Move(enemy.Position.X, enemy.Position.Y, (collision) => CollisionResponses.Slide);
+                    //    enemyCollision.Move(enemy.Position.X, enemy.Position.Y, (collision) => CollisionResponses.Slide);
                         enemy.Attack(enemy, ally);
                     }
                 }
@@ -254,12 +254,13 @@ namespace Demo.Scenes
             }
 
             foreach (Entity ally in allyList)
-            { 
+            {
+             //   allyCollision.Move(ally.Position.X, ally.Position.Y, (collision) => CollisionResponses.Slide);
+
                 foreach (Entity enemy in enemyList)
                 {
                     if (enemy.State != Action.Dead)
                     {
-                       // allyCollision.Move(ally.Position.X, ally.Position.Y, (collision) => CollisionResponses.Slide);
                         ally.Attack(ally, enemy);
                     }
                 }
