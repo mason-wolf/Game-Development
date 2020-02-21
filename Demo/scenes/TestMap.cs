@@ -231,6 +231,8 @@ namespace Demo.Scenes
                 {
                     allyPathFinder.MoveUnits(allyList, gameTime);
                 }
+
+
             }
             else
             {

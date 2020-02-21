@@ -34,7 +34,7 @@ namespace Demo
 
         public void LoadContent(ContentManager content)
         {
-            playerTexture = content.Load<Texture2D>(@"spritesheets\militia");
+            playerTexture = content.Load<Texture2D>(@"spritesheets\player_2");
             playerAtlas = TextureAtlas.Create(playerTexture, 32, 32);
             playerAnimation = new SpriteSheetAnimationFactory(playerAtlas);
             float animationSpeed = .09f;

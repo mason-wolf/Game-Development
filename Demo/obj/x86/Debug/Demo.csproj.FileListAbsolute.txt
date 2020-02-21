@@ -377,3 +377,4 @@ C:\Users\mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.exe
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.pdb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\militia2.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\militia2.xnb
+C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\player_2.xnb
