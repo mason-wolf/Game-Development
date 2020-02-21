@@ -44,7 +44,8 @@ namespace Demo.Scenes
         public static IBox enemyCollision;
 
         private SpriteFont font;
-        
+        Vector2 playerStartingPosition = new Vector2(500, 850);
+
         public TestMap(Game game, GameWindow window) : base(game)
         {
             viewPortAdapter = new BoxingViewportAdapter(window, GraphicsDevice, 1080, 720);
@@ -71,8 +72,8 @@ namespace Demo.Scenes
                     collisionWorld.Create(tile.Position.X + 1, tile.Position.Y + 1, 16, 16);
 
                     // Populate the AI movement grid to avoid obstacles.
-                    int x = (int)tile.Position.X - 1;
-                    int y = (int)tile.Position.Y - 1;
+                    int x = (int)tile.Position.X;
+                    int y = (int)tile.Position.Y;
 
                     for (int i = 0; i < 16; ++i)
                     {
@@ -101,17 +102,16 @@ namespace Demo.Scenes
             ally.LoadContent(Content);
             enemy.LoadContent(Content);
 
-   
             // Create player entity to manage interactions with AI.
             playerEntity = new Entity(player.playerAnimation);
             playerEntity.LoadContent(Content);
-            playerEntity.Position = new Vector2(525,725);
+            playerEntity.Position = playerStartingPosition;
             playerEntity.State = Action.IdleNorth;
             playerEntity.MaxHealth = 150;
             playerEntity.CurrentHealth = 150;
             player.AttackDamage = 4;
 
-            Vector2 enemyStartingPosition = new Vector2(525, 628);
+            Vector2 enemyStartingPosition = new Vector2(400, 100);
             enemyEntity = new Entity(enemy.militiaAnimation);
             enemyEntity.LoadContent(Content);
             enemyEntity.ID = 0;
@@ -121,7 +121,7 @@ namespace Demo.Scenes
             enemyEntity.CurrentHealth = 15;
             enemyEntity.AttackDamage = .1;
 
-            Vector2 allyStartingPosition = new Vector2(525, 700);
+            Vector2 allyStartingPosition = new Vector2(400, 500);
             allyEntity = new Entity(ally.militiaAnimation);
             allyEntity.LoadContent(Content);
             allyEntity.ID = 0;
@@ -135,8 +135,8 @@ namespace Demo.Scenes
             enemyList.Add(enemyEntity);
             allyList.Add(allyEntity);
 
-            // Create five enemies.
-            //for (int i = 1; i < 50; i++)
+          //  Create enemies.
+            //for (int i = 1; i < 5; i++)
             //{
             //    Entity enemyEntity = new Entity(enemy.militiaAnimation);
             //    enemyEntity.LoadContent(Content);
@@ -148,17 +148,17 @@ namespace Demo.Scenes
             //    enemyList.Add(enemyEntity);
             //}
 
-            // Assign enemy positions.
-            for (int i = 0; i < enemyList.Count; i++)
-            {
-                if (enemyList[i] != enemyList[0])
-                {
-                    enemyList[i].Position = new Vector2(enemyList[i - 1].Position.X + 25, enemyList[i - 1].Position.Y);
-                }
-            }
+            //// Assign enemy positions.
+            //for (int i = 0; i < enemyList.Count; i++)
+            //{
+            //    if (enemyList[i] != enemyList[0])
+            //    {
+            //        enemyList[i].Position = new Vector2(enemyList[i - 1].Position.X + 25, enemyList[i - 1].Position.Y);
+            //    }
+            //}
 
-            // Create five allies.
-            for (int i = 1; i < 50; i++)
+            // Create allies.
+            for (int i = 1; i < 10; i++)
             {
                 allyEntity = new Entity(ally.militiaAnimation);
                 allyEntity.LoadContent(Content);
@@ -225,8 +225,12 @@ namespace Demo.Scenes
             {
                 //enemyPathFinder.FindPathToUnit(grid, enemyList, playerEntity);
                 //enemyPathFinder.MoveUnits(enemyList, gameTime);
-                //allyPathFinder.FindPathToUnit(grid, allyList, enemyList[3]);
-                //allyPathFinder.MoveUnits(allyList, gameTime);
+                allyPathFinder.FindPathToUnit(grid, allyList, playerEntity);
+
+                if (playerEntity.Position.Y < 800)
+                {
+                    allyPathFinder.MoveUnits(allyList, gameTime);
+                }
             }
             else
             {

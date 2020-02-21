@@ -116,12 +116,12 @@ namespace Demo.Interface
         {
             KeyboardState newState = Keyboard.GetState();
 
-            if (newState.IsKeyDown(Keys.Down) && oldState.IsKeyDown(Keys.Down))
+            if (newState.IsKeyDown(Keys.D) && oldState.IsKeyDown(Keys.D))
             {
                 selectedIndex = 1;
             }
 
-            if (newState.IsKeyDown(Keys.Up) && oldState.IsKeyDown(Keys.Up))
+            if (newState.IsKeyDown(Keys.W) && oldState.IsKeyDown(Keys.W))
             {
                 selectedIndex = 0;
             }

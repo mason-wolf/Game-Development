@@ -58,7 +58,7 @@ namespace Demo
         {
             KeyboardState keyboardState = Keyboard.GetState();
 
-            if (keyboardState.IsKeyDown(Keys.Enter) && SelectedIndex == 0)
+            if (keyboardState.IsKeyDown(Keys.E) && SelectedIndex == 0)
             {
                 buttonMenu.Hide();
                 TestMap testMap = new TestMap(game, window);
