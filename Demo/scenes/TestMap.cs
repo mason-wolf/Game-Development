@@ -44,7 +44,8 @@ namespace Demo.Scenes
         public static IBox enemyCollision;
 
         private SpriteFont font;
-        Vector2 playerStartingPosition = new Vector2(500, 850);
+        // y: 490, 820
+        Vector2 playerStartingPosition = new Vector2(971, 590);
 
         public TestMap(Game game, GameWindow window) : base(game)
         {
@@ -69,9 +70,8 @@ namespace Demo.Scenes
             {
                 if (tile.TileID != 0)
                 {
-                    collisionWorld.Create(tile.Position.X + 1, tile.Position.Y + 1, 16, 16);
+                    collisionWorld.Create(tile.Position.X + 5, tile.Position.Y + 5, 16, 16);
 
-                    // Populate the AI movement grid to avoid obstacles.
                     int x = (int)tile.Position.X;
                     int y = (int)tile.Position.Y;
 
@@ -109,77 +109,39 @@ namespace Demo.Scenes
             playerEntity.State = Action.IdleNorth;
             playerEntity.MaxHealth = 150;
             playerEntity.CurrentHealth = 150;
-            player.AttackDamage = 4;
+            player.AttackDamage = 2;
 
-            Vector2 enemyStartingPosition = new Vector2(400, 100);
-            enemyEntity = new Entity(enemy.militiaAnimation);
-            enemyEntity.LoadContent(Content);
-            enemyEntity.ID = 0;
-            enemyEntity.Position = enemyStartingPosition;
-            enemyEntity.State = Action.Idle;
-            enemyEntity.MaxHealth = 15;
-            enemyEntity.CurrentHealth = 15;
-            enemyEntity.AttackDamage = .1;
-
-            Vector2 allyStartingPosition = new Vector2(400, 500);
-            allyEntity = new Entity(ally.militiaAnimation);
-            allyEntity.LoadContent(Content);
-            allyEntity.ID = 0;
-            allyEntity.Position = allyStartingPosition;
-            allyEntity.State = Action.IdleNorth;
-            allyEntity.MaxHealth = 15;
-            allyEntity.CurrentHealth = 15;
-            allyEntity.AttackDamage = 0.1;
-
-
-            enemyList.Add(enemyEntity);
-            allyList.Add(allyEntity);
-
-          //  Create enemies.
-            //for (int i = 1; i < 5; i++)
-            //{
-            //    Entity enemyEntity = new Entity(enemy.militiaAnimation);
-            //    enemyEntity.LoadContent(Content);
-            //    enemyEntity.ID = i;
-            //    enemyEntity.State = Action.Idle;
-            //    enemyEntity.MaxHealth = 15;
-            //    enemyEntity.CurrentHealth = 15;
-            //    enemyEntity.AttackDamage = 0.1;
-            //    enemyList.Add(enemyEntity);
-            //}
-
-            //// Assign enemy positions.
-            //for (int i = 0; i < enemyList.Count; i++)
-            //{
-            //    if (enemyList[i] != enemyList[0])
-            //    {
-            //        enemyList[i].Position = new Vector2(enemyList[i - 1].Position.X + 25, enemyList[i - 1].Position.Y);
-            //    }
-            //}
-
-            // Create allies.
-            for (int i = 1; i < 10; i++)
+            // Create enemies
+            for (int i = 0;  i < 1; i++)
             {
-                allyEntity = new Entity(ally.militiaAnimation);
-                allyEntity.LoadContent(Content);
-                allyEntity.ID = i;
-                allyEntity.State = Action.IdleNorth;
-                allyEntity.MaxHealth = 15;
-                allyEntity.CurrentHealth = 15;
-                allyEntity.AttackDamage = 0.12;
-                allyList.Add(allyEntity);
+                Entity enemyEntity = new Entity(enemy.militiaAnimation);
+                enemyEntity.LoadContent(Content);
+                enemyEntity.ID = i;
+                enemyEntity.State = Action.Idle;
+                enemyEntity.MaxHealth = 15;
+                enemyEntity.CurrentHealth = 15;
+                enemyEntity.AttackDamage = 0.1;
+                enemyList.Add(enemyEntity);
             }
 
-            // Assign ally positions.
-            for (int i = 0; i < allyList.Count; i++)
+            // Create Allies
+            for (int i = 0; i < 2; i++)
             {
-                if (allyList[i] != allyList[0])
-                {
-                    allyList[i].Position = new Vector2(allyList[i - 1].Position.X + 25, allyList[i - 1].Position.Y);
-                }
+                Entity npc = new Entity(ally.militiaAnimation);
+                npc.LoadContent(Content);
+                npc.State = Action.Idle;
+                npc.MaxHealth = 15;
+                npc.CurrentHealth = 15;
+                npc.AttackDamage = 0.1;
+                allyList.Add(npc);
             }
 
+            enemyList[0].Position = new Vector2(778, 590);
+  
 
+
+            allyList[0].Position = new Vector2(456, 338);
+            allyList[1].Position = new Vector2(505, 338);
             // Attach player to collision world.
             playerCollision = collisionWorld.Create(0, 0, 16, 16);
             allyCollision = collisionWorld.Create(0, 0, 16, 16);
@@ -193,85 +155,52 @@ namespace Demo.Scenes
         }
 
 
-        List<Entity> enemyDeaths = new List<Entity>();
-        bool gameOver = false;
-
         public override void Update(GameTime gameTime)
         {
 
+            Console.WriteLine(playerEntity.Position);
             newState = Keyboard.GetState();
 
             // Handle collision.
             playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
-          
             playerEntity.Update(gameTime);
 
-            PathFinder enemyPathFinder = new PathFinder();
-            PathFinder allyPathFinder = new PathFinder();
 
             foreach (Entity enemy in enemyList)
             {
-                if (enemy.Dead)
+                float enemyDistance = Vector2.Distance(playerEntity.Position, enemy.Position);
+
+                if (enemyDistance < 200 && enemy.State != Action.Dead)
                 {
-                    if (!enemyDeaths.Contains(enemy))
-                    {
-                        enemyDeaths.Add(enemy);
-                    }
+                    PathFinder enemyPathFinder = new PathFinder(grid);
+                    enemyPathFinder.FindPathToUnit(enemyList, playerEntity);
+                    enemyPathFinder.MoveUnits(enemyList, gameTime);
+                    enemy.Attack(enemy, playerEntity);
                 }
 
-            }
-
-            if (!gameOver)
-            {
-                //enemyPathFinder.FindPathToUnit(grid, enemyList, playerEntity);
-                //enemyPathFinder.MoveUnits(enemyList, gameTime);
-                allyPathFinder.FindPathToUnit(grid, allyList, playerEntity);
-
-                if (playerEntity.Position.Y < 800)
-                {
-                    allyPathFinder.MoveUnits(allyList, gameTime);
-                }
-
-
-            }
-            else
-            {
-                allyPathFinder.FindPathToUnit(grid, allyList, playerEntity);
-                allyPathFinder.MoveUnits(allyList, gameTime);
-            }
-
-            if (enemyDeaths.Count == enemyList.Count)
-            {
-                gameOver = true;
-            }
-
-            foreach (Entity enemy in enemyList)
-            {
-                foreach (Entity ally in allyList)
-                {
-                    if (ally.State != Action.Dead)
-                    {
-                    //    enemyCollision.Move(enemy.Position.X, enemy.Position.Y, (collision) => CollisionResponses.Slide);
-                        enemy.Attack(enemy, ally);
-                    }
-                }
-
-                enemy.Attack(enemy, playerEntity);
+                enemy.Update(gameTime);
             }
 
             foreach (Entity ally in allyList)
             {
-             //   allyCollision.Move(ally.Position.X, ally.Position.Y, (collision) => CollisionResponses.Slide);
 
                 foreach (Entity enemy in enemyList)
                 {
-                    if (enemy.State != Action.Dead)
+                    float enemyDistance = Vector2.Distance(ally.Position, enemy.Position);
+
+                    if (enemyDistance < 200 && enemy.State != Action.Dead && ally.State != Action.Dead)
                     {
+                        PathFinder allyPathFinder = new PathFinder(grid);
+                        allyPathFinder.FindPathToUnit(allyList, enemy);
+                        allyPathFinder.MoveUnits(allyList, gameTime);
                         ally.Attack(ally, enemy);
                     }
-                }
-            }
 
+                }
+
+            //    allyCollision.Move(ally.Position.X, ally.Position.Y, (collision) => CollisionResponses.Slide);
+                ally.Update(gameTime);
+            }
 
             camera.Zoom = 3;
 
@@ -284,14 +213,6 @@ namespace Demo.Scenes
 
         public override void Draw(GameTime gameTime)
         {
-            Texture2D collision;
-            Texture2D path;
-
-            collision = new Texture2D(GraphicsDevice, 1, 1);
-            collision.SetData(new Color[] { Color.Blue });
-
-            path = new Texture2D(GraphicsDevice, 1, 1);
-            path.SetData(new Color[] { Color.Red });
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
 
@@ -305,37 +226,6 @@ namespace Demo.Scenes
             int health = (int)playerEntity.CurrentHealth;
             Vector2 healthStatus = new Vector2(playerHealthPosition.X + 57, playerHealthPosition.Y);
             spriteBatch.DrawString(font, health.ToString() + " / 150", healthStatus, Color.White);
-       
-            //foreach (Tile t in map.GetCollisionLayer())
-            //{
-            //    if (t.TileID != 0)
-            //    {
-
-            //        int x = (int)t.Position.X;
-            //        int y = (int)t.Position.Y;
-
-            //        for (int i = 0; i < 16; ++i)
-            //        {
-            //            for (int j = 0; j < 16; ++j)
-            //            {
-            //                spriteBatch.Draw(collision, new Rectangle((int)x, (int)y, 1, 1), Color.White);
-            //                x++;
-            //            }
-
-            //            x = (int)t.Position.X;
-
-            //            spriteBatch.Draw(collision, new Rectangle((int)x, (int)y, 1, 1), Color.White);
-
-            //            y++;
-
-            //        }
-            //    }
-            //}
-
-            //foreach (Vector2 v in AIWayPoints)
-            //{
-            //    spriteBatch.Draw(path, new Rectangle((int)v.X, (int)v.Y, 1, 1), Color.White);
-            //}
 
 
             spriteBatch.End();

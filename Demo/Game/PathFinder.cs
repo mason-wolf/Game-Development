@@ -11,10 +11,34 @@ namespace Demo
 {
     class PathFinder
     {
+        Grid grid;
+
+        public PathFinder(Grid grid)
+        {
+            this.grid = grid;
+        }
         List<Vector2> wayPoints = new List<Vector2>();
         public List<WayPoint> wayPointsList = new List<WayPoint>();
 
-        public void FindPathToUnit(Grid grid, List<Entity> entityList, Entity unit)
+ 
+        ///// Finds the closest path to the player.
+        //public void FindPathToPlayer(Entity entity, Entity player)
+        //{
+
+        // //   Vector2 closestPath = ClosestEntity(entity, player);
+        //    var movementPattern = new[] { new Offset(-1, 0), new Offset(0, -1), new Offset(1, 0), new Offset(0, 1) };
+
+        //    Position nearestEntity = new Position((int)closestPath.X, (int)closestPath.Y);
+        //    Position playerPosition = new Position((int)player.Position.X, (int)player.Position.Y);
+        //    Position[] path = grid.GetPath(nearestEntity, playerPosition, movementPattern);
+
+        //    foreach (Position position in path)
+        //    {
+        //        wayPoints.Add(new Vector2(position.X, position.Y));
+        //    }
+        //}
+
+        public void FindPathToUnit(List<Entity> entityList, Entity unit)
         {
 
             Vector2 closestPath = ClosestEntity(entityList, unit);
@@ -34,15 +58,43 @@ namespace Demo
             wayPointsList.Add(wayPoint);
         }
 
+        public void MoveUnit(List<Entity> unitList, Entity unit, GameTime gameTime)
+        {
+            if (wayPoints.Count > 15 && unit.CurrentHealth > 0)
+            {
+                Avoid(gameTime, unitList, unit);
+                unit.FollowPath(gameTime, unit, wayPoints, 0.05f);
+            }
+            else if (unit.CurrentHealth <= 0)
+            {
+                unit.State = Action.Dead;
+                unit.Dead = true;
+            }
+
+            unit.Update(gameTime);
+        }
 
         public void MoveUnits(List<Entity> unitList, GameTime gameTime)
         {
+
             foreach (Entity unit in unitList)
             {
                 if (wayPoints.Count > 15 && unit.CurrentHealth > 0)
                 {
                     Avoid(gameTime, unitList, unit);
-                    unit.FollowPath(gameTime, unit, wayPoints, .05f);
+
+                    float speed = 0;
+
+                    if (unitList.Count > 1)
+                    {
+                        speed = .02f;
+                    }
+                    else
+                    {
+                        speed = 0.05f;
+                    }
+
+                    unit.FollowPath(gameTime, unit, wayPoints, speed);
                 }
                 else if (unit.CurrentHealth <= 0)
                 {

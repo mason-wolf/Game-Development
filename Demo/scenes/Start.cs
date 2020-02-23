@@ -54,16 +54,23 @@ namespace Demo
             base.LoadContent();
         }
 
+        bool gameStart = false;
+
         public override void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
 
-            if (keyboardState.IsKeyDown(Keys.E) && SelectedIndex == 0)
+            if (!gameStart)
             {
-                buttonMenu.Hide();
-                TestMap testMap = new TestMap(game, window);
-                Components.Add(testMap);
-                testMap.Show();
+                if (keyboardState.IsKeyDown(Keys.E) && SelectedIndex == 0)
+                {
+                    gameStart = true;
+                    buttonMenu.Hide();
+                    TestMap testMap = new TestMap(game, window);
+                    Components.Add(testMap);
+                    testMap.Show();
+                }
+
             }
 
             base.Update(gameTime);

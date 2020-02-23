@@ -184,8 +184,8 @@ namespace Demo.Engine
             foreach (Entity a in allyList)
             {
 
-                Vector2 AIHealthPosition = new Vector2(a.Position.X - 8, a.Position.Y - 20);
-                a.DrawHUD(spriteBatch, AIHealthPosition, false);
+             //   Vector2 AIHealthPosition = new Vector2(a.Position.X - 8, a.Position.Y - 20);
+             //   a.DrawHUD(spriteBatch, AIHealthPosition, false);
 
                 Vector2 destination = playerEntity.Position - a.Position;
                 destination.Normalize();

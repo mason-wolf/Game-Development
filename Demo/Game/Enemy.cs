@@ -24,8 +24,8 @@ namespace Demo.Engine
             militiaTexture = content.Load<Texture2D>(@"spritesheets\militia2");
             militiaAtlas = TextureAtlas.Create(militiaTexture, 32, 32);
             militiaAnimation = new SpriteSheetAnimationFactory(militiaAtlas);
-            float animationSpeed = .09f;
-            float attackSpeed = 0.06f;
+            float animationSpeed = .2f;
+            float attackSpeed = 0.09f;
             militiaAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }));
             militiaAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 1, 2 }, animationSpeed, isLooping: true));
             militiaAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 3, 4, 5, 6, 7, 8, 7, 6, 5, 9, 10, 11, 10 }, attackSpeed, isLooping: true));

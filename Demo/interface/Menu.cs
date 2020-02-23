@@ -15,7 +15,6 @@ using MonoGame.Extended;
 
 namespace Demo.Interface
 {
-
     public class Menu : SceneManager
     {
         private BoxingViewportAdapter viewPortAdapter;
@@ -116,7 +115,7 @@ namespace Demo.Interface
         {
             KeyboardState newState = Keyboard.GetState();
 
-            if (newState.IsKeyDown(Keys.D) && oldState.IsKeyDown(Keys.D))
+            if (newState.IsKeyDown(Keys.S) && oldState.IsKeyDown(Keys.S))
             {
                 selectedIndex = 1;
             }

@@ -147,13 +147,10 @@ namespace Demo
             {
                 if (!ReachedDestination)
                 {
-
-                    float Distance = Vector2.Distance(entity.Position, DestinationWaypoint[WayPointIndex]);
                     Vector2 Direction = DestinationWaypoint[WayPointIndex] - entity.Position;
                     Direction.Normalize();
                     Double angle = Math.Atan2(Direction.X, Direction.Y);
                     double rotation = (float)(angle * (180 / Math.PI));
-
 
                     if (rotation < -179 || rotation == 180)
                     {
@@ -180,6 +177,9 @@ namespace Demo
                         entity.State = Action.WalkSouth;
                     }
 
+
+                    float Distance = Vector2.Distance(entity.Position, DestinationWaypoint[WayPointIndex]);
+
                     if (Distance > Direction.Length())
                         entity.Position += Direction * (float)(Speed * gameTime.ElapsedGameTime.TotalMilliseconds);
                     else
@@ -189,7 +189,7 @@ namespace Demo
                             entity.Position += Direction;
                             ReachedDestination = true;
                         }
-                        else
+                        else if (WayPointIndex < 3)
                             WayPointIndex++;
                     }
                 }
