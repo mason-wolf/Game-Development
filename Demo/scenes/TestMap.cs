@@ -112,7 +112,7 @@ namespace Demo.Scenes
             player.AttackDamage = 2;
 
             // Create enemies
-            for (int i = 0;  i < 1; i++)
+            for (int i = 0;  i < 2; i++)
             {
                 Entity enemyEntity = new Entity(enemy.militiaAnimation);
                 enemyEntity.LoadContent(Content);
@@ -137,7 +137,7 @@ namespace Demo.Scenes
             }
 
             enemyList[0].Position = new Vector2(778, 590);
-  
+            enemyList[1].Position = new Vector2(778, 590);
 
 
             allyList[0].Position = new Vector2(456, 338);
@@ -165,7 +165,7 @@ namespace Demo.Scenes
             playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
             playerEntity.Update(gameTime);
 
-
+            // Attack the player if an enemy is within range.
             foreach (Entity enemy in enemyList)
             {
                 float enemyDistance = Vector2.Distance(playerEntity.Position, enemy.Position);
@@ -181,26 +181,25 @@ namespace Demo.Scenes
                 enemy.Update(gameTime);
             }
 
-            foreach (Entity ally in allyList)
-            {
+            //// Attack the enemy if an ally is within range.
+            //foreach (Entity ally in allyList)
+            //{
+            //    foreach (Entity enemy in enemyList)
+            //    {
+            //        float enemyDistance = Vector2.Distance(ally.Position, enemy.Position);
 
-                foreach (Entity enemy in enemyList)
-                {
-                    float enemyDistance = Vector2.Distance(ally.Position, enemy.Position);
+            //        if (enemyDistance < 200 && enemy.State != Action.Dead && ally.State != Action.Dead)
+            //        {
+            //            PathFinder allyPathFinder = new PathFinder(grid);
+            //            allyPathFinder.FindPathToUnit(allyList, enemy);
+            //            allyPathFinder.MoveUnits(allyList, gameTime);
+            //            ally.Attack(ally, enemy);
+            //        }
 
-                    if (enemyDistance < 200 && enemy.State != Action.Dead && ally.State != Action.Dead)
-                    {
-                        PathFinder allyPathFinder = new PathFinder(grid);
-                        allyPathFinder.FindPathToUnit(allyList, enemy);
-                        allyPathFinder.MoveUnits(allyList, gameTime);
-                        ally.Attack(ally, enemy);
-                    }
+            //    }
 
-                }
-
-            //    allyCollision.Move(ally.Position.X, ally.Position.Y, (collision) => CollisionResponses.Slide);
-                ally.Update(gameTime);
-            }
+            //    ally.Update(gameTime);
+            //}
 
             camera.Zoom = 3;
 

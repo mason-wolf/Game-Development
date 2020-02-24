@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/staminabar.png</SourceFile>
-  <SourceTime>2020-02-22T14:05:40.5878211-06:00</SourceTime>
-  <DestFile>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/bin/Windows/interface/staminabar.xnb</DestFile>
-  <DestTime>2020-02-22T22:03:01.7186195-06:00</DestTime>
+  <SourceFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/staminabar.png</SourceFile>
+  <SourceTime>2020-02-21T15:02:59.894312-06:00</SourceTime>
+  <DestFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/bin/Windows/interface/staminabar.xnb</DestFile>
+  <DestTime>2020-02-23T16:46:17.9785912-06:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
