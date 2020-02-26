@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game\Ally.cs" />
+    <Compile Include="Game\EnemyAI.cs" />
     <Compile Include="Game\PathFinder.cs" />
     <Compile Include="Game\Enemy.cs" />
     <Compile Include="Game\Layer.cs" />

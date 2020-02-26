@@ -27,14 +27,12 @@ namespace Demo.Scenes
         public static KeyboardState oldState;
         public static KeyboardState newState;
         public static Entity playerEntity;
-        public static Entity allyEntity;
-        public static Entity enemyEntity;
         public static Player player;
         public static Ally ally;
         public static Enemy enemy;
+        public static EnemyAI enemyAI;
         public static Camera2D camera;
         public static Map map;
-        public static List<Vector2> wayPoints;
         public static List<Entity> enemyList = new List<Entity>();
         public static List<Entity> allyList = new List<Entity>();
         public static RoyT.AStar.Grid grid;
@@ -45,7 +43,7 @@ namespace Demo.Scenes
 
         private SpriteFont font;
         // y: 490, 820
-        Vector2 playerStartingPosition = new Vector2(971, 590);
+        Vector2 playerStartingPosition = new Vector2(562, 588);
 
         public TestMap(Game game, GameWindow window) : base(game)
         {
@@ -100,9 +98,11 @@ namespace Demo.Scenes
             enemy = new Enemy();
             player.LoadContent(Content);
             ally.LoadContent(Content);
+
             enemy.LoadContent(Content);
 
             // Create player entity to manage interactions with AI.
+ 
             playerEntity = new Entity(player.playerAnimation);
             playerEntity.LoadContent(Content);
             playerEntity.Position = playerStartingPosition;
@@ -112,9 +112,9 @@ namespace Demo.Scenes
             player.AttackDamage = 2;
 
             // Create enemies
-            for (int i = 0;  i < 2; i++)
+            for (int i = 0;  i < 4; i++)
             {
-                Entity enemyEntity = new Entity(enemy.militiaAnimation);
+                Entity enemyEntity = new Entity(enemy.Animation);
                 enemyEntity.LoadContent(Content);
                 enemyEntity.ID = i;
                 enemyEntity.State = Action.Idle;
@@ -138,11 +138,13 @@ namespace Demo.Scenes
 
             enemyList[0].Position = new Vector2(778, 590);
             enemyList[1].Position = new Vector2(778, 590);
-
+            enemyList[2].Position = new Vector2(1060, 377);
+            enemyList[3].Position = new Vector2(1060, 377);
 
             allyList[0].Position = new Vector2(456, 338);
             allyList[1].Position = new Vector2(505, 338);
-            // Attach player to collision world.
+
+            // Attach entities to collision world.
             playerCollision = collisionWorld.Create(0, 0, 16, 16);
             allyCollision = collisionWorld.Create(0, 0, 16, 16);
             enemyCollision = collisionWorld.Create(0, 0, 16, 16);
@@ -150,54 +152,67 @@ namespace Demo.Scenes
 
             font = Content.Load<SpriteFont>(@"interface\font");
 
-   
+            enemyAI = new EnemyAI(grid, enemyList, playerEntity);
+
             base.LoadContent();
         }
 
-
         public override void Update(GameTime gameTime)
         {
+       //     Console.WriteLine(playerEntity.Position);
 
-            Console.WriteLine(playerEntity.Position);
             newState = Keyboard.GetState();
 
             // Handle collision.
             playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
             playerEntity.Update(gameTime);
 
-            // Attack the player if an enemy is within range.
-            foreach (Entity enemy in enemyList)
-            {
-                float enemyDistance = Vector2.Distance(playerEntity.Position, enemy.Position);
-
-                if (enemyDistance < 200 && enemy.State != Action.Dead)
-                {
-                    PathFinder enemyPathFinder = new PathFinder(grid);
-                    enemyPathFinder.FindPathToUnit(enemyList, playerEntity);
-                    enemyPathFinder.MoveUnits(enemyList, gameTime);
-                    enemy.Attack(enemy, playerEntity);
-                }
-
-                enemy.Update(gameTime);
-            }
+            enemyAI.Update(gameTime);
 
             //// Attack the enemy if an ally is within range.
             //foreach (Entity ally in allyList)
             //{
-            //    foreach (Entity enemy in enemyList)
-            //    {
-            //        float enemyDistance = Vector2.Distance(ally.Position, enemy.Position);
 
-            //        if (enemyDistance < 200 && enemy.State != Action.Dead && ally.State != Action.Dead)
+            //    if (!attacking)
+            //    {
+            //        allyPathFinder.FindPathToUnit(allyList, playerEntity);
+            //        allyPathFinder.MoveUnit(allyList, ally, gameTime);
+            //    }
+
+            //    int enemyDeathCount = 0;
+
+            //    if (enemyDeathCount != enemyList.Count)
+            //    {
+            //        Entity attackingEnemy = PathFinder.GetNearestEntity(enemyList, ally);
+
+            //        if (attackingEnemy.State != Action.Dead && ally.State != Action.Dead)
             //        {
-            //            PathFinder allyPathFinder = new PathFinder(grid);
-            //            allyPathFinder.FindPathToUnit(allyList, enemy);
-            //            allyPathFinder.MoveUnits(allyList, gameTime);
-            //            ally.Attack(ally, enemy);
+            //            float enemyDistance = Vector2.Distance(ally.Position, attackingEnemy.Position);
+
+            //            if (enemyDistance < 100)
+            //            {
+            //                attacking = true;
+            //                allyPathFinder.FindPathToUnit(allyList, attackingEnemy);
+            //                allyPathFinder.MoveUnit(allyList, ally, gameTime);
+            //                ally.Attack(ally, attackingEnemy);
+            //            }
+            //            else
+            //            {
+            //                attacking = false;
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        foreach (Entity enemy in enemyList)
+            //        {
+            //            if (enemy.State == Action.Dead)
+            //            {
+            //                enemyDeathCount++;
+            //            }
             //        }
 
             //    }
-
             //    ally.Update(gameTime);
             //}
 

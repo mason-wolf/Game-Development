@@ -35,7 +35,7 @@ namespace Demo
 
     public class Entity : IUpdate, IActorTarget
     {
-        private readonly AnimatedSprite sprite;
+        public AnimatedSprite sprite;
  
         private Action state;
         public RectangleF BoundingBox => sprite.BoundingRectangle;
@@ -133,6 +133,11 @@ namespace Demo
 
         public Vector2 Velocity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
   
+        public Entity()
+        {
+ 
+        }
+
         public Entity(SpriteSheetAnimationFactory animations)
         {
             sprite = new AnimatedSprite(animations);
@@ -197,17 +202,17 @@ namespace Demo
         }
 
 
-        public void Attack(Entity entity, Entity target)
+        public void Attack(Entity target)
         {
 
-            Vector2 currentPosition = entity.Position;
+            Vector2 currentPosition = Position;
 
-            float distance = Vector2.Distance(entity.Position, target.Position);
+            float distance = Vector2.Distance(Position, target.Position);
 
-            if (distance < 20 && entity.CurrentHealth > 0)
+            if (distance < 20 && CurrentHealth > 0)
             {
 
-                Vector2 destination = entity.Position - target.Position;
+                Vector2 destination = Position - target.Position;
                 destination.Normalize();
                 Double angle = Math.Atan2(destination.X, destination.Y);
                 double direction = Math.Ceiling(angle);
@@ -215,31 +220,37 @@ namespace Demo
 
                 if (direction == -3 || direction == 4 || direction == -2)
                 {
-                    entity.State = Action.AttackSouthPattern1;
-                    target.CurrentHealth -= entity.AttackDamage;
+                    State = Action.AttackSouthPattern1;
+                    target.CurrentHealth -= AttackDamage;
                 }
 
                 if (direction == -1)
                 {
-                    entity.State = Action.AttackEastPattern1;
-                    target.CurrentHealth -= entity.AttackDamage;
+                    State = Action.AttackEastPattern1;
+                    target.CurrentHealth -= AttackDamage;
                 }
 
                 if (direction == 0 || direction == 1)
                 {
-                    entity.State = Action.AttackNorthPattern1;
-                    target.CurrentHealth -= entity.AttackDamage;
+                    State = Action.AttackNorthPattern1;
+                    target.CurrentHealth -= AttackDamage;
                 }
 
                 if (direction == 2 || direction == 3)
                 {
-                    entity.State = Action.AttackWestPattern1;
-                    target.CurrentHealth -= entity.AttackDamage;
+                    State = Action.AttackWestPattern1;
+                    target.CurrentHealth -= AttackDamage;
                 }
             }
         }
         public void Update(GameTime gameTime)
         {
+           if (CurrentHealth <= 0)
+            {
+                State = Action.Dead;
+                Dead = true;
+            }
+
             sprite.Update(gameTime);
         }
 

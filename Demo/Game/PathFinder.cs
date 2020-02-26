@@ -1,34 +1,41 @@
-﻿using Humper.Responses;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using RoyT.AStar;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Demo
 {
     class PathFinder
     {
-        Grid grid;
+        Grid movementGrid;
+        List<Entity> unitList;
+        GameTime gameTime;
 
-        public PathFinder(Grid grid)
+        /// <summary>
+        /// Creates a path finding instance to track units on a movement grid.
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="movementGrid">The area in which the units are allowed to move.</param>
+        /// <param name="unitList">The list of units to move.</param>
+
+        public PathFinder(GameTime gameTime, Grid movementGrid, List<Entity> unitList)
         {
-            this.grid = grid;
+            this.movementGrid = movementGrid;
+            this.unitList = unitList;
+            this.gameTime = gameTime;
         }
+
         List<Vector2> wayPoints = new List<Vector2>();
         public List<WayPoint> wayPointsList = new List<WayPoint>();
 
-        public void FindPathToUnit(List<Entity> movingUnit, Entity target)
+        public void FindPathToUnit(Entity target)
         {
 
-            Vector2 closestPath = GetNearestEntity(movingUnit, target);
+            Vector2 closestPath = GetNearestUnit(unitList, target);
             var movementPattern = new[] { new Offset(-1, 0), new Offset(0, -1), new Offset(1, 0), new Offset(0, 1) };
 
             Position nearestEntity = new Position((int)closestPath.X, (int)closestPath.Y);
             Position targetPosition = new Position((int)target.Position.X, (int)target.Position.Y);
-            Position[] path = grid.GetPath(nearestEntity, targetPosition, movementPattern);
+            Position[] path = movementGrid.GetPath(nearestEntity, targetPosition, movementPattern);
 
             foreach (Position position in path)
             {
@@ -40,27 +47,17 @@ namespace Demo
             wayPointsList.Add(wayPoint);
         }
 
-        public void MoveUnits(List<Entity> unitList, GameTime gameTime)
+        public void MoveUnit(Entity unit, float speed, GameTime gameTime)
         {
 
-            foreach (Entity unit in unitList)
-            {
                 if (wayPoints.Count > 15 && unit.CurrentHealth > 0)
                 {
                     Avoid(gameTime, unitList, unit);
-
-                    unit.FollowPath(gameTime, unit, wayPoints, 0.02f);
+                    unit.FollowPath(gameTime, unit, wayPoints, speed);
                 }
-                else if (unit.CurrentHealth <= 0)
-                {
-                    unit.State = Action.Dead;
-                    unit.Dead = true;
-                }
-
-                unit.Update(gameTime);
-
-            }
+                unit.Update(gameTime);        
         }
+
         public void Avoid(GameTime gameTime, List<Entity> Units, Entity entity)
         {
             for (int i = 0; i < Units.Count; i++)
@@ -80,8 +77,8 @@ namespace Demo
             }
         }
 
-        // Find the closest unit.
-        public Vector2 GetNearestEntity(List<Entity> movingUnits, Entity target)
+        // Returns the closest distance between a list of units and the target.
+        public static Vector2 GetNearestUnit(List<Entity> movingUnits, Entity target)
         {
             Vector2 closest = new Vector2(0, 0);
             var closestDistance = float.MaxValue;
@@ -99,8 +96,32 @@ namespace Demo
                 }
 
             }
-
             return closest;
+        }
+
+        // Find the closest unit.
+        public static Entity GetNearestEntity(List<Entity> movingUnits, Entity target)
+        {
+            Vector2 closest = new Vector2(0, 0);
+            Entity closestEntity = new Entity();
+
+            var closestDistance = float.MaxValue;
+
+            for (int i = 0; i < movingUnits.Count; i++)
+            {
+                if (movingUnits[i].State != Action.Dead)
+                {
+                    var distance = Vector2.DistanceSquared(movingUnits[i].Position, target.Position);
+                    if (distance < closestDistance)
+                    {
+                        closest = movingUnits[i].Position;
+                        closestEntity = movingUnits[i];
+                        closestDistance = distance;
+                    }
+                }
+
+            }
+            return closestEntity;
         }
     }
 }

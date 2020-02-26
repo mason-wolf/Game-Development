@@ -13,7 +13,7 @@ using MonoGame.Extended.TextureAtlases;
 namespace Demo.Engine
 {
 
-    public class Ally
+    public class Ally 
     {
         public Texture2D militiaTexture;
         public TextureAtlas militiaAtlas;
