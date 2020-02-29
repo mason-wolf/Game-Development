@@ -55,6 +55,7 @@ namespace Demo
         public double CurrentHealth { get; set; } = 0;
         public double AttackDamage { get; set; } = 0;
         public bool Dead { get; set; } = false;
+ 
 
         public void LoadContent(ContentManager content)
         {
@@ -146,6 +147,7 @@ namespace Demo
         public int WayPointIndex;
         public bool ReachedDestination;
 
+
         public void FollowPath(GameTime gameTime, Entity entity, List<Vector2> DestinationWaypoint, float Speed)
         {
             if (DestinationWaypoint.Count > 0)
@@ -159,20 +161,19 @@ namespace Demo
 
                     if (rotation < -179 || rotation == 180)
                     {
+ 
                         entity.State = Action.WalkNorth;
                     }
-
-                    if (rotation >= 90 && rotation < 180)
+                    else if (rotation >= 89 && rotation < 180)
                     {
                         entity.State = Action.WalkEast;
                     }
-
-                    if (rotation <= -90 && rotation > -179)
+                    else if (rotation <= -90 && rotation > -179)
                     {
+
                         entity.State = Action.WalkWest;
                     }
-
-                    if (rotation == 0)
+                    else if (rotation >= 0 && rotation <= 1)
                     {
                         entity.State = Action.WalkSouth;
                     }
@@ -181,7 +182,6 @@ namespace Demo
                     {
                         entity.State = Action.WalkSouth;
                     }
-
 
                     float Distance = Vector2.Distance(entity.Position, DestinationWaypoint[WayPointIndex]);
 
@@ -194,7 +194,7 @@ namespace Demo
                             entity.Position += Direction;
                             ReachedDestination = true;
                         }
-                        else if (WayPointIndex < 3)
+                            if(WayPointIndex < 3)
                             WayPointIndex++;
                     }
                 }
@@ -216,7 +216,6 @@ namespace Demo
                 destination.Normalize();
                 Double angle = Math.Atan2(destination.X, destination.Y);
                 double direction = Math.Ceiling(angle);
-
 
                 if (direction == -3 || direction == 4 || direction == -2)
                 {

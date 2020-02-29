@@ -27,13 +27,12 @@ namespace Demo.Engine
             this.player = player;
         }
 
+ 
         public void Update(GameTime gameTime)
         {
-            Console.WriteLine(enemiesInRange.Count);
-
-            PathFinder pathFinder = new PathFinder(gameTime, movementGrid, enemiesInRange);
 
             int enemyDeathCount = 0;
+            PathFinder pathFinder = new PathFinder(gameTime, movementGrid, enemiesInRange);
 
             foreach (Entity enemy in enemiesInRange)
             {
@@ -53,7 +52,7 @@ namespace Demo.Engine
             {
                 float enemyDistance = Vector2.Distance(player.Position, enemy.Position);
 
-                if (enemyDistance < 150 && enemy.State != Action.Dead)
+                if (enemyDistance < 100 && enemy.State != Action.Dead)
                 {
                     // Keep a list to find paths of the nearest enemies.
                     if (!enemiesInRange.Contains(enemy))
@@ -61,8 +60,7 @@ namespace Demo.Engine
                         enemiesInRange.Add(enemy);
                     }
 
-                    pathFinder.MoveUnit(enemy, 0.05f, gameTime);
-
+                    pathFinder.MoveUnit(enemy, 0.05f, 15, gameTime);
                     enemy.Attack(player);
                 }
                 else

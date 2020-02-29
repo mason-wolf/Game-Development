@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using RoyT.AStar;
+using System;
 using System.Collections.Generic;
 
 namespace Demo
@@ -29,7 +30,7 @@ namespace Demo
 
         public void FindPathToUnit(Entity target)
         {
-
+    
             Vector2 closestPath = GetNearestUnit(unitList, target);
             var movementPattern = new[] { new Offset(-1, 0), new Offset(0, -1), new Offset(1, 0), new Offset(0, 1) };
 
@@ -37,41 +38,44 @@ namespace Demo
             Position targetPosition = new Position((int)target.Position.X, (int)target.Position.Y);
             Position[] path = movementGrid.GetPath(nearestEntity, targetPosition, movementPattern);
 
-            foreach (Position position in path)
-            {
-                wayPoints.Add(new Vector2(position.X, position.Y));
-            }
+                foreach (Position position in path)
+                {
+                    wayPoints.Add(new Vector2(position.X, position.Y));
+                }
+
 
             WayPoint wayPoint = new WayPoint();
             wayPoint.Add = wayPoints;
             wayPointsList.Add(wayPoint);
         }
 
-        public void MoveUnit(Entity unit, float speed, GameTime gameTime)
-        {
 
-                if (wayPoints.Count > 15 && unit.CurrentHealth > 0)
+        public void MoveUnit(Entity unit, float speed, int distanceLimit, GameTime gameTime)
+        {
+ 
+                if (wayPoints.Count > distanceLimit && unit.CurrentHealth > 0)
                 {
-                    Avoid(gameTime, unitList, unit);
+                    Avoid(gameTime, unit);
                     unit.FollowPath(gameTime, unit, wayPoints, speed);
                 }
                 unit.Update(gameTime);        
         }
 
-        public void Avoid(GameTime gameTime, List<Entity> Units, Entity entity)
-        {
-            for (int i = 0; i < Units.Count; i++)
-            {
-                if (Units[i].BoundingBox.Intersects(entity.BoundingBox) && Units[i].State != Action.Dead)
-                {
-                    float Distance1 = Vector2.Distance(entity.Position, wayPoints[wayPoints.Count - 1]);
-                    float Distance2 = Vector2.Distance(Units[i].Position, wayPoints[wayPoints.Count - 1]);
 
-                    if (Distance1 > Distance2)
+        public void Avoid(GameTime gameTime, Entity unit)
+        {
+            for (int i = 0; i < unitList.Count; i++)
+            {
+                if (unitList[i].BoundingBox.Intersects(unit.BoundingBox) && unitList[i].State != Action.Dead)
+                {
+                    float unitDistanceToDestination = Vector2.Distance(unit.Position, wayPoints[wayPoints.Count - 1]);
+                    float movingUnitsDistanceToDestination = Vector2.Distance(unitList[i].Position, wayPoints[wayPoints.Count - 1]);
+
+                    if (unitDistanceToDestination > movingUnitsDistanceToDestination)
                     {
-                        Vector2 OppositeDirection = Units[i].Position - entity.Position;
-                        OppositeDirection.Normalize();
-                        entity.Position -= OppositeDirection * (float)(0.05f * gameTime.ElapsedGameTime.TotalMilliseconds);
+                        Vector2 oppositeDirection = unitList[i].Position - unit.Position;
+                        oppositeDirection.Normalize();
+                        unit.Position -= oppositeDirection * (float)(0.05f * gameTime.ElapsedGameTime.TotalMilliseconds);
                     }
                 }
             }

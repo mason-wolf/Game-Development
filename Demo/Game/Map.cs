@@ -146,12 +146,11 @@ namespace Demo.Engine
             }
         }
 
-        public void SortSprites(SpriteBatch spriteBatch, Entity playerEntity, List<Entity> enemyList, List<Entity> allyList)
+        public void SortSprites(SpriteBatch spriteBatch, Entity playerEntity, List<Entity> enemyList)
         {
             foreach (Entity e in enemyList)
             {
                 Vector2 AIHealthPosition = new Vector2(e.Position.X - 8, e.Position.Y - 20);
-                e.DrawHUD(spriteBatch, AIHealthPosition, false);
 
                 Vector2 destination = playerEntity.Position - e.Position;
                 destination.Normalize();
@@ -179,42 +178,10 @@ namespace Demo.Engine
                     playerEntity.Draw(spriteBatch);
                     e.Draw(spriteBatch);
                 }
+
+                e.DrawHUD(spriteBatch, AIHealthPosition, false);
             }
-
-            foreach (Entity a in allyList)
-            {
-
-             //   Vector2 AIHealthPosition = new Vector2(a.Position.X - 8, a.Position.Y - 20);
-             //   a.DrawHUD(spriteBatch, AIHealthPosition, false);
-
-                Vector2 destination = playerEntity.Position - a.Position;
-                destination.Normalize();
-                Double angle = Math.Atan2(destination.X, destination.Y);
-                double direction = Math.Ceiling(angle);
-
-
-                if (direction == -3 || direction == 4 || direction == -2)
-                {
-                    playerEntity.Draw(spriteBatch);
-                    a.Draw(spriteBatch); ;
-                }
-                else if (direction == 0 || direction == 1)
-                {
-                    a.Draw(spriteBatch);
-                    playerEntity.Draw(spriteBatch);
-                }
-                else if (a.CurrentHealth <= 0)
-                {
-                    a.Draw(spriteBatch);
-                    playerEntity.Draw(spriteBatch);
-                }
-                else
-                {
-                    playerEntity.Draw(spriteBatch);
-                    a.Draw(spriteBatch);
-                }
             }
-        }
-    }
+        }  
 }
 

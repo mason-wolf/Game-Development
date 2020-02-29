@@ -69,6 +69,7 @@ namespace Demo
                     TestMap testMap = new TestMap(game, window);
                     Components.Add(testMap);
                     testMap.Show();
+
                 }
 
             }
