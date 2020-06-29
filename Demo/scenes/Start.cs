@@ -66,12 +66,11 @@ namespace Demo
                 {
                     gameStart = true;
                     buttonMenu.Hide();
-                    TestMap testMap = new TestMap(game, window);
-                    Components.Add(testMap);
-                    testMap.Show();
 
+                    StartingArea startingArea = new StartingArea(game, window);
+                    Components.Add(startingArea);
+                    startingArea.Show();
                 }
-
             }
 
             base.Update(gameTime);

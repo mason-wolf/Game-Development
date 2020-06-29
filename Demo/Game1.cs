@@ -38,14 +38,15 @@ namespace Demo
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
             Services.AddService(typeof(SpriteBatch), spriteBatch);
             Services.AddService(typeof(ContentManager), Content);
  
+            // Show the start screen
             start = new Start(this, Window);
+
             Components.Add(start);
             start.Show();
-                    
+                 
         }
 
         protected override void Update(GameTime gameTime)

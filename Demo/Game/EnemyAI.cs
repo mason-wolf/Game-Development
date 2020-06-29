@@ -47,30 +47,30 @@ namespace Demo.Engine
                 pathFinder.FindPathToUnit(player);
             }
 
-            // Attack the player if an enemy is within range.
-            foreach (Entity enemy in enemyList)
-            {
-                float enemyDistance = Vector2.Distance(player.Position, enemy.Position);
+            //// Attack the player if an enemy is within range.
+            //foreach (Entity enemy in enemyList)
+            //{
+            //    float enemyDistance = Vector2.Distance(player.Position, enemy.Position);
 
-                if (enemyDistance < 100 && enemy.State != Action.Dead)
-                {
-                    // Keep a list to find paths of the nearest enemies.
-                    if (!enemiesInRange.Contains(enemy))
-                    {
-                        enemiesInRange.Add(enemy);
-                    }
+            //    if (enemyDistance < 100 && enemy.State != Action.Dead)
+            //    {
+            //        // Keep a list to find paths of the nearest enemies.
+            //        if (!enemiesInRange.Contains(enemy))
+            //        {
+            //            enemiesInRange.Add(enemy);
+            //        }
 
-                    pathFinder.MoveUnit(enemy, 0.05f, 15, gameTime);
-                    enemy.Attack(player);
-                }
-                else
-                {
-                    enemiesInRange.Remove(enemy);
-                }
+            //        pathFinder.MoveUnit(enemy, 0.05f, 15, gameTime);
+            //        enemy.Attack(player);
+            //    }
+            //    else
+            //    {
+            //        enemiesInRange.Remove(enemy);
+            //    }
 
-                enemy.Update(gameTime);
+            //    enemy.Update(gameTime);
 
-            }
+            //}
         }
     }
 }

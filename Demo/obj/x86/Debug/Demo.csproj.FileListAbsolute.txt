@@ -379,3 +379,5 @@ C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Cont
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\militia2.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\player_2.xnb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\player_2.xnb
+C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\campfire.xnb
+C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\tilesets\tileset_2.xnb

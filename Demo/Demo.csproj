@@ -51,7 +51,10 @@
     <Compile Include="Game\Entity.cs" />
     <Compile Include="Game\Player.cs" />
     <Compile Include="Interface\Dialog.cs" />
-    <Compile Include="Scenes\TestMap.cs" />
+    <Compile Include="Scenes\Level_1.cs" />
+    <Compile Include="Scenes\Screen.cs" />
+    <Compile Include="Scenes\ScreenManager.cs" />
+    <Compile Include="Scenes\StartingArea.cs" />
     <Compile Include="Scenes\BuildMode.cs" />
     <Compile Include="Interface\Menu.cs" />
     <Compile Include="Program.cs" />
@@ -93,7 +96,9 @@
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
+    <MonoGameContentReference Include="Content\Content.mgcb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </MonoGameContentReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

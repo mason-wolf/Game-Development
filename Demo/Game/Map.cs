@@ -44,8 +44,9 @@ namespace Demo.Engine
 
         public void LoadMap(ContentManager content, string filePath)
         {
+            content.Unload();
             layers = new List<Layer>();
-
+  
             // Load map from file.
             using (XmlReader reader = XmlReader.Create(filePath))
             {
@@ -79,6 +80,8 @@ namespace Demo.Engine
                         layers.Add(newLayer);
                     }
                 }
+
+                reader.Close();
             }
 
 
@@ -114,14 +117,11 @@ namespace Demo.Engine
             {
                 tile.TileID = layers[1].Tiles[secondCount];
                 secondCount++;
-            }
-
-            
+            }        
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
             foreach (Tile tile in firstLayer)
             {
                 if (tile.TileID != 0)

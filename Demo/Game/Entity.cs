@@ -33,6 +33,9 @@ namespace Demo
         Dead
     }
 
+    /// <summary>
+    /// Entity class for player, enemy or NPC.
+    /// </summary>
     public class Entity : IUpdate, IActorTarget
     {
         public AnimatedSprite sprite;
@@ -46,6 +49,7 @@ namespace Demo
             set { sprite.Position = value; }
         }
 
+        // Create textures to display health.
         Texture2D statusBar;
         Texture2D healthBar;
         Texture2D staminaBar;
@@ -64,6 +68,7 @@ namespace Demo
             staminaBar = content.Load<Texture2D>(@"interface\staminabar");
         }
 
+        // Create standard animation states for the entity.
         public Action State
         {
             get { return state; }
@@ -147,7 +152,7 @@ namespace Demo
         public int WayPointIndex;
         public bool ReachedDestination;
 
-
+        // Method to make an entity follow a path of waypoints.
         public void FollowPath(GameTime gameTime, Entity entity, List<Vector2> DestinationWaypoint, float Speed)
         {
             if (DestinationWaypoint.Count > 0)

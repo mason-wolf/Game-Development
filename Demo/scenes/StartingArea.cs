@@ -17,10 +17,12 @@ using Demo.Engine;
 using Humper;
 using Humper.Responses;
 using RoyT.AStar;
+using MonoGame.Extended.Sprites;
+using Microsoft.Xna.Framework.Content;
 
 namespace Demo.Scenes
 {
-    class TestMap : SceneManager
+    class StartingArea : SceneManager
     {
 
         public static ViewportAdapter viewPortAdapter;
@@ -42,11 +44,18 @@ namespace Demo.Scenes
         public static IBox enemyCollision;
 
         private SpriteFont font;
-        // 272, 809
-        Vector2 playerStartingPosition = new Vector2(272, 809);
+        Vector2 playerStartingPosition = new Vector2(350, 220);
 
-        public TestMap(Game game, GameWindow window) : base(game)
+        public Texture2D campfireTexture;
+        public TextureAtlas campfireAtlas;
+        public SpriteSheetAnimationFactory campfireAnimation;
+        public AnimatedSprite campfire;
+        Rectangle teleporter;
+        GameWindow window;
+
+        public StartingArea(Game game, GameWindow window) : base(game)
         {
+            this.window = window;
             viewPortAdapter = new BoxingViewportAdapter(window, GraphicsDevice, 1080, 720);
             camera = new Camera2D(viewPortAdapter);
             base.Initialize();
@@ -56,11 +65,12 @@ namespace Demo.Scenes
         {
             map = new Map();
 
-            map.LoadMap(Content, "Content/maps/testMap.tmx");
+            map.LoadMap(Content, "Content/maps/StartingArea.tmx");
 
             // Generate collision world.
             collisionWorld = new World(map.Width() * 16, map.Height() * 16);
 
+            // Create path finding grid.
             grid = new RoyT.AStar.Grid(map.Width() * 16, map.Height() * 16, 1);
 
             // Find the tiles in the collision layer and add them to the collision world.
@@ -68,26 +78,7 @@ namespace Demo.Scenes
             {
                 if (tile.TileID != 0)
                 {
-                    collisionWorld.Create(tile.Position.X + 5, tile.Position.Y + 5, 16, 16);
-
-                    int x = (int)tile.Position.X;
-                    int y = (int)tile.Position.Y;
-
-                    for (int i = 0; i < 16; ++i)
-                    {
-                        for (int j = 0; j < 16; ++j)
-                        {
-                            grid.BlockCell(new Position(x, y));
-                            x++;
-                        }
-
-                        x = (int)tile.Position.X;
-
-                        grid.BlockCell(new Position(x, y));
-
-                        y++;
-
-                    }
+                    collisionWorld.Create(tile.Position.X + 8, tile.Position.Y + 8, 16, 16);
                 }
             }
 
@@ -102,7 +93,6 @@ namespace Demo.Scenes
             enemy.LoadContent(Content);
 
             // Create player entity to manage interactions with AI.
-
             playerEntity = new Entity(player.playerAnimation);
             playerEntity.LoadContent(Content);
             playerEntity.Position = playerStartingPosition;
@@ -112,7 +102,7 @@ namespace Demo.Scenes
             player.AttackDamage = 2;
 
             // Create enemies
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 6; i++)
             {
                 Entity enemyEntity = new Entity(enemy.Animation);
                 enemyEntity.LoadContent(Content);
@@ -139,6 +129,9 @@ namespace Demo.Scenes
             enemyList[0].Position = new Vector2(789, 663);
             enemyList[1].Position = new Vector2(789, 376);
             enemyList[2].Position = new Vector2(581, 459);
+            enemyList[3].Position = new Vector2(800, 663);
+            enemyList[4].Position = new Vector2(825, 376);
+            enemyList[5].Position = new Vector2(850, 459);
 
             // Attach entities to collision world.
             playerCollision = collisionWorld.Create(0, 0, 16, 16);
@@ -149,52 +142,80 @@ namespace Demo.Scenes
             font = Content.Load<SpriteFont>(@"interface\font");
 
             enemyAI = new EnemyAI(grid, enemyList, playerEntity);
- 
+
+            campfireTexture = Content.Load<Texture2D>(@"objects\campfire");
+            campfireAtlas = TextureAtlas.Create(campfireTexture, 16, 32);
+            campfireAnimation = new SpriteSheetAnimationFactory(campfireAtlas);
+            campfireAnimation.Add("burning", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, .09f, isLooping: true));
+            campfire = new AnimatedSprite(campfireAnimation);
+            campfire.Play("burning");
+            campfire.Position = new Vector2(300, 260);
+            collisionWorld.Create(campfire.Position.X, campfire.Position.Y- 1, 4, 4);
+            collisionWorld.Create(campfire.Position.X, campfire.Position.Y, 16, 16);
+
+            teleporter = new Rectangle(340, 134, 16, 13);
+
             base.LoadContent();
         }
+
+        bool nextLevel = false;
 
         public override void Update(GameTime gameTime)
         {
 
-            Console.WriteLine(playerEntity.Position);
+            if (playerEntity.BoundingBox.Intersects(teleporter) && nextLevel == false)
+            {
+                Content.Unload();
+                nextLevel = true;
+                Level_1 level_1 = new Level_1(game, window);
+                Components.Add(level_1);
+                level_1.Show();
+            }
 
-            newState = Keyboard.GetState();
+            if (nextLevel == false)
+            {
+                newState = Keyboard.GetState();
 
-            // Handle collision.
-            playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
+                // Handle collision.
+                playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
 
-  
-            playerEntity.Update(gameTime);
-            enemyAI.Update(gameTime);
+                playerEntity.Update(gameTime);
+                enemyAI.Update(gameTime);
+                campfire.Update(gameTime);
+                camera.Zoom = 3;
 
+                player.HandleInput(gameTime, playerEntity, playerCollision, newState, oldState);
+                camera.LookAt(playerEntity.Position);
+                oldState = newState;
+                newState = Keyboard.GetState();
 
-            camera.Zoom = 3;
-
-            player.HandleInput(gameTime, playerEntity, playerCollision, newState, oldState);
-            camera.LookAt(playerEntity.Position);
-            oldState = newState;
+            }
 
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
+            if (nextLevel == false)
+            {
+                spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
 
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
+                map.Draw(spriteBatch);
 
-            map.Draw(spriteBatch);
+                spriteBatch.Draw(campfire);
 
-            Vector2 playerHealthPosition = new Vector2(playerEntity.Position.X - 170, playerEntity.Position.Y - 110);
+                Vector2 playerHealthPosition = new Vector2(playerEntity.Position.X - 170, playerEntity.Position.Y - 110);
 
-            map.SortSprites(spriteBatch, playerEntity, enemyList);
-            playerEntity.DrawHUD(spriteBatch, playerHealthPosition, true);
+                map.SortSprites(spriteBatch, playerEntity, enemyList);
+                playerEntity.DrawHUD(spriteBatch, playerHealthPosition, true);
 
-            int health = (int)playerEntity.CurrentHealth;
-            Vector2 healthStatus = new Vector2(playerHealthPosition.X + 57, playerHealthPosition.Y);
-            spriteBatch.DrawString(font, health.ToString() + " / 150", healthStatus, Color.White);
+                int health = (int)playerEntity.CurrentHealth;
+                Vector2 healthStatus = new Vector2(playerHealthPosition.X + 57, playerHealthPosition.Y);
+                spriteBatch.DrawString(font, health.ToString() + " / 150", healthStatus, Color.White);
 
-            
-            spriteBatch.End();
+                spriteBatch.End();
+            }
+
             base.Draw(gameTime);
         }
 

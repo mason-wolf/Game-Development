@@ -62,22 +62,25 @@ namespace Demo
         // Loop through list of enemies and do damage if close.
         public void Attack()
         {
-            foreach (Entity enemy in EnemyList)
+            if (EnemyList != null)
             {
-                if (playerEntity.BoundingBox.Intersects(enemy.BoundingBox))
+                foreach (Entity enemy in EnemyList)
                 {
-                    enemy.CurrentHealth -= AttackDamage;
+                    if (playerEntity.BoundingBox.Intersects(enemy.BoundingBox))
+                    {
+                        enemy.CurrentHealth -= AttackDamage;
+                    }
                 }
             }
         }
 
         // Handle attacking and movement animations.
-        public void HandleInput(GameTime gameTime, Entity player, IBox playerBox, KeyboardState newState, KeyboardState oldState)
+        public void HandleInput(GameTime gameTime, Entity player, IBox playerCollisionBox, KeyboardState newState, KeyboardState oldState)
         {
             playerEntity = player;
-            Vector2 motion = new Vector2(playerBox.X, playerBox.Y);
+            Vector2 motion = new Vector2(playerCollisionBox.X, playerCollisionBox.Y);
 
-            int speed = 1;
+            float speed = 1.4f;
 
             newMouseState = Mouse.GetState();
 
