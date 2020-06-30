@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Humper;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.TextureAtlases;
@@ -44,7 +45,7 @@ namespace Demo.Engine
 
         public void LoadMap(ContentManager content, string filePath)
         {
-            content.Unload();
+
             layers = new List<Layer>();
   
             // Load map from file.
@@ -144,6 +145,22 @@ namespace Demo.Engine
                     spriteBatch.Draw(region.Texture, destinationRectangle, sourceRectangle, Color.White);
                 }
             }
+        }
+
+        public IBox GenerateCollisionWorld()
+        {
+            World world = new World(mapWidth * 16, mapHeight * 16);
+            IBox collisionBox = world.Create(0, 0, 16, 16);
+            // Find the tiles in the collision layer and add them to the collision world.
+            foreach (Tile tile in GetCollisionLayer())
+            {
+                if (tile.TileID != 0)
+                {
+                    world.Create(tile.Position.X + 8, tile.Position.Y + 8, 16, 16);
+                }
+            }
+
+            return collisionBox;
         }
 
         public void SortSprites(SpriteBatch spriteBatch, Entity playerEntity, List<Entity> enemyList)

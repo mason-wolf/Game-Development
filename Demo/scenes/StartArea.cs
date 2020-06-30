@@ -22,9 +22,8 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Demo.Scenes
 {
-    class StartingArea : SceneManager
+    class StartArea : SceneManager
     {
-
         public static ViewportAdapter viewPortAdapter;
         public static KeyboardState oldState;
         public static KeyboardState newState;
@@ -34,14 +33,11 @@ namespace Demo.Scenes
         public static Enemy enemy;
         public static EnemyAI enemyAI;
         public static Camera2D camera;
-        public static Map map;
+        public static Scene startingArea;
+        public static Scene level_1;
         public static List<Entity> enemyList = new List<Entity>();
         public static List<Entity> allyList = new List<Entity>();
         public static RoyT.AStar.Grid grid;
-        public static World collisionWorld;
-        public static IBox playerCollision;
-        public static IBox allyCollision;
-        public static IBox enemyCollision;
 
         private SpriteFont font;
         Vector2 playerStartingPosition = new Vector2(350, 220);
@@ -50,10 +46,12 @@ namespace Demo.Scenes
         public TextureAtlas campfireAtlas;
         public SpriteSheetAnimationFactory campfireAnimation;
         public AnimatedSprite campfire;
+
         Rectangle teleporter;
+        Rectangle level_1_teleporter;
         GameWindow window;
 
-        public StartingArea(Game game, GameWindow window) : base(game)
+        public StartArea(Game game, GameWindow window) : base(game)
         {
             this.window = window;
             viewPortAdapter = new BoxingViewportAdapter(window, GraphicsDevice, 1080, 720);
@@ -61,27 +59,21 @@ namespace Demo.Scenes
             base.Initialize();
         }
 
+        private enum Level
+        {
+            StartingArea,
+            Level_1
+        }
+
+        private Level SelectedLevel { get; set; }
+
         protected override void LoadContent()
         {
-            map = new Map();
-
-            map.LoadMap(Content, "Content/maps/StartingArea.tmx");
-
-            // Generate collision world.
-            collisionWorld = new World(map.Width() * 16, map.Height() * 16);
+            startingArea = new Scene(Content, "Content/maps/StartingArea.tmx");
+            level_1 = new Scene(Content, "Content/maps/level_1.tmx");
 
             // Create path finding grid.
-            grid = new RoyT.AStar.Grid(map.Width() * 16, map.Height() * 16, 1);
-
-            // Find the tiles in the collision layer and add them to the collision world.
-            foreach (Tile tile in map.GetCollisionLayer())
-            {
-                if (tile.TileID != 0)
-                {
-                    collisionWorld.Create(tile.Position.X + 8, tile.Position.Y + 8, 16, 16);
-                }
-            }
-
+            grid = new RoyT.AStar.Grid(startingArea.map.Width() * 16, startingArea.map.Height() * 16, 1);
 
             // Create player to manage animations and controls.
             player = new Player();
@@ -89,7 +81,6 @@ namespace Demo.Scenes
             enemy = new Enemy();
             player.LoadContent(Content);
             ally.LoadContent(Content);
-
             enemy.LoadContent(Content);
 
             // Create player entity to manage interactions with AI.
@@ -134,9 +125,9 @@ namespace Demo.Scenes
             enemyList[5].Position = new Vector2(850, 459);
 
             // Attach entities to collision world.
-            playerCollision = collisionWorld.Create(0, 0, 16, 16);
-            allyCollision = collisionWorld.Create(0, 0, 16, 16);
-            enemyCollision = collisionWorld.Create(0, 0, 16, 16);
+
+       //     allyCollision = startingAreaCollisionWorld.Create(0, 0, 16, 16);
+       //     enemyCollision = startingAreaCollisionWorld.Create(0, 0, 16, 16);
             player.EnemyList = enemyList;
 
             font = Content.Load<SpriteFont>(@"interface\font");
@@ -150,34 +141,46 @@ namespace Demo.Scenes
             campfire = new AnimatedSprite(campfireAnimation);
             campfire.Play("burning");
             campfire.Position = new Vector2(300, 260);
-            collisionWorld.Create(campfire.Position.X, campfire.Position.Y- 1, 4, 4);
-            collisionWorld.Create(campfire.Position.X, campfire.Position.Y, 16, 16);
+       //     startingAreaCollisionWorld.Create(campfire.Position.X, campfire.Position.Y- 1, 4, 4);
+      //      startingAreaCollisionWorld.Create(campfire.Position.X, campfire.Position.Y, 16, 16);
 
-            teleporter = new Rectangle(340, 134, 16, 13);
-
+            teleporter = new Rectangle(340, 134, 8, 1);
+            level_1_teleporter = new Rectangle(407, 1020, 8, 1);
+            SelectedLevel = Level.StartingArea;
+            playerCollision = startingArea.GetCollisionWorld();
             base.LoadContent();
         }
 
-        bool nextLevel = false;
-
+        IBox playerCollision;
         public override void Update(GameTime gameTime)
         {
 
-            if (playerEntity.BoundingBox.Intersects(teleporter) && nextLevel == false)
+            if (playerEntity.BoundingBox.Intersects(teleporter))
             {
-                Content.Unload();
-                nextLevel = true;
-                Level_1 level_1 = new Level_1(game, window);
-                Components.Add(level_1);
-                level_1.Show();
+                SelectedLevel = Level.Level_1;
+                playerEntity.Position = new Vector2(407, 990);
             }
 
-            if (nextLevel == false)
+            if (playerEntity.BoundingBox.Intersects(level_1_teleporter))
             {
+                SelectedLevel = Level.StartingArea;
+                playerEntity.Position = new Vector2(325, 150);
+            }
+
                 newState = Keyboard.GetState();
 
-                // Handle collision.
-                playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
+            switch (SelectedLevel)
+            {
+                case Level.StartingArea:
+                    playerCollision = startingArea.GetCollisionWorld();
+                    startingArea.Update(gameTime);
+                    break;
+                case Level.Level_1:
+                    playerCollision = level_1.GetCollisionWorld();
+                    break;
+            }
+            // Handle collision.
+            playerCollision.Move(playerEntity.Position.X, playerEntity.Position.Y, (collision) => CollisionResponses.Slide);
 
                 playerEntity.Update(gameTime);
                 enemyAI.Update(gameTime);
@@ -189,33 +192,37 @@ namespace Demo.Scenes
                 oldState = newState;
                 newState = Keyboard.GetState();
 
-            }
 
             base.Update(gameTime);
         }
 
+
         public override void Draw(GameTime gameTime)
         {
-            if (nextLevel == false)
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
+
+            switch (SelectedLevel)
             {
-                spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
-
-                map.Draw(spriteBatch);
-
-                spriteBatch.Draw(campfire);
-
-                Vector2 playerHealthPosition = new Vector2(playerEntity.Position.X - 170, playerEntity.Position.Y - 110);
-
-                map.SortSprites(spriteBatch, playerEntity, enemyList);
-                playerEntity.DrawHUD(spriteBatch, playerHealthPosition, true);
-
-                int health = (int)playerEntity.CurrentHealth;
-                Vector2 healthStatus = new Vector2(playerHealthPosition.X + 57, playerHealthPosition.Y);
-                spriteBatch.DrawString(font, health.ToString() + " / 150", healthStatus, Color.White);
-
-                spriteBatch.End();
+                case Level.StartingArea:
+                    startingArea.Draw(spriteBatch);
+                    campfire.Draw(spriteBatch);
+                    break;
+                case Level.Level_1:
+                    level_1.Draw(spriteBatch);
+                    break;
             }
 
+            Vector2 playerHealthPosition = new Vector2(playerEntity.Position.X - 170, playerEntity.Position.Y - 110);
+            
+
+            playerEntity.Draw(spriteBatch);
+            playerEntity.DrawHUD(spriteBatch, playerHealthPosition, true);
+            startingArea.map.SortSprites(spriteBatch, playerEntity, enemyList);
+            int health = (int)playerEntity.CurrentHealth;
+            Vector2 healthStatus = new Vector2(playerHealthPosition.X + 57, playerHealthPosition.Y);
+            spriteBatch.DrawString(font, health.ToString() + " / 150", healthStatus, Color.White);
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
 
