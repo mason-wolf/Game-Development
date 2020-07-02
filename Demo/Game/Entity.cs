@@ -50,9 +50,9 @@ namespace Demo
         }
 
         // Create textures to display health.
-        Texture2D statusBar;
-        Texture2D healthBar;
-        Texture2D staminaBar;
+        public Texture2D statusBar;
+        public Texture2D healthBar;
+        public Texture2D staminaBar;
 
         public int ID { get; set; } = 0;
         public double MaxHealth { get; set; } = 0;
@@ -166,7 +166,6 @@ namespace Demo
 
                     if (rotation < -179 || rotation == 180)
                     {
- 
                         entity.State = Action.WalkNorth;
                     }
                     else if (rotation >= 89 && rotation < 180)

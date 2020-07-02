@@ -18,6 +18,7 @@ namespace Demo.Scenes
         public static EnemyAI enemyAI;
         public static List<Entity> enemyList = new List<Entity>();
         public RoyT.AStar.Grid grid;
+        Player player = StartArea.player;
 
         public override void LoadContent(ContentManager content)
         {
@@ -25,7 +26,7 @@ namespace Demo.Scenes
             enemy.LoadContent(content);
 
             // Create enemies
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 6; i++)
             {
                 Entity enemyEntity = new Entity(enemy.Animation);
                 enemyEntity.LoadContent(content);
@@ -37,14 +38,48 @@ namespace Demo.Scenes
                 enemyList.Add(enemyEntity);
             }
 
-         //   grid = new RoyT.AStar.Grid(map.Width() * 16, map.Height() * 16, 1);
-            enemyList[0].Position = new Vector2(407, 764);
+            MapRenderer map = StartArea.level_1.map;
+            grid = new RoyT.AStar.Grid(map.Width() * 16, map.Height() * 16, 1);
 
-         //   StartArea.playerObject.EnemyList = enemyList;
+            enemyList[0].Position = new Vector2(100, 764);
+            enemyList[1].Position = new Vector2(170, 617);
+            enemyList[2].Position = new Vector2(95, 687);
+            enemyList[3].Position = new Vector2(95, 521);
+            enemyList[4].Position = new Vector2(95, 380);
+            enemyList[5].Position = new Vector2(373, 373);
+
+            StartArea.player.EnemyList = enemyList;
+
+            // Block cells in the collision layer for path finding.
+            foreach (Tile tile in map.GetCollisionLayer())
+            {
+                if (tile.TileID !=0)
+                {
+                    int x = (int)tile.Position.X;
+                    int y = (int)tile.Position.Y;
+
+                    for (int i = 0; i < 16; i++)
+                    {
+                        for (int j = 0; j < 16; j++)
+                        {
+                            grid.BlockCell(new RoyT.AStar.Position(x, y));
+                            x++;
+                        }
+
+                        x = (int)tile.Position.X;
+                        grid.BlockCell(new RoyT.AStar.Position(x, y));
+                        y++;
+                    }
+                }
+            }
+            enemyAI = new EnemyAI(grid, enemyList, StartArea.player);
         }
 
         public override void Update(GameTime gameTime)
         {
+            Console.WriteLine(player.Position);
+            enemyAI.Update(gameTime);
+
             foreach(Entity e in enemyList)
             {
                 e.Update(gameTime);
@@ -56,6 +91,8 @@ namespace Demo.Scenes
             foreach(Entity e in enemyList)
             {
                 e.Draw(spriteBatch);
+                Vector2 AIHealthPosition = new Vector2(e.Position.X - 8, e.Position.Y - 20);
+                e.DrawHUD(spriteBatch, AIHealthPosition, false);
             }
         }
     }

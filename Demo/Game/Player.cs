@@ -29,10 +29,9 @@ namespace Demo
         MouseState newMouseState;
         Entity playerEntity;
 
-        public double AttackDamage { get; set; }
         public List<Entity> EnemyList { get; set; }
 
-        public void LoadContent(ContentManager content)
+        public new void LoadContent(ContentManager content)
         {
             playerTexture = content.Load<Texture2D>(@"spritesheets\player_2");
             playerAtlas = TextureAtlas.Create(playerTexture, 32, 32);
@@ -55,6 +54,9 @@ namespace Demo
             playerAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 39, 40, 41, 42, 43, 44 }, attackSpeed, isLooping: true));
             playerAnimation.Add("attackNorthPattern2", new SpriteSheetAnimationData(new[] { 45, 46, 47, 46 }, attackSpeed, isLooping: true));
             playerAnimation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 37 }));
+            statusBar = content.Load<Texture2D>(@"interface\statusbar");
+            healthBar = content.Load<Texture2D>(@"interface\healthbar");
+            staminaBar = content.Load<Texture2D>(@"interface\staminabar");
         }
 
         Random random = new Random();
