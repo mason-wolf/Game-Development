@@ -20,7 +20,7 @@ using Humper;
 
 namespace Demo
 {
-    public class Player
+    public class Player : Entity
     {
         public Texture2D playerTexture;
         public TextureAtlas playerAtlas;
@@ -29,8 +29,8 @@ namespace Demo
         MouseState newMouseState;
         Entity playerEntity;
 
+        public double AttackDamage { get; set; }
         public List<Entity> EnemyList { get; set; }
-        public double AttackDamage { get; set; } = 0;
 
         public void LoadContent(ContentManager content)
         {

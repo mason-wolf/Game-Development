@@ -33,8 +33,8 @@ namespace Demo.Scenes
         public static Enemy enemy;
         public static EnemyAI enemyAI;
         public static Camera2D camera;
-        public static Scene startingArea;
-        public static Scene level_1;
+        public static Map startingArea;
+        public static Map level_1;
         public static List<Entity> enemyList = new List<Entity>();
         public static List<Entity> allyList = new List<Entity>();
         public static RoyT.AStar.Grid grid;
@@ -69,21 +69,27 @@ namespace Demo.Scenes
 
         protected override void LoadContent()
         {
-            startingArea = new Scene(Content, "Content/maps/StartingArea.tmx");
-            level_1 = new Scene(Content, "Content/maps/level_1.tmx");
+            startingArea = new Map(Content, "Content/maps/StartingArea.tmx");
+            level_1 = new Map(Content, "Content/maps/level_1.tmx");
+
+            player = new Player();
+            player.LoadContent(Content);
+
+            level_1.AddScene(new Level_1());
 
             // Create path finding grid.
             grid = new RoyT.AStar.Grid(startingArea.map.Width() * 16, startingArea.map.Height() * 16, 1);
 
             // Create player to manage animations and controls.
-            player = new Player();
+
             ally = new Ally();
             enemy = new Enemy();
-            player.LoadContent(Content);
+ 
             ally.LoadContent(Content);
             enemy.LoadContent(Content);
 
             // Create player entity to manage interactions with AI.
+
             playerEntity = new Entity(player.playerAnimation);
             playerEntity.LoadContent(Content);
             playerEntity.Position = playerStartingPosition;
@@ -91,43 +97,6 @@ namespace Demo.Scenes
             playerEntity.MaxHealth = 150;
             playerEntity.CurrentHealth = 150;
             player.AttackDamage = 2;
-
-            // Create enemies
-            for (int i = 0; i < 6; i++)
-            {
-                Entity enemyEntity = new Entity(enemy.Animation);
-                enemyEntity.LoadContent(Content);
-                enemyEntity.ID = i;
-                enemyEntity.State = Action.Idle;
-                enemyEntity.MaxHealth = 15;
-                enemyEntity.CurrentHealth = 15;
-                enemyEntity.AttackDamage = 0.1;
-                enemyList.Add(enemyEntity);
-            }
-
-            // Create Allies
-            for (int i = 0; i < 2; i++)
-            {
-                Entity npc = new Entity(ally.militiaAnimation);
-                npc.LoadContent(Content);
-                npc.State = Action.Idle;
-                npc.MaxHealth = 15;
-                npc.CurrentHealth = 15;
-                npc.AttackDamage = 0.1;
-                allyList.Add(npc);
-            }
-
-            enemyList[0].Position = new Vector2(789, 663);
-            enemyList[1].Position = new Vector2(789, 376);
-            enemyList[2].Position = new Vector2(581, 459);
-            enemyList[3].Position = new Vector2(800, 663);
-            enemyList[4].Position = new Vector2(825, 376);
-            enemyList[5].Position = new Vector2(850, 459);
-
-            // Attach entities to collision world.
-
-       //     allyCollision = startingAreaCollisionWorld.Create(0, 0, 16, 16);
-       //     enemyCollision = startingAreaCollisionWorld.Create(0, 0, 16, 16);
             player.EnemyList = enemyList;
 
             font = Content.Load<SpriteFont>(@"interface\font");
@@ -145,24 +114,43 @@ namespace Demo.Scenes
       //      startingAreaCollisionWorld.Create(campfire.Position.X, campfire.Position.Y, 16, 16);
 
             teleporter = new Rectangle(340, 134, 8, 1);
-            level_1_teleporter = new Rectangle(407, 1020, 8, 1);
-            SelectedLevel = Level.StartingArea;
+            level_1_teleporter = new Rectangle(407, 915, 8, 1);
+            SelectedLevel = Level.Level_1;
+            playerEntity.Position = new Vector2(407, 875);
             playerCollision = startingArea.GetCollisionWorld();
             base.LoadContent();
         }
 
         IBox playerCollision;
+
         public override void Update(GameTime gameTime)
         {
+        //    Console.WriteLine(player.Position);
 
             if (playerEntity.BoundingBox.Intersects(teleporter))
             {
+                level_1.FadeIn();
+
+                if(level_1.hasFaded)
+                {
+                    level_1.hasFaded = false;
+                    level_1.color = new Color(255, 255, 255, 255);
+                }
+
                 SelectedLevel = Level.Level_1;
-                playerEntity.Position = new Vector2(407, 990);
+                playerEntity.Position = new Vector2(407, 875);
             }
 
             if (playerEntity.BoundingBox.Intersects(level_1_teleporter))
             {
+                startingArea.FadeIn();
+
+                if (startingArea.hasFaded)
+                {
+                    startingArea.hasFaded = false;
+                    startingArea.color = new Color(255, 255, 255, 255);
+                }
+
                 SelectedLevel = Level.StartingArea;
                 playerEntity.Position = new Vector2(325, 150);
             }
@@ -177,6 +165,7 @@ namespace Demo.Scenes
                     break;
                 case Level.Level_1:
                     playerCollision = level_1.GetCollisionWorld();
+                    level_1.Update(gameTime);
                     break;
             }
             // Handle collision.
@@ -186,7 +175,6 @@ namespace Demo.Scenes
                 enemyAI.Update(gameTime);
                 campfire.Update(gameTime);
                 camera.Zoom = 3;
-
                 player.HandleInput(gameTime, playerEntity, playerCollision, newState, oldState);
                 camera.LookAt(playerEntity.Position);
                 oldState = newState;

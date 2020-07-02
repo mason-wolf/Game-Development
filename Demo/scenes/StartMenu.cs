@@ -66,7 +66,6 @@ namespace Demo
                 {
                     gameStart = true;
                     buttonMenu.Hide();
-
                     StartArea startingArea = new StartArea(game, window);
                     Components.Add(startingArea);
                     startingArea.Show();

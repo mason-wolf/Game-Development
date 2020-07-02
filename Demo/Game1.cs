@@ -56,7 +56,7 @@ namespace Demo
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(new Color(25, 25, 25));
             base.Draw(gameTime);
         }
     }

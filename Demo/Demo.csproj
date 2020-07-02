@@ -40,11 +40,12 @@
   <ItemGroup>
     <Compile Include="Game\Ally.cs" />
     <Compile Include="Game\EnemyAI.cs" />
+    <Compile Include="Game\Scene.cs" />
     <Compile Include="Game\PathFinder.cs" />
     <Compile Include="Game\Enemy.cs" />
     <Compile Include="Game\Layer.cs" />
+    <Compile Include="Game\MapRenderer.cs" />
     <Compile Include="Game\Map.cs" />
-    <Compile Include="Game\Scene.cs" />
     <Compile Include="Game\Tile.cs" />
     <Compile Include="Game\Waypoint.cs" />
     <Compile Include="Interface\Background.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="Game\Entity.cs" />
     <Compile Include="Game\Player.cs" />
     <Compile Include="Interface\Dialog.cs" />
+    <Compile Include="Scenes\Level_1.cs" />
     <Compile Include="Scenes\StartArea.cs" />
     <Compile Include="Interface\Menu.cs" />
     <Compile Include="Program.cs" />

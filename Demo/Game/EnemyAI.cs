@@ -13,7 +13,7 @@ using RoyT.AStar;
 
 namespace Demo.Engine
 {
-    class EnemyAI : IUpdate
+    public class EnemyAI : IUpdate
     {
         private Grid movementGrid;
         private Entity player;
