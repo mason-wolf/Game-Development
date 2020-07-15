@@ -26,7 +26,7 @@ namespace Demo.Engine
             Atlas = TextureAtlas.Create(Texture, 32, 32);
             Animation = new SpriteSheetAnimationFactory(Atlas);
             float animationSpeed = .2f;
-            float attackSpeed = 0.09f;
+            float attackSpeed = 0.2f;
             Animation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }));
             Animation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 1, 2 }, animationSpeed, isLooping: true));
             Animation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 3, 4, 5, 6, 7, 8, 7, 6, 5, 9, 10, 11, 10 }, attackSpeed, isLooping: true));

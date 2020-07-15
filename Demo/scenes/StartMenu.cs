@@ -33,7 +33,7 @@ namespace Demo
                 game,
                 window,
                 spriteFont,
-                buttonImage);
+                buttonImage, background);
 
             buttonMenu.SetMenuItems(items);
             

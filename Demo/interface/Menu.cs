@@ -21,6 +21,7 @@ namespace Demo.Interface
         private Camera2D camera;
         SpriteFont spriteFont;
         Texture2D buttonImage;
+        Texture2D background;
 
         Color normalColor = Color.Yellow;
         Color hiliteColor = Color.White;
@@ -33,13 +34,14 @@ namespace Demo.Interface
 
         int width, height;
 
-        public Menu(Game game, GameWindow window, SpriteFont spriteFont, Texture2D buttonImage)
+        public Menu(Game game, GameWindow window, SpriteFont spriteFont, Texture2D buttonImage, Texture2D background)
             : base(game)
         {
             viewPortAdapter = new BoxingViewportAdapter(window, GraphicsDevice, 1080, 720);
             camera = new Camera2D(viewPortAdapter);
             this.spriteFont = spriteFont;
             this.buttonImage = buttonImage;
+            this.background = background;
             spriteBatch =
                 (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
         }
@@ -146,6 +148,7 @@ namespace Demo.Interface
 
             Color myColor;
 
+            spriteBatch.Draw(background, new Vector2(textPosition.X - 121, textPosition.Y - 122), Color.White);
 
             for (int i = 0; i < menuItems.Count; i++)
             {
@@ -164,7 +167,7 @@ namespace Demo.Interface
 
                 Vector2 textSize = spriteFont.MeasureString(menuItems[i]);
                 textPosition.X -= textSize.X / 2;
-                textPosition.Y -= spriteFont.LineSpacing / 2;
+                textPosition.Y -= spriteFont.LineSpacing / 3;
 
                 spriteBatch.DrawString(spriteFont,
                     menuItems[i],

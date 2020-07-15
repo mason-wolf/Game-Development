@@ -75,7 +75,7 @@ namespace Demo
                     {
                         Vector2 oppositeDirection = unitList[i].Position - unit.Position;
                         oppositeDirection.Normalize();
-                        unit.Position -= oppositeDirection * (float)(0.05f * gameTime.ElapsedGameTime.TotalMilliseconds);
+                        unit.Position -= oppositeDirection * (float)(0.01f * gameTime.ElapsedGameTime.TotalMilliseconds);
                     }
                 }
             }

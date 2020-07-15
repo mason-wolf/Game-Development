@@ -34,7 +34,7 @@ namespace Demo.Scenes
                 enemyEntity.State = Action.Idle;
                 enemyEntity.MaxHealth = 15;
                 enemyEntity.CurrentHealth = 15;
-                enemyEntity.AttackDamage = 0.1;
+                enemyEntity.AttackDamage = 0.05;
                 enemyList.Add(enemyEntity);
             }
 
@@ -77,7 +77,6 @@ namespace Demo.Scenes
 
         public override void Update(GameTime gameTime)
         {
-            Console.WriteLine(player.Position);
             enemyAI.Update(gameTime);
 
             foreach(Entity e in enemyList)

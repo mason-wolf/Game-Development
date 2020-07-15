@@ -35,7 +35,8 @@ namespace Demo
             map.LoadMap(content, mapName);
             this.content = content;
             collisionWorld = map.GenerateCollisionWorld();
-            splash = content.Load<Texture2D>(@"interface/titlescreen");
+            splash = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);
+            splash.SetData(new Color[] { Color.Black });
             color = new Color(255, 255, 255, 255);
             fadeIn = false;
         }

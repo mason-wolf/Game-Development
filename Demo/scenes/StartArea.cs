@@ -32,7 +32,7 @@ namespace Demo.Scenes
         public static Map startingArea;
         public static Map level_1;
         private SpriteFont font;
-        Vector2 playerStartingPosition = new Vector2(350, 220);
+        Vector2 playerStartingPosition = new Vector2(350, 200);
 
         public Texture2D campfireTexture;
         public TextureAtlas campfireAtlas;
@@ -72,8 +72,8 @@ namespace Demo.Scenes
             player.sprite = new AnimatedSprite(player.playerAnimation);
             player.Position = playerStartingPosition;
             player.State = Action.Idle;
-            player.MaxHealth = 100;
-            player.CurrentHealth = 100;
+            player.MaxHealth = 150;
+            player.CurrentHealth = 150;
             player.AttackDamage = 2;
 
 
@@ -91,8 +91,8 @@ namespace Demo.Scenes
 
             teleporter = new Rectangle(340, 134, 8, 1);
             level_1_teleporter = new Rectangle(407, 915, 8, 1);
-            SelectedLevel = Level.Level_1;
-            player.Position = new Vector2(407, 875);
+            SelectedLevel = Level.StartingArea;
+          //  player.Position = new Vector2(407, 875);
             playerCollision = startingArea.GetCollisionWorld();
             base.LoadContent();
         }

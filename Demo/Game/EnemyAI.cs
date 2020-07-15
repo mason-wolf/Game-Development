@@ -51,7 +51,7 @@ namespace Demo.Engine
             {
                 float enemyDistance = Vector2.Distance(player.Position, enemy.Position);
 
-                if (enemyDistance < 200 && enemy.State != Action.Dead)
+                if (enemyDistance < 90 && enemy.State != Action.Dead)
                 {
                     // Keep a list to find paths of the nearest enemies.
                     if (!enemiesInRange.Contains(enemy))
@@ -59,7 +59,7 @@ namespace Demo.Engine
                         enemiesInRange.Add(enemy);
                     }
 
-                    pathFinder.MoveUnit(enemy, 0.05f, 15, gameTime);
+                    pathFinder.MoveUnit(enemy, 0.07f, 15, gameTime);
                     enemy.Attack(player);
                 }
                 else
