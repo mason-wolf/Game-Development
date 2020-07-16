@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/healthbar.png</SourceFile>
-  <SourceTime>2019-10-28T20:46:37.4335996-05:00</SourceTime>
-  <DestFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/bin/Windows/interface/healthbar.xnb</DestFile>
-  <DestTime>2020-07-16T17:26:53.7513878-05:00</DestTime>
+  <SourceFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/Bat.png</SourceFile>
+  <SourceTime>2020-07-16T17:19:53.4143148-05:00</SourceTime>
+  <DestFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/bin/Windows/spritesheets/Bat.xnb</DestFile>
+  <DestTime>2020-07-16T17:26:53.970388-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

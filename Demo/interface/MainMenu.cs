@@ -15,7 +15,7 @@ using MonoGame.Extended;
 
 namespace Demo.Interface
 {
-    public class Menu : SceneManager
+    public class MainMenu : SceneManager
     {
         private BoxingViewportAdapter viewPortAdapter;
         private Camera2D camera;
@@ -34,7 +34,7 @@ namespace Demo.Interface
 
         int width, height;
 
-        public Menu(Game game, GameWindow window, SpriteFont spriteFont, Texture2D buttonImage, Texture2D background)
+        public MainMenu(Game game, GameWindow window, SpriteFont spriteFont, Texture2D buttonImage, Texture2D background)
             : base(game)
         {
             viewPortAdapter = new BoxingViewportAdapter(window, GraphicsDevice, 1080, 720);

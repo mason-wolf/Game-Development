@@ -124,6 +124,7 @@ namespace Demo.Engine
 
         public void Draw(SpriteBatch spriteBatch)
         {
+
             foreach (Tile tile in firstLayer)
             {
                 if (tile.TileID != 0)

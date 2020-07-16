@@ -19,6 +19,7 @@ using Humper.Responses;
 using RoyT.AStar;
 using MonoGame.Extended.Sprites;
 using Microsoft.Xna.Framework.Content;
+using Demo.Interface;
 
 namespace Demo.Scenes
 {
@@ -33,12 +34,12 @@ namespace Demo.Scenes
         public static Map level_1;
         private SpriteFont font;
         Vector2 playerStartingPosition = new Vector2(350, 200);
-
         public Texture2D campfireTexture;
         public TextureAtlas campfireAtlas;
         public SpriteSheetAnimationFactory campfireAnimation;
         public AnimatedSprite campfire;
 
+        public EscapeMenu escapeMenu;
         Rectangle teleporter;
         Rectangle level_1_teleporter;
         GameWindow window;
@@ -51,19 +52,20 @@ namespace Demo.Scenes
             base.Initialize();
         }
 
-        public enum Level
+        public enum Scene
         {
+            EscapeMenu,
             StartingArea,
             Level_1
         }
 
-        public Level SelectedLevel { get; set; }
+        public static Scene SelectedScene { get; set; }
 
         protected override void LoadContent()
         {
             startingArea = new Map(Content, "Content/maps/StartingArea.tmx");
             level_1 = new Map(Content, "Content/maps/level_1.tmx");
-
+            font = Content.Load<SpriteFont>(@"interface\font");
             player = new Player();
             player.LoadContent(Content);
 
@@ -74,10 +76,12 @@ namespace Demo.Scenes
             player.State = Action.Idle;
             player.MaxHealth = 150;
             player.CurrentHealth = 150;
-            player.AttackDamage = 2;
+            player.AttackDamage = 2.5;
 
 
-            font = Content.Load<SpriteFont>(@"interface\font");
+            escapeMenu = new EscapeMenu(game, window, Content);
+            string[] items = { "Continue", "Save", "Load", "Quit" };
+            escapeMenu.SetMenuItems(items);
 
             campfireTexture = Content.Load<Texture2D>(@"objects\campfire");
             campfireAtlas = TextureAtlas.Create(campfireTexture, 16, 32);
@@ -91,7 +95,7 @@ namespace Demo.Scenes
 
             teleporter = new Rectangle(340, 134, 8, 1);
             level_1_teleporter = new Rectangle(407, 915, 8, 1);
-            SelectedLevel = Level.StartingArea;
+            SelectedScene = Scene.StartingArea;
           //  player.Position = new Vector2(407, 875);
             playerCollision = startingArea.GetCollisionWorld();
             base.LoadContent();
@@ -101,9 +105,9 @@ namespace Demo.Scenes
 
         public override void Update(GameTime gameTime)
         {
-            //    Console.WriteLine(player.Position);
+            escapeMenu.Position = new Vector2(player.Position.X, player.Position.Y - 125);
 
-            if (player.BoundingBox.Intersects(teleporter))
+            if (player.BoundingBox.Intersects(teleporter) && SelectedScene != Scene.Level_1)
             {
                 level_1.FadeIn();
 
@@ -112,9 +116,9 @@ namespace Demo.Scenes
                     level_1.hasFaded = false;
                     level_1.color = new Color(255, 255, 255, 255);
                 }
-
-                SelectedLevel = Level.Level_1;
-                player.Position = new Vector2(407, 875);
+                
+                SelectedScene = Scene.Level_1;
+                player.Position = new Vector2(416, 875);
             }
 
             if (player.BoundingBox.Intersects(level_1_teleporter))
@@ -127,19 +131,22 @@ namespace Demo.Scenes
                     startingArea.color = new Color(255, 255, 255, 255);
                 }
 
-                SelectedLevel = Level.StartingArea;
+                SelectedScene = Scene.StartingArea;
                 player.Position = new Vector2(325, 150);
             }
 
             newState = Keyboard.GetState();
 
-            switch (SelectedLevel)
+            switch (SelectedScene)
             {
-                case Level.StartingArea:
+                case Scene.EscapeMenu:
+                    escapeMenu.Update(gameTime);
+                    break;
+                case Scene.StartingArea:
                     playerCollision = startingArea.GetCollisionWorld();
                     startingArea.Update(gameTime);
                     break;
-                case Level.Level_1:
+                case Scene.Level_1:
                     playerCollision = level_1.GetCollisionWorld();
                     level_1.Update(gameTime);
                     break;
@@ -165,26 +172,32 @@ namespace Demo.Scenes
         {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
 
-            switch (SelectedLevel)
+            switch (SelectedScene)
             {
-                case Level.StartingArea:
+                case Scene.StartingArea:
                     startingArea.Draw(spriteBatch);
                     campfire.Draw(spriteBatch);
                     break;
-                case Level.Level_1:
+                case Scene.Level_1:
                     level_1.Draw(spriteBatch);
                     break;
             }
 
-            Vector2 playerHealthPosition = new Vector2(player.Position.X - 170, player.Position.Y - 110);
+            if (SelectedScene == Scene.EscapeMenu)
+            {
+                escapeMenu.Draw(spriteBatch);
+            }
+            else
+            {
+                Vector2 playerHealthPosition = new Vector2(player.Position.X - 170, player.Position.Y - 110);
 
+                player.Draw(spriteBatch);
+                player.DrawHUD(spriteBatch, playerHealthPosition, true);
+                int health = (int)player.CurrentHealth;
+                Vector2 healthStatus = new Vector2(playerHealthPosition.X + 57, playerHealthPosition.Y);
+                spriteBatch.DrawString(font, health.ToString() + " / 150", healthStatus, Color.White);
 
-            player.Draw(spriteBatch);
-            player.DrawHUD(spriteBatch, playerHealthPosition, true);
-            int health = (int)player.CurrentHealth;
-            Vector2 healthStatus = new Vector2(playerHealthPosition.X + 57, playerHealthPosition.Y);
-            spriteBatch.DrawString(font, health.ToString() + " / 150", healthStatus, Color.White);
-
+            }
             spriteBatch.End();
             base.Draw(gameTime);
         }

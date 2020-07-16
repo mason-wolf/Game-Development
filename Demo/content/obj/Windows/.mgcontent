@@ -21,5 +21,9 @@
     <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/player_2.png</File>
     <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/objects/campfire.png</File>
     <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/tilesets/tileset_2.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/escapeMenu.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/Skeleton.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/Bat.png</File>
+    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/FireBat.png</File>
   </SourceFiles>
 </SourceFileCollection>

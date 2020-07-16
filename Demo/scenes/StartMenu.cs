@@ -12,7 +12,7 @@ namespace Demo
 {
     class Start : SceneManager
     {
-        public Menu buttonMenu;
+        public MainMenu buttonMenu;
         SpriteFont spriteFont;
         Texture2D background;
         Texture2D buttonImage;
@@ -29,7 +29,7 @@ namespace Demo
 
             string[] items = { "START", "QUIT" };
 
-            buttonMenu = new Menu(
+            buttonMenu = new MainMenu(
                 game,
                 window,
                 spriteFont,
@@ -66,6 +66,7 @@ namespace Demo
                 {
                     gameStart = true;
                     buttonMenu.Hide();
+                    this.UnloadContent();
                     StartArea startingArea = new StartArea(game, window);
                     Components.Add(startingArea);
                     startingArea.Show();
@@ -77,8 +78,7 @@ namespace Demo
 
         public override void Show()
         {
-            buttonMenu.Position = new Vector2((Game.Window.ClientBounds.Width -
-                                        buttonMenu.Width) / 2, 450);
+            buttonMenu.Position = new Vector2((Game.Window.ClientBounds.Width - buttonMenu.Width) / 2, 450);
             base.Show();
         }
 

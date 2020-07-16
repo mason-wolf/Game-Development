@@ -76,6 +76,11 @@ namespace Demo
             }
         }
 
+        bool inMenu = false;
+        public static bool pressedContinued = false;
+        // Store currently running scene to revert back after exiting escape menu.
+        StartArea.Scene currentScene = StartArea.SelectedScene;
+
         // Handle attacking and movement animations.
         public void HandleInput(GameTime gameTime, Entity player, IBox playerCollisionBox, KeyboardState newState, KeyboardState oldState)
         {
@@ -86,155 +91,173 @@ namespace Demo
 
             newMouseState = Mouse.GetState();
 
-            // Attacking south
-            if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkSouth ||
-                newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.Idle)
+            // Handle escape menu.
+            if (newState.IsKeyDown(Keys.Escape) && oldState.IsKeyUp(Keys.Escape) || pressedContinued == true)
             {
-
-                // Randomly select an attack pattern.
-                int attackPattern = random.Next(1, 4);
-
-                if (attackPattern < 3)
+                if (inMenu)
                 {
-                    motion.Y -= speed;
-                    player.Position = motion;
-                    player.State = Action.AttackSouthPattern1;
-                    Attack();
+                    StartArea.SelectedScene = currentScene;
+                    inMenu = false;
+                    pressedContinued = false;
                 }
                 else
                 {
-                    player.State = Action.AttackSouthPattern2;
-                    Attack();
+                    currentScene = StartArea.SelectedScene;
+                    StartArea.SelectedScene = StartArea.Scene.EscapeMenu;
+                    inMenu = true;
                 }
             }
 
-            // Attacking West
-            else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkWest ||
-                newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleWest)
+            if (!inMenu)
             {
-                int attackPattern = random.Next(1, 4);
-
-                if (attackPattern < 3)
+                // Attacking south
+                if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkSouth ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.Idle)
                 {
 
-                    player.State = Action.AttackWestPattern1;
-                    Attack();
-                }
-                else
-                {
-                    player.State = Action.AttackWestPattern2;
-                    Attack();
-                }
-            }
+                    // Randomly select an attack pattern.
+                    int attackPattern = random.Next(1, 4);
 
-            // Attacking East
-            else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkEast ||
-                newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleEast)
-            {
-                int attackPattern = random.Next(1, 4);
-
-                if (attackPattern < 3)
-                {
-                    player.State = Action.AttackEastPattern1;
-                    Attack();
-                }
-                else
-                {
-                    player.State = Action.AttackEastPattern2;
-                    Attack();
-                }
-            }
-
-            // Attacking North
-            else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkNorth ||
-                newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleNorth)
-            {
-
-                int attackPattern = random.Next(1, 4);
-
-                if (attackPattern < 3)
-                {
-                    player.State = Action.AttackNorthPattern1;
-                    Attack();
-                }
-                else
-                {
-                    player.State = Action.AttackNorthPattern2;
-                    Attack();
-                }
-            }
-            else
-            {
-                if (newState.IsKeyDown(Keys.W) && player.State != Action.AttackNorthPattern1)
-                {
-                    // Walk east if W and D are pressed
-                    if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.D))
+                    if (attackPattern < 3)
                     {
                         motion.Y -= speed;
                         player.Position = motion;
-                        player.State = Action.WalkEast;
-                    }
-                    // Walk west if W and A are pressed.
-                    else if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.A))
-                    {
-                        motion.Y -= speed;
-                        player.Position = motion;
-                        player.State = Action.WalkWest;
+                        player.State = Action.AttackSouthPattern1;
+                        Attack();
                     }
                     else
                     {
-                        // Walk north.
-                        motion.Y -= speed;
-                        player.Position = motion;
-                        player.State = Action.WalkNorth;
+                        player.State = Action.AttackSouthPattern2;
+                        Attack();
                     }
                 }
 
-                if (newState.IsKeyDown(Keys.S) && player.State != Action.AttackSouthPattern1)
+                // Attacking West
+                else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkWest ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleWest)
                 {
-                    // Walk east if S and D are pressed.
-                    if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.D))
-                    {
-                        motion.Y += speed;
-                        player.Position = motion;
-                        player.State = Action.WalkEast;
+                    int attackPattern = random.Next(1, 4);
 
-                    }
-
-                    // Walk west if S and A are pressed.
-                    else if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.A))
+                    if (attackPattern < 3)
                     {
-                        motion.Y += speed;
-                        player.Position = motion;
-                        player.State = Action.WalkWest;
+
+                        player.State = Action.AttackWestPattern1;
+                        Attack();
                     }
                     else
                     {
-                        // Walk south
-                        motion.Y += speed;
-                        player.Position = motion;
-                        player.State = Action.WalkSouth;
+                        player.State = Action.AttackWestPattern2;
+                        Attack();
                     }
                 }
 
-                // Walk east
-                if (newState.IsKeyDown(Keys.D) && player.State != Action.AttackEastPattern1)
+                // Attacking East
+                else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkEast ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleEast)
                 {
-                    motion.X += speed;
-                    player.Position = motion;
-                    player.State = Action.WalkEast;
+                    int attackPattern = random.Next(1, 4);
+
+                    if (attackPattern < 3)
+                    {
+                        player.State = Action.AttackEastPattern1;
+                        Attack();
+                    }
+                    else
+                    {
+                        player.State = Action.AttackEastPattern2;
+                        Attack();
+                    }
                 }
 
-                // Walk west
-                if (newState.IsKeyDown(Keys.A) && player.State != Action.AttackWestPattern1)
+                // Attacking North
+                else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkNorth ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleNorth)
                 {
-                    motion.X -= speed;
-                    player.Position = motion;
-                    player.State = Action.WalkWest;
+
+                    int attackPattern = random.Next(1, 4);
+
+                    if (attackPattern < 3)
+                    {
+                        player.State = Action.AttackNorthPattern1;
+                        Attack();
+                    }
+                    else
+                    {
+                        player.State = Action.AttackNorthPattern2;
+                        Attack();
+                    }
+                }
+                else
+                {
+                    if (newState.IsKeyDown(Keys.W) && player.State != Action.AttackNorthPattern1)
+                    {
+                        // Walk east if W and D are pressed
+                        if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.D))
+                        {
+                            motion.Y -= speed;
+                            player.Position = motion;
+                            player.State = Action.WalkEast;
+                        }
+                        // Walk west if W and A are pressed.
+                        else if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.A))
+                        {
+                            motion.Y -= speed;
+                            player.Position = motion;
+                            player.State = Action.WalkWest;
+                        }
+                        else
+                        {
+                            // Walk north.
+                            motion.Y -= speed;
+                            player.Position = motion;
+                            player.State = Action.WalkNorth;
+                        }
+                    }
+
+                    if (newState.IsKeyDown(Keys.S) && player.State != Action.AttackSouthPattern1)
+                    {
+                        // Walk east if S and D are pressed.
+                        if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.D))
+                        {
+                            motion.Y += speed;
+                            player.Position = motion;
+                            player.State = Action.WalkEast;
+
+                        }
+
+                        // Walk west if S and A are pressed.
+                        else if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.A))
+                        {
+                            motion.Y += speed;
+                            player.Position = motion;
+                            player.State = Action.WalkWest;
+                        }
+                        else
+                        {
+                            // Walk south
+                            motion.Y += speed;
+                            player.Position = motion;
+                            player.State = Action.WalkSouth;
+                        }
+                    }
+
+                    // Walk east
+                    if (newState.IsKeyDown(Keys.D) && player.State != Action.AttackEastPattern1)
+                    {
+                        motion.X += speed;
+                        player.Position = motion;
+                        player.State = Action.WalkEast;
+                    }
+
+                    // Walk west
+                    if (newState.IsKeyDown(Keys.A) && player.State != Action.AttackWestPattern1)
+                    {
+                        motion.X -= speed;
+                        player.Position = motion;
+                        player.State = Action.WalkWest;
+                    }
                 }
             }
-
-
             oldMouseState = newMouseState;
         }
     }

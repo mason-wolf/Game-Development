@@ -14,7 +14,9 @@ namespace Demo.Scenes
 {
     public class Level_1 : Scene
     {
-        public static Enemy enemy;
+        public static Skeleton skeletonEnemy;
+        public static Bat batEnemy;
+        public static FireBat fireBatEnemy;
         public static EnemyAI enemyAI;
         public static List<Entity> enemyList = new List<Entity>();
         public RoyT.AStar.Grid grid;
@@ -22,31 +24,76 @@ namespace Demo.Scenes
 
         public override void LoadContent(ContentManager content)
         {
-            enemy = new Enemy();
-            enemy.LoadContent(content);
+            skeletonEnemy = new Skeleton();
+            batEnemy = new Bat();
+            fireBatEnemy = new FireBat();
+            skeletonEnemy.LoadContent(content);
+            batEnemy.LoadContent(content);
+            fireBatEnemy.LoadContent(content);
 
-            // Create enemies
-            for (int i = 0; i < 6; i++)
+            // Create skeleton enemies
+            for (int i = 0; i < 11; i++)
             {
-                Entity enemyEntity = new Entity(enemy.Animation);
-                enemyEntity.LoadContent(content);
-                enemyEntity.ID = i;
-                enemyEntity.State = Action.Idle;
-                enemyEntity.MaxHealth = 15;
-                enemyEntity.CurrentHealth = 15;
-                enemyEntity.AttackDamage = 0.05;
-                enemyList.Add(enemyEntity);
+                Entity skeletonEntity = new Entity(skeletonEnemy.Animation);
+                skeletonEntity.LoadContent(content);
+                skeletonEntity.ID = i;
+                skeletonEntity.State = Action.Idle;
+                skeletonEntity.MaxHealth = 15;
+                skeletonEntity.CurrentHealth = 15;
+                skeletonEntity.AttackDamage = 0.05;
+                enemyList.Add(skeletonEntity);
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                Entity batEntity = new Entity(batEnemy.Animation);
+                batEntity.LoadContent(content);
+                batEntity.ID = i;
+                batEntity.State = Action.IdleEast;
+                batEntity.MaxHealth = 15;
+                batEntity.CurrentHealth = 15;
+                batEntity.AttackDamage = 0.02;
+                enemyList.Add(batEntity);
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                Entity fireBatEntity = new Entity(fireBatEnemy.Animation);
+                fireBatEntity.LoadContent(content);
+                fireBatEntity.ID = i;
+                fireBatEntity.State = Action.IdleEast;
+                fireBatEntity.MaxHealth = 15;
+                fireBatEntity.CurrentHealth = 15;
+                fireBatEntity.AttackDamage = 0.08;
+                enemyList.Add(fireBatEntity);
             }
 
             MapRenderer map = StartArea.level_1.map;
             grid = new RoyT.AStar.Grid(map.Width() * 16, map.Height() * 16, 1);
 
-            enemyList[0].Position = new Vector2(100, 764);
-            enemyList[1].Position = new Vector2(170, 617);
-            enemyList[2].Position = new Vector2(95, 687);
-            enemyList[3].Position = new Vector2(95, 521);
-            enemyList[4].Position = new Vector2(95, 380);
-            enemyList[5].Position = new Vector2(373, 373);
+            enemyList[0].Position = new Vector2(112, 691);
+            enemyList[1].Position = new Vector2(29, 468);
+            enemyList[2].Position = new Vector2(200, 471);
+            enemyList[3].Position = new Vector2(33, 159);
+            enemyList[4].Position = new Vector2(355, 114);
+            enemyList[5].Position = new Vector2(726, 690);
+            enemyList[6].Position = new Vector2(903, 438);
+            enemyList[7].Position = new Vector2(840, 116);
+            enemyList[8].Position = new Vector2(498, 162);
+            enemyList[9].Position = new Vector2(533, 293);
+            enemyList[10].Position = new Vector2(448, 563);
+            enemyList[11].Position = new Vector2(890, 701);
+            enemyList[12].Position = new Vector2(712, 877);
+            enemyList[13].Position = new Vector2(955, 232);
+            enemyList[14].Position = new Vector2(955, 567);
+            enemyList[15].Position = new Vector2(261, 686);
+            enemyList[16].Position = new Vector2(253, 314);
+            enemyList[17].Position = new Vector2(191, 378);
+            enemyList[18].Position = new Vector2(336, 125);
+            enemyList[19].Position = new Vector2(626, 562);
+            enemyList[20].Position = new Vector2(498, 692);
+            enemyList[21].Position = new Vector2(510, 692);
+
 
             StartArea.player.EnemyList = enemyList;
 
@@ -77,6 +124,7 @@ namespace Demo.Scenes
 
         public override void Update(GameTime gameTime)
         {
+            Console.WriteLine(player.Position);
             enemyAI.Update(gameTime);
 
             foreach(Entity e in enemyList)
