@@ -26,23 +26,33 @@ namespace Demo.Scenes
     class StartArea : SceneManager
     {
         public static ViewportAdapter viewPortAdapter;
+        // Monitor keyboard states.
         public static KeyboardState oldState;
         public static KeyboardState newState;
         public static Player player;
         public static Camera2D camera;
-        public static Map startingArea;
-        public static Map level_1;
+        // Store the maps.
+        public static Map startingAreaMap;
+        public static Map level_1Map;
         private SpriteFont font;
-        Vector2 playerStartingPosition = new Vector2(350, 200);
-        public Texture2D campfireTexture;
-        public TextureAtlas campfireAtlas;
-        public SpriteSheetAnimationFactory campfireAnimation;
-        public AnimatedSprite campfire;
+        private Vector2 playerStartingPosition = new Vector2(350, 200);
 
         public EscapeMenu escapeMenu;
-        Rectangle teleporter;
-        Rectangle level_1_teleporter;
-        GameWindow window;
+
+        // Create teleporters.
+        private Rectangle teleporterToLevel_1;
+        private Rectangle teleporterToStartingLevel;
+
+        private GameWindow window;
+        public static Scene SelectedScene { get; set; }
+        DialogBox dialogBox;
+
+        // Create entities for this map.
+        Entity sittingWarriorEntity;
+        AnimatedSprite campfire;
+
+        // Store the player's collision state to pass to different scenes.
+        IBox playerCollision;
 
         public StartArea(Game game, GameWindow window) : base(game)
         {
@@ -52,6 +62,7 @@ namespace Demo.Scenes
             base.Initialize();
         }
 
+        // Store a list of scenes to switch to.
         public enum Scene
         {
             EscapeMenu,
@@ -59,17 +70,19 @@ namespace Demo.Scenes
             Level_1
         }
 
-        public static Scene SelectedScene { get; set; }
-
         protected override void LoadContent()
         {
-            startingArea = new Map(Content, "Content/maps/StartingArea.tmx");
-            level_1 = new Map(Content, "Content/maps/level_1.tmx");
+            startingAreaMap = new Map(Content, "Content/maps/StartingArea.tmx");
+            level_1Map = new Map(Content, "Content/maps/level_1.tmx");
             font = Content.Load<SpriteFont>(@"interface\font");
             player = new Player();
             player.LoadContent(Content);
 
-            level_1.AddScene(new Level_1());
+            Sprites sprites = new Sprites();
+            sprites.LoadContent(Content);
+
+            sittingWarriorEntity = new Entity(Sprites.sittingWarriorAnimation);
+            level_1Map.AddScene(new Level_1());
 
             player.sprite = new AnimatedSprite(player.playerAnimation);
             player.Position = playerStartingPosition;
@@ -78,64 +91,60 @@ namespace Demo.Scenes
             player.CurrentHealth = 150;
             player.AttackDamage = 2.5;
 
+            sittingWarriorEntity.CurrentHealth = 1;
+            sittingWarriorEntity.Position = new Vector2(player.Position.X - 100, player.Position.Y + 65);
+            sittingWarriorEntity.State = Action.IdleEast;
+            startingAreaMap.AddCollidable(sittingWarriorEntity.Position.X, sittingWarriorEntity.Position.Y - 16, 16, 31);
 
             escapeMenu = new EscapeMenu(game, window, Content);
             string[] items = { "Continue", "Save", "Load", "Quit" };
             escapeMenu.SetMenuItems(items);
 
-            campfireTexture = Content.Load<Texture2D>(@"objects\campfire");
-            campfireAtlas = TextureAtlas.Create(campfireTexture, 16, 32);
-            campfireAnimation = new SpriteSheetAnimationFactory(campfireAtlas);
-            campfireAnimation.Add("burning", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, .09f, isLooping: true));
-            campfire = new AnimatedSprite(campfireAnimation);
-            campfire.Play("burning");
-            campfire.Position = new Vector2(300, 260);
-            //     startingAreaCollisionWorld.Create(campfire.Position.X, campfire.Position.Y- 1, 4, 4);
-            //      startingAreaCollisionWorld.Create(campfire.Position.X, campfire.Position.Y, 16, 16);
+            dialogBox = new DialogBox(game, font)
+            {
+                Text = "\n" + 
+                       "Oh..are you here to ascend the mount?\n" +
+                       "Hmph..you'll be needing some help then.\n" +
+                       "I had some friends enter the beast a few days ago.\n" +
+                       "Help me find them and we'll be sure to repay you.\n"
+            };
 
-            teleporter = new Rectangle(340, 134, 8, 1);
-            level_1_teleporter = new Rectangle(407, 915, 8, 1);
+            dialogBox.Position = new Vector2(player.Position.X - 175, player.Position.Y + 100);
+
+            campfire = Sprites.campfireSprite;
+            campfire.Position = new Vector2(300, 260);
+            startingAreaMap.AddCollidable(campfire.Position.X, campfire.Position.Y, 8, 8);
+
+            teleporterToLevel_1 = new Rectangle(340, 134, 8, 1);
+            teleporterToStartingLevel = new Rectangle(407, 915, 8, 1);
             SelectedScene = Scene.StartingArea;
-          //  player.Position = new Vector2(407, 875);
-            playerCollision = startingArea.GetCollisionWorld();
+            playerCollision = startingAreaMap.GetCollisionWorld();
+
             base.LoadContent();
         }
-
-        IBox playerCollision;
 
         public override void Update(GameTime gameTime)
         {
             escapeMenu.Position = new Vector2(player.Position.X, player.Position.Y - 125);
 
-            if (player.BoundingBox.Intersects(teleporter) && SelectedScene != Scene.Level_1)
+            // If player intersects the teleporter, transport to Level 1.
+            if (player.BoundingBox.Intersects(teleporterToLevel_1) && SelectedScene != Scene.Level_1)
             {
-                level_1.FadeIn();
-
-                if (level_1.hasFaded)
-                {
-                    level_1.hasFaded = false;
-                    level_1.color = new Color(255, 255, 255, 255);
-                }
-                
+                FadeInMap(level_1Map);
                 SelectedScene = Scene.Level_1;
-                player.Position = new Vector2(416, 875);
+                player.Position = new Vector2(410, 812);
             }
 
-            if (player.BoundingBox.Intersects(level_1_teleporter))
+            if (player.BoundingBox.Intersects(teleporterToStartingLevel))
             {
-                startingArea.FadeIn();
-
-                if (startingArea.hasFaded)
-                {
-                    startingArea.hasFaded = false;
-                    startingArea.color = new Color(255, 255, 255, 255);
-                }
-
+                FadeInMap(startingAreaMap);
                 SelectedScene = Scene.StartingArea;
                 player.Position = new Vector2(325, 150);
             }
 
             newState = Keyboard.GetState();
+
+            HandleDialog();
 
             switch (SelectedScene)
             {
@@ -143,22 +152,29 @@ namespace Demo.Scenes
                     escapeMenu.Update(gameTime);
                     break;
                 case Scene.StartingArea:
-                    playerCollision = startingArea.GetCollisionWorld();
-                    startingArea.Update(gameTime);
+                    playerCollision = startingAreaMap.GetCollisionWorld();
+                    sittingWarriorEntity.Update(gameTime);
+                    startingAreaMap.Update(gameTime);
                     break;
                 case Scene.Level_1:
-                    playerCollision = level_1.GetCollisionWorld();
-                    level_1.Update(gameTime);
+                    playerCollision = level_1Map.GetCollisionWorld();
+                    level_1Map.Update(gameTime);
                     break;
             }
 
-            // Handle collision.
+            dialogBox.Update();
+
+            // Handle player's collision.
             playerCollision.Move(player.Position.X, player.Position.Y, (collision) => CollisionResponses.Slide);
             player.Update(gameTime);
+
             campfire.Update(gameTime);
 
             camera.Zoom = 3;
-            player.HandleInput(gameTime, player, playerCollision, newState, oldState);
+            if (!inDialog)
+            {
+                player.HandleInput(gameTime, player, playerCollision, newState, oldState);
+            }
             camera.LookAt(player.Position);
 
             oldState = newState;
@@ -172,14 +188,16 @@ namespace Demo.Scenes
         {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
 
+            // Draw the selected screen.
             switch (SelectedScene)
             {
                 case Scene.StartingArea:
-                    startingArea.Draw(spriteBatch);
+                    startingAreaMap.Draw(spriteBatch);
                     campfire.Draw(spriteBatch);
+                    sittingWarriorEntity.Draw(spriteBatch);
                     break;
                 case Scene.Level_1:
-                    level_1.Draw(spriteBatch);
+                    level_1Map.Draw(spriteBatch);
                     break;
             }
 
@@ -193,15 +211,49 @@ namespace Demo.Scenes
 
                 player.Draw(spriteBatch);
                 player.DrawHUD(spriteBatch, playerHealthPosition, true);
+
                 int health = (int)player.CurrentHealth;
                 Vector2 healthStatus = new Vector2(playerHealthPosition.X + 57, playerHealthPosition.Y);
                 spriteBatch.DrawString(font, health.ToString() + " / 150", healthStatus, Color.White);
-
+                dialogBox.Draw(spriteBatch);
             }
             spriteBatch.End();
             base.Draw(gameTime);
         }
 
+        bool inDialog = false;
+
+        public void HandleDialog()
+        {
+            if (player.BoundingBox.Intersects(sittingWarriorEntity.BoundingBox) && newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
+            {
+                dialogBox.Show();
+            }
+
+            if (dialogBox.IsActive())
+            {
+                inDialog = true;
+            }
+            else
+            {
+                inDialog = false;
+            }
+        }
+        /// <summary>
+        /// Creates a transition effect on the map.
+        /// </summary>
+        /// <param name="map">Map to fade in.</param>
+        public void FadeInMap(Map map)
+        {
+            // Fade in the screen.
+            map.FadeIn();
+            // The effect occured once, so set the trigger back to false and reset visibility color.
+            if (map.hasFaded)
+            {
+                level_1Map.hasFaded = false;
+                level_1Map.color = new Color(255, 255, 255, 255);
+            }
+        }
         public override void Show()
         {
             base.Show();

@@ -78,6 +78,7 @@ namespace Demo
 
         bool inMenu = false;
         public static bool pressedContinued = false;
+        public static bool isAttacking = false;
         // Store currently running scene to revert back after exiting escape menu.
         StartArea.Scene currentScene = StartArea.SelectedScene;
 
@@ -256,6 +257,37 @@ namespace Demo
                         player.Position = motion;
                         player.State = Action.WalkWest;
                     }
+                }
+
+                switch(player.State)
+                {
+                    case (Action.AttackEastPattern1):
+                        isAttacking = true;
+                        break;
+                    case (Action.AttackEastPattern2):
+                        isAttacking = true;
+                        break;
+                    case (Action.AttackNorthPattern1):
+                        isAttacking = true;
+                        break;
+                    case (Action.AttackNorthPattern2):
+                        isAttacking = true;
+                        break;
+                    case (Action.AttackSouthPattern1):
+                        isAttacking = true;
+                        break;
+                    case (Action.AttackSouthPattern2):
+                        isAttacking = true;
+                        break;
+                    case (Action.AttackWestPattern1):
+                        isAttacking = true;
+                        break;
+                    case (Action.AttackWestPattern2):
+                        isAttacking = true;
+                        break;
+                    default:
+                        isAttacking = false;
+                        break;
                 }
             }
             oldMouseState = newMouseState;

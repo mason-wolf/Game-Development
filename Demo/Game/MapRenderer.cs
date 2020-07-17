@@ -1,4 +1,5 @@
-﻿using Humper;
+﻿using Demo;
+using Humper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,6 +22,8 @@ namespace Demo.Engine
         List<Layer> layers;
         List<Tile> firstLayer;
         List<Tile> secondLayer;
+        List<MapObject> mapObjects = new List<MapObject>();
+
         World world;
 
         int tileWidth = 16;
@@ -39,9 +42,19 @@ namespace Demo.Engine
             return mapHeight;
         }
 
+        public World GetWorld()
+        {
+            return world;
+        }
+
         public List<Tile> GetCollisionLayer()
         {
             return secondLayer;
+        }
+
+        public List<MapObject> GetMapObjects()
+        {
+            return mapObjects;
         }
 
         public void LoadMap(ContentManager content, string filePath)
@@ -60,10 +73,10 @@ namespace Demo.Engine
                         {
                             mapWidth = Int32.Parse(reader.GetAttribute("width"));
                             mapHeight = Int32.Parse(reader.GetAttribute("height"));
- 
                         }
                     }
      
+                    // Grab the tileset.
                     if (reader.LocalName == "tileset")
                     {
                         string tilesetFilePath = "tilesets/" + Path.GetFileNameWithoutExtension(reader.GetAttribute("source"));
@@ -71,7 +84,7 @@ namespace Demo.Engine
                         mapAtlas = TextureAtlas.Create(mapTexture, 16, 16);
                     }
 
-
+                    // Get the the tiles in each layer and add to layers list.
                     if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "layer")
                     {
                         Layer newLayer = new Layer();
@@ -80,6 +93,15 @@ namespace Demo.Engine
                         string[] tiles = reader.ReadElementContentAsString().Split(',');               
                         newLayer.AddTiles(tiles);
                         layers.Add(newLayer);
+                    }
+
+                    // Get the object layer.
+                    if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "object")
+                    {
+                        string objectName = reader.GetAttribute("name");
+                        Vector2 objectPosition = new Vector2(float.Parse(reader.GetAttribute("x")), float.Parse(reader.GetAttribute("y")));
+                        MapObject newObject = new MapObject(reader.GetAttribute("name"), objectPosition);
+                        mapObjects.Add(newObject);
                     }
                 }
 
@@ -106,7 +128,7 @@ namespace Demo.Engine
  
             int count = 0;
 
-            // Assign tile ID for each tile in each layer.
+            // Assign tile ID for each tile in first layer (walkable).
             foreach (Tile tile in firstLayer)
             {
                 tile.TileID = layers[0].Tiles[count];
@@ -115,6 +137,7 @@ namespace Demo.Engine
 
             int secondCount = 0;
 
+            // Get the second layer (collidable).
             foreach (Tile tile in secondLayer)
             {
                 tile.TileID = layers[1].Tiles[secondCount];
@@ -163,11 +186,6 @@ namespace Demo.Engine
             }
 
             return collisionBox;
-        }
-
-        public void AddCollidable(IBox collidable)
-        {
-            world.Create(0, 0, 16, 16);
         }
 
         public void SortSprites(SpriteBatch spriteBatch, Entity playerEntity, List<Entity> enemyList)

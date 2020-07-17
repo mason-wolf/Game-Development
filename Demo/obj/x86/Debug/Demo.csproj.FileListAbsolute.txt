@@ -385,3 +385,6 @@ C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\int
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\Skeleton.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\Bat.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\FireBat.xnb
+C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\Sitting Warrior.xnb
+C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Torch.xnb
+C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Barrel.xnb

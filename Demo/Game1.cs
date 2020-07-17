@@ -20,11 +20,12 @@ namespace Demo
         public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static SceneManager start;
+        public static Vector2 CenterScreen => new Vector2(graphics.GraphicsDevice.Viewport.Width / 2f, graphics.GraphicsDevice.Viewport.Height / 2f);
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = false;
             graphics.PreferredBackBufferWidth = 1080;
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";

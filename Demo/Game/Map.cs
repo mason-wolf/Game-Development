@@ -1,4 +1,5 @@
 ﻿using Demo.Engine;
+using Demo;
 using Demo.Scenes;
 using Humper;
 using Microsoft.Xna.Framework;
@@ -12,16 +13,17 @@ using System.Threading.Tasks;
 
 namespace Demo
 {
-    public class Map 
+    public class Map
     {
         public ContentManager content;
         public MapRenderer map;
         public string mapName;
         IBox collisionWorld;
         Scene scene;
-        Texture2D splash;
+        Texture2D transitionTexture;
         bool fadeIn;
         public Color color;
+        List<MapObject> mapObjects;
 
         /// <summary>
         /// Loads and renders a map. Every map has collision and a basic screen transition effect.
@@ -33,10 +35,11 @@ namespace Demo
             this.mapName = mapName;
             map = new MapRenderer();
             map.LoadMap(content, mapName);
+            mapObjects = map.GetMapObjects();
             this.content = content;
             collisionWorld = map.GenerateCollisionWorld();
-            splash = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);
-            splash.SetData(new Color[] { Color.Black });
+            transitionTexture = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);
+            transitionTexture.SetData(new Color[] { Color.Black });
             color = new Color(255, 255, 255, 255);
             fadeIn = false;
         }
@@ -48,9 +51,19 @@ namespace Demo
             return collisionWorld;
         }
 
+        public World GetWorld()
+        {
+            return map.GetWorld();
+        }
+
         public void FadeIn()
         {
             fadeIn = true;
+        }
+
+        public List<MapObject> GetMapObjects()
+        {
+            return map.GetMapObjects();
         }
 
         // Adds a scene associated with this map.
@@ -85,6 +98,18 @@ namespace Demo
                 scene.Update(gameTime);
             }
         }
+        /// <summary>
+        /// Adds an object to the collision world on the map.
+        /// </summary>
+        /// <param name="x">Position X</param>
+        /// <param name="y">Position Y</param>
+        /// <param name="width">Width</param>
+        /// <param name="height">Height</param>
+        public void AddCollidable(float x, float y, int width, int height)
+        {
+            World world = map.GetWorld();
+            world.Create(x, y, width, height);
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -98,7 +123,7 @@ namespace Demo
 
             if (fadeIn == true)
             {
-                spriteBatch.Draw(splash, new Rectangle(0, 0, 1080, 1800), color);
+                spriteBatch.Draw(transitionTexture, new Rectangle(0, 0, 1080, 1800), color);
             }
 
 
