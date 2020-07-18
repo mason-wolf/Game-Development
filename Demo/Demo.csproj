@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game\EnemyAI.cs" />
+    <Compile Include="Game\Item.cs" />
     <Compile Include="Game\MapObject.cs" />
     <Compile Include="Game\Scene.cs" />
     <Compile Include="Game\PathFinder.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Game\Player.cs" />
     <Compile Include="Interface\DialogBox.cs" />
     <Compile Include="Interface\EscapeMenu.cs" />
+    <Compile Include="Interface\Inventory.cs" />
     <Compile Include="Scenes\Level_1.cs" />
     <Compile Include="Scenes\StartArea.cs" />
     <Compile Include="Interface\MainMenu.cs" />

@@ -38,6 +38,7 @@ namespace Demo.Scenes
         private Vector2 playerStartingPosition = new Vector2(350, 200);
 
         public EscapeMenu escapeMenu;
+        public Inventory inventory;
 
         // Create teleporters.
         private Rectangle teleporterToLevel_1;
@@ -66,6 +67,7 @@ namespace Demo.Scenes
         public enum Scene
         {
             EscapeMenu,
+            Inventory,
             StartingArea,
             Level_1
         }
@@ -100,6 +102,8 @@ namespace Demo.Scenes
             string[] items = { "Continue", "Save", "Load", "Quit" };
             escapeMenu.SetMenuItems(items);
 
+            inventory = new Inventory(Content);
+
             dialogBox = new DialogBox(game, font)
             {
                 Text = "\n" + 
@@ -119,6 +123,13 @@ namespace Demo.Scenes
             teleporterToStartingLevel = new Rectangle(407, 915, 8, 1);
             SelectedScene = Scene.StartingArea;
             playerCollision = startingAreaMap.GetCollisionWorld();
+
+
+            Item chickenItem = new Item();
+            chickenItem.HealthAmount = 10;
+            chickenItem.ItemTexture = Sprites.chickenTexture;
+            //Player.InventoryList[0] = chickenItem;
+            //Player.InventoryList[1] = chickenItem;
 
             base.LoadContent();
         }
@@ -163,6 +174,7 @@ namespace Demo.Scenes
             }
 
             dialogBox.Update();
+            inventory.Update(gameTime);
 
             // Handle player's collision.
             playerCollision.Move(player.Position.X, player.Position.Y, (collision) => CollisionResponses.Slide);
@@ -182,7 +194,6 @@ namespace Demo.Scenes
 
             base.Update(gameTime);
         }
-
 
         public override void Draw(GameTime gameTime)
         {
@@ -216,6 +227,7 @@ namespace Demo.Scenes
                 Vector2 healthStatus = new Vector2(playerHealthPosition.X + 57, playerHealthPosition.Y);
                 spriteBatch.DrawString(font, health.ToString() + " / 150", healthStatus, Color.White);
                 dialogBox.Draw(spriteBatch);
+                inventory.Draw(spriteBatch);
             }
             spriteBatch.End();
             base.Draw(gameTime);
@@ -250,8 +262,8 @@ namespace Demo.Scenes
             // The effect occured once, so set the trigger back to false and reset visibility color.
             if (map.hasFaded)
             {
-                level_1Map.hasFaded = false;
-                level_1Map.color = new Color(255, 255, 255, 255);
+                map.hasFaded = false;
+                map.color = new Color(255, 255, 255, 255);
             }
         }
         public override void Show()

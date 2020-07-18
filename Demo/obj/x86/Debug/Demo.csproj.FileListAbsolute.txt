@@ -321,7 +321,6 @@ C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\RoyT.AStar.
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\RoyT.AStar.xml
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\player.xnb
-C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\militia.xnb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\music\chopping_block.wma
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\music\chopping_block.xnb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\buildMenu.xnb
@@ -376,8 +375,6 @@ C:\Users\mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.csproj.
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.exe
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.pdb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\militia2.xnb
-C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\militia2.xnb
-C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\player_2.xnb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\player_2.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\campfire.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\tilesets\tileset_2.xnb
@@ -388,3 +385,4 @@ C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spr
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\Sitting Warrior.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Torch.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Barrel.xnb
+C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\items\Chicken.xnb

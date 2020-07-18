@@ -49,6 +49,9 @@ namespace Demo
         public TextureAtlas barrelAtlas;
         public static SpriteSheetAnimationFactory barrelAnimation;
 
+        // Chicken sprite
+        public static Texture2D chickenTexture;
+
         public void LoadContent(ContentManager content)
         {
             //Bat
@@ -119,7 +122,7 @@ namespace Demo
             sittingWarriorAnimation.Add("idleWest", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
             sittingWarriorAnimation.Add("walkEast", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             sittingWarriorAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            sittingWarriorAnimation.Add("idleEast", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, 1.5f, isLooping: true));
+            sittingWarriorAnimation.Add("idleEast", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 3, 3, 3, 3, 3, 3}, 0.7f, isLooping: true));
             sittingWarriorAnimation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             sittingWarriorAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
             sittingWarriorAnimation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
@@ -145,6 +148,9 @@ namespace Demo
             barrelAnimation = new SpriteSheetAnimationFactory(barrelAtlas);
             barrelAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }, 0.09f, isLooping: false));
             barrelAnimation.Add("broken", new SpriteSheetAnimationData(new[] { 1, 2, 3}, 0.07f, isLooping: false));
+
+            // Chicken
+            chickenTexture = content.Load<Texture2D>(@"items\Chicken");
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Demo.Scenes
                         barrelSprite.Play("idle");
                         barrelSprite.Position = mapObject.GetPosition();
                         mapObject.SetSprite(barrelSprite);
-                        IBox barrelCollidable = StartArea.level_1Map.GetWorld().Create(barrelSprite.Position.X, barrelSprite.Position.Y - 6, 16, 16);
+                        IBox barrelCollidable = StartArea.level_1Map.GetWorld().Create(barrelSprite.Position.X, barrelSprite.Position.Y - 4, 16, 16);
                         mapObject.SetCollisionBox(barrelCollidable);
                         break;
                 }
