@@ -24,7 +24,7 @@ namespace Demo.Interface
         public static List<Item> itemList = Player.InventoryList;
         public static bool InventoryOpen { get; set; }
         Vector2 Position { get; set; }
-
+        public static int TotalItems { get; set; }
         public enum Items
         {
             Chicken
@@ -122,12 +122,17 @@ namespace Demo.Interface
             {
                 case Items.Chicken:
                     emptySlotFound = false;
+ 
                     Item chicken = new Item();
                     chicken.ItemTexture = Sprites.chickenTexture;
                     int itemSlot = GetEmptySlot();
-                    itemList[itemSlot].ItemTexture = chicken.ItemTexture;
-                    itemList[itemSlot].Name = "Chicken";
-                    itemList[itemSlot].Description = "Restores health.";
+                    if (itemSlot < 3)
+                    {
+                        itemList[itemSlot].ItemTexture = chicken.ItemTexture;
+                        itemList[itemSlot].Name = "Chicken";
+                        itemList[itemSlot].Description = "Restores health.";
+                    }
+
                     break;
             }
 
@@ -135,19 +140,40 @@ namespace Demo.Interface
         }
 
         bool emptySlotFound = false;
-
         public int GetEmptySlot()
         {
             int slot = 0;
+            int emptySlots = 0;
 
             if (!emptySlotFound)
             {
+                // Count number of items in inventory.
                 foreach (Item item in itemList)
                 {
                     if (item.ItemTexture == null)
                     {
-                        slot = item.Index;
+                        emptySlots++;
                     }
+                }
+
+                // If inventory is empty, assign the item to the first slot.
+                if (emptySlots == itemList.Count)
+                {
+                    slot = 0;
+                }
+                else
+                {
+                    int nextSlot = 0;
+                    // Find the next open slot.
+                    foreach (Item item in itemList)
+                    {
+                        if (item.ItemTexture != null)
+                        {
+                            nextSlot++;
+                        }
+                    }
+
+                    slot = nextSlot;
                 }
             }
             return slot;
@@ -206,7 +232,7 @@ namespace Demo.Interface
             {
                 for (int i = 0; i < itemList.Count; i++)
                 {
-                    if (i < 45 && itemList[i].ItemTexture != null)
+                    if (i < 32 && itemList[i].ItemTexture != null)
                     {
                         // Draw the item texture on the inventory slot.
                         spriteBatch.Draw(itemList[i].ItemTexture, new Rectangle(itemList[i].ItemRectangle.X, itemList[i].ItemRectangle.Y, 32, 32), Color.White);

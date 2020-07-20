@@ -4,27 +4,27 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/button.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/music/chopping_block.mp3</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/font.spritefont</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/menu.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/statusbar.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/tilesets/tileset_1.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/titlescreen.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/buildMenu.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/cursor.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/staminabar.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/healthbar.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/tilesets/tileset_2.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/interface/escapeMenu.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/Skeleton.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/Bat.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/FireBat.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/Sitting Warrior.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/objects/Torch.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/objects/Barrel.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/spritesheets/Player.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/objects/Campfire.png</File>
-    <File>C:/Users/Mason/Documents/Game-Development/Demo/Content/items/Chicken.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/button.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/music/chopping_block.mp3</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/font.spritefont</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/menu.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/statusbar.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/tilesets/tileset_1.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/titlescreen.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/buildMenu.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/cursor.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/staminabar.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/healthbar.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/tilesets/tileset_2.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/interface/escapeMenu.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Skeleton.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Bat.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/FireBat.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Sitting Warrior.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/objects/Torch.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/objects/Barrel.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Player.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/objects/Campfire.png</File>
+    <File>C:/Users/mason/Documents/GitHub/Game-Development/Demo/Content/items/Chicken.png</File>
   </SourceFiles>
 </SourceFileCollection>

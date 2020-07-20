@@ -340,7 +340,6 @@ C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Cont
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\tilesets\tileset_1.xnb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\maps\area_1.tmx
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\maps\village.xnb
-C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\militia.xnb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\player.xnb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\teleporter.xnb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\enemies\wolf.xnb
@@ -374,8 +373,6 @@ C:\Users\mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.csprojA
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.csproj.CopyComplete
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.exe
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.pdb
-C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\militia2.xnb
-C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\player_2.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\campfire.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\tilesets\tileset_2.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\escapeMenu.xnb
@@ -386,3 +383,13 @@ C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spr
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Torch.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Barrel.xnb
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\items\Chicken.xnb
+C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\tilesets\tileset_2.xnb
+C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\Bat.xnb
+C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\FireBat.xnb
+C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\Sitting Warrior.xnb
+C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\Skeleton.xnb
+C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Barrel.xnb
+C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\campfire.xnb
+C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Torch.xnb
+C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\items\Chicken.xnb
+C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\escapeMenu.xnb
