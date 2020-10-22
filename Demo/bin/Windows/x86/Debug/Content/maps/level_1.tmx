@@ -179,10 +179,10 @@
   <object id="45" name="Torch" x="394.75" y="368.5"/>
   <object id="46" name="Torch" x="543.333" y="528.667"/>
   <object id="47" name="Torch" x="652" y="528.667"/>
-  <object id="56" name="Barrel" x="700.591" y="811.75"/>
-  <object id="68" name="Barrel" x="714.386" y="885.114"/>
+  <object id="56" name="Barrel" x="705.258" y="817.417"/>
+  <object id="68" name="Barrel" x="705.386" y="849.447"/>
   <object id="70" name="Barrel" x="851.25" y="812"/>
-  <object id="71" name="Barrel" x="851.75" y="834.25"/>
+  <object id="71" name="Barrel" x="851.083" y="847.25"/>
   <object id="72" name="Barrel" x="186.443" y="549.864"/>
   <object id="73" name="Barrel" x="154.097" y="550.199"/>
   <object id="75" name="Barrel" x="42.3977" y="550.341"/>
@@ -190,10 +190,7 @@
   <object id="77" name="Barrel" x="191.636" y="384.545"/>
   <object id="78" name="Barrel" x="28.5" y="160.25"/>
   <object id="79" name="Barrel" x="28.75" y="135.5"/>
-  <object id="80" name="Barrel" x="498" y="161.75"/>
-  <object id="81" name="Barrel" x="383" y="161.5"/>
   <object id="92" name="Barrel" x="852.25" y="883.5"/>
-  <object id="93" name="Barrel" x="746.375" y="885.75"/>
-  <object id="95" name="Barrel" x="778.375" y="858.125"/>
+  <object id="93" name="Barrel" x="704.708" y="881.083"/>
  </objectgroup>
 </map>

@@ -121,9 +121,9 @@ namespace Demo.Scenes
 
             teleporterToLevel_1 = new Rectangle(340, 134, 8, 1);
             teleporterToStartingLevel = new Rectangle(407, 915, 8, 1);
-            SelectedScene = Scene.StartingArea;
+            SelectedScene = Scene.Level_1;
             playerCollision = startingAreaMap.GetCollisionWorld();
-
+            player.Position = new Vector2(808, 862);
 
             Item chickenItem = new Item();
             chickenItem.HealthAmount = 10;
@@ -183,6 +183,7 @@ namespace Demo.Scenes
             campfire.Update(gameTime);
 
             camera.Zoom = 3;
+
             if (!inDialog)
             {
                 player.HandleInput(gameTime, player, playerCollision, newState, oldState);

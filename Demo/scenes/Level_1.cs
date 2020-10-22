@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended;
 using MonoGame.Extended.Collisions;
+using Microsoft.Xna.Framework.Input;
 
 namespace Demo.Scenes
 {
@@ -113,15 +114,16 @@ namespace Demo.Scenes
                 o.Update(gameTime);
             }
 
-            foreach(MapObject o in mapObjects)
+            // Handle the player destroying objects.
+            foreach(MapObject mapObject in mapObjects)
             {
-                if (player.BoundingBox.Intersects(o.GetBoundingBox()) && Player.isAttacking && o.GetName() == "Barrel")
+                if (player.BoundingBox.Intersects(mapObject.GetBoundingBox()) && Player.isAttacking && mapObject.GetName() == "Barrel")
                 {
-                    if (!o.isDestroyed())
+                    if (!mapObject.isDestroyed())
                     {
-                        o.GetSprite().Play("broken");
-                        o.Destroy();
-                        StartArea.level_1Map.GetWorld().Remove(o.GetCollisionBox());
+                        mapObject.GetSprite().Play("broken");
+                        mapObject.Destroy();
+                        StartArea.level_1Map.GetWorld().Remove(mapObject.GetCollisionBox());
                     }
                 }
             }
@@ -130,16 +132,16 @@ namespace Demo.Scenes
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            foreach(Entity e in enemyList)
+            foreach(Entity enemy in enemyList)
             {
-                e.Draw(spriteBatch);
-                Vector2 AIHealthPosition = new Vector2(e.Position.X - 8, e.Position.Y - 20);
-                e.DrawHUD(spriteBatch, AIHealthPosition, false);
+                enemy.Draw(spriteBatch);
+                Vector2 AIHealthPosition = new Vector2(enemy.Position.X - 8, enemy.Position.Y - 20);
+                enemy.DrawHUD(spriteBatch, AIHealthPosition, false);
             }
 
-            foreach (MapObject o in mapObjects)
+            foreach (MapObject mapObject in mapObjects)
             {
-                o.Draw(spriteBatch);
+                mapObject.Draw(spriteBatch);
             }
         }
     }

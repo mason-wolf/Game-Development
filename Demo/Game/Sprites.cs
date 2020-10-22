@@ -40,7 +40,7 @@ namespace Demo
         public static AnimatedSprite campfireSprite;
 
         // Torch sprite
-        public Texture2D torchTexture;
+        public static Texture2D torchTexture;
         public TextureAtlas torchAtlas;
         public static SpriteSheetAnimationFactory torchAnimation;
 

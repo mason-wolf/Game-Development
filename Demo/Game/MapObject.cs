@@ -91,7 +91,7 @@ namespace Demo
         {
             this.name = objectName;
             this.position = position;
-            this.boundingBox = new Rectangle((int)position.X, (int)position.Y, 32, 32);
+            this.boundingBox = new Rectangle((int)position.X, (int)position.Y - 5, 10, 10);
         }
     }
 }

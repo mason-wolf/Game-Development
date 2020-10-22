@@ -25,6 +25,8 @@ namespace Demo.Interface
         public static bool InventoryOpen { get; set; }
         Vector2 Position { get; set; }
         public static int TotalItems { get; set; }
+        public static int TotalChickens { get; set; }
+
         public enum Items
         {
             Chicken
@@ -45,10 +47,12 @@ namespace Demo.Interface
             inventoryTexture.SetData(new[] { interfaceColor });
             selectedItemTexture.SetData(new[] { selectedItemTextureColor });
             InventoryOpen = false;
+            TotalChickens = 3;
         }
 
         public override void Update(GameTime gameTime)
         {
+            // Store & remember the selected item.
             if (InventoryOpen)
             {
                 newKeyboardState = Keyboard.GetState();
@@ -57,7 +61,7 @@ namespace Demo.Interface
             Position = new Vector2(StartArea.player.Position.X - 150, StartArea.player.Position.Y - 90);
             inventoryInterface = new Rectangle((int)Position.X, (int)Position.Y, 300, 200);
 
-            // Handle item selection in inventory menu.
+            // Handle item selection in inventory menu: move right.
             if (newKeyboardState.IsKeyDown(Keys.D) && oldKeyboardState.IsKeyUp(Keys.D))
             {
                 if (SelectedItem != itemList.Count)
@@ -66,6 +70,7 @@ namespace Demo.Interface
                 }
             }
 
+            // Move Left
             if (newKeyboardState.IsKeyDown(Keys.A) && oldKeyboardState.IsKeyUp(Keys.A))
             {
                 if (SelectedItem != 0)
@@ -74,14 +79,22 @@ namespace Demo.Interface
                 }
             }
 
+            // Move Down
             if (newKeyboardState.IsKeyDown(Keys.S) && oldKeyboardState.IsKeyUp(Keys.S))
             {
                 MoveToNextRow();
             }
 
+            //Move Up
             if (newKeyboardState.IsKeyDown(Keys.W) && oldKeyboardState.IsKeyUp(Keys.W))
             {
                 MoveToPreviousRow();
+            }
+
+            //Move Up
+            if (newKeyboardState.IsKeyDown(Keys.E) && oldKeyboardState.IsKeyUp(Keys.E))
+            {
+                itemUsed = true;
             }
 
             // Reset selection if reached the end.
@@ -118,68 +131,117 @@ namespace Demo.Interface
         /// <param name="item">Item Name</param>
         public void AddToInventory(Items item)
         {
+
+            TotalItems++;
+
             switch (item)
             {
                 case Items.Chicken:
-                    emptySlotFound = false;
- 
+
                     Item chicken = new Item();
                     chicken.ItemTexture = Sprites.chickenTexture;
-                    int itemSlot = GetEmptySlot();
-                    if (itemSlot < 3)
+
+                    int itemSlot = AssignSlot(chicken);
+
+                    if (itemSlot < TotalItems)
                     {
                         itemList[itemSlot].ItemTexture = chicken.ItemTexture;
                         itemList[itemSlot].Name = "Chicken";
                         itemList[itemSlot].Description = "Restores health.";
+                        itemList[itemSlot].Quantity = TotalChickens;
                     }
 
+                    itemSlot = 0;
                     break;
             }
 
-            emptySlotFound = true;
+
         }
 
-        bool emptySlotFound = false;
+        /// <summary>
+        /// Assigns an inventory slot to an item. If the item is a duplicate, then assign it's current slot.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public int AssignSlot(Item item)
+        {
+            int slotNumber = 0;
+
+            if (!IsDuplicateItem(item))
+            {
+                slotNumber = GetEmptySlot();
+            }
+            else
+            {
+                slotNumber = duplicateItemSlot;
+            }
+
+            return slotNumber;
+        }
+        /// <summary>
+        /// Gets the next empty slot in the inventory, if inventory is empty the first slot is 0.
+        /// </summary>
+        /// <returns></returns>
         public int GetEmptySlot()
         {
             int slot = 0;
             int emptySlots = 0;
 
-            if (!emptySlotFound)
+
+            // Count number of items in inventory.
+            foreach (Item item in itemList)
             {
-                // Count number of items in inventory.
-                foreach (Item item in itemList)
+                if (item.ItemTexture == null)
                 {
-                    if (item.ItemTexture == null)
-                    {
-                        emptySlots++;
-                    }
-                }
-
-                // If inventory is empty, assign the item to the first slot.
-                if (emptySlots == itemList.Count)
-                {
-                    slot = 0;
-                }
-                else
-                {
-                    int nextSlot = 0;
-                    // Find the next open slot.
-                    foreach (Item item in itemList)
-                    {
-                        if (item.ItemTexture != null)
-                        {
-                            nextSlot++;
-                        }
-                    }
-
-                    slot = nextSlot;
+                    emptySlots++;
                 }
             }
+
+            // If inventory is empty, assign the item to the first slot.
+            if (emptySlots == itemList.Count)
+            {
+                slot = 0;
+            }
+            else
+            {
+                // Find the next open slot.
+                foreach (Item item in itemList)
+                {
+                    if (item.ItemTexture != null)
+                    {
+                        slot++;
+                    }
+                }
+            }
+
             return slot;
         }
+
+        int duplicateItemSlot = 0;
+        /// <summary>
+        /// Checks to see if the item already exists in the inventory. 
+        /// </summary>
+        /// <param name="itemToAdd"></param>
+        /// <returns></returns>
+        public bool IsDuplicateItem(Item itemToAdd)
+        {
+            bool isDuplicate = false;
+
+            foreach (Item item in itemList)
+            {
+                if (itemToAdd.ItemTexture == item.ItemTexture)
+                {
+                    isDuplicate = true;
+                    duplicateItemSlot = item.Index;
+                }
+            }
+            return isDuplicate;
+        }
+
         // Create a delay before drawing to allow time for positioning to update correctly.
         int frames = 0;
+        bool itemUsed = false;
+        bool itemsRemoved = false;
 
         public void DrawSelectedItem(SpriteBatch spriteBatch)
         {
@@ -222,9 +284,24 @@ namespace Demo.Interface
             int itemWidth = itemList[SelectedItem].ItemRectangle.Width;
             int itemHeight = itemList[SelectedItem].ItemRectangle.Height;
 
-            AddToInventory(Items.Chicken);
-            AddToInventory(Items.Chicken);
-            AddToInventory(Items.Chicken);
+            TotalItems = 0;
+
+            for (int i = 0; i < TotalChickens; i++)
+            {
+                AddToInventory(Items.Chicken);
+            }
+
+            if (itemUsed)
+            {
+                if (itemList[SelectedItem].Name == "Chicken")
+                {
+                    TotalChickens -= 1;
+                    
+                    itemsRemoved = true;
+                }
+            }
+
+            itemUsed = false;
 
             frames++;
 
@@ -237,8 +314,9 @@ namespace Demo.Interface
                         // Draw the item texture on the inventory slot.
                         spriteBatch.Draw(itemList[i].ItemTexture, new Rectangle(itemList[i].ItemRectangle.X, itemList[i].ItemRectangle.Y, 32, 32), Color.White);
 
-                        // Draw the item name.
+                        // Draw the item name and description.
                         spriteBatch.DrawString(inventoryFont, itemList[SelectedItem].Name, new Vector2(Position.X + 25, Position.Y + 175), Color.LightGreen, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+                        spriteBatch.DrawString(inventoryFont, itemList[i].Quantity.ToString(), new Vector2(itemList[i].ItemRectangle.X + 25, itemList[i].ItemRectangle.Y + 22), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
                         spriteBatch.DrawString(inventoryFont, itemList[SelectedItem].Description, new Vector2(Position.X + 25, Position.Y + 185), Color.White, 0, new Vector2(0, 0), .7f, SpriteEffects.None, 0);
                     }
                 }
