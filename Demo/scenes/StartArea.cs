@@ -34,7 +34,7 @@ namespace Demo.Scenes
         // Store the maps.
         public static Map startingAreaMap;
         public static Map level_1Map;
-        private SpriteFont font;
+        public static SpriteFont font;
         private Vector2 playerStartingPosition = new Vector2(350, 200);
 
         public EscapeMenu escapeMenu;

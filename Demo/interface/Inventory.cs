@@ -296,7 +296,7 @@ namespace Demo.Interface
                 if (itemList[SelectedItem].Name == "Chicken")
                 {
                     TotalChickens -= 1;
-                    
+                    StartArea.player.CurrentHealth += 10;
                     itemsRemoved = true;
                 }
             }

@@ -19,6 +19,7 @@ namespace Demo.Scenes
 {
     public class Level_1 : Scene
     {
+        GameTime gameTime;
         public static EnemyAI enemyAI;
         public static List<Entity> enemyList = new List<Entity>();
         public RoyT.AStar.Grid grid;
@@ -100,8 +101,14 @@ namespace Demo.Scenes
             enemyAI = new EnemyAI(grid, enemyList, StartArea.player);
         }
 
+        float elapsedTime;
+
         public override void Update(GameTime gameTime)
         {
+            this.gameTime = gameTime;
+
+            elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             enemyAI.Update(gameTime);
 
             foreach(Entity e in enemyList)
@@ -119,7 +126,7 @@ namespace Demo.Scenes
             {
                 if (player.BoundingBox.Intersects(mapObject.GetBoundingBox()) && Player.isAttacking && mapObject.GetName() == "Barrel")
                 {
-                    if (!mapObject.isDestroyed())
+                    if (!mapObject.IsDestroyed())
                     {
                         mapObject.GetSprite().Play("broken");
                         mapObject.Destroy();
@@ -130,19 +137,33 @@ namespace Demo.Scenes
 
         }
 
+        float timer = 3;
+
         public override void Draw(SpriteBatch spriteBatch)
         {
-            foreach(Entity enemy in enemyList)
+            foreach (Entity enemy in enemyList)
             {
                 enemy.Draw(spriteBatch);
                 Vector2 AIHealthPosition = new Vector2(enemy.Position.X - 8, enemy.Position.Y - 20);
                 enemy.DrawHUD(spriteBatch, AIHealthPosition, false);
             }
 
+            timer -= elapsedTime;
+
             foreach (MapObject mapObject in mapObjects)
             {
+                Item item = new Item();
+                item.ItemTexture = Sprites.chickenTexture;
+                item.Name = "Chicken";
+                mapObject.SetContainedItem(item);
                 mapObject.Draw(spriteBatch);
+
+                if (mapObject.ItemPickedUp())
+                {
+                    spriteBatch.DrawString(StartArea.font, "You picked up", new Vector2(player.Position.X - 170, player.Position.Y + 100), Color.White);
+                }
             }
+
         }
     }
 }

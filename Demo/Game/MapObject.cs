@@ -1,4 +1,6 @@
 ﻿
+using Demo.Interface;
+using Demo.Scenes;
 using Humper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -16,9 +18,12 @@ namespace Demo
     {
         string name;
         Vector2 position;
-        Rectangle boundingBox;
+        Rectangle objectBoundingBox;
         AnimatedSprite animatedSprite;
+        Item containedItem;
+        Rectangle containedItemBoundingBox;
         bool destroyed = false;
+        bool itemPickedUp = false;
         IBox collisionBox;
 
         public string GetName()
@@ -33,7 +38,7 @@ namespace Demo
 
         public Rectangle GetBoundingBox()
         {
-            return boundingBox;
+            return objectBoundingBox;
         }
 
         public void SetSprite(AnimatedSprite animatedSprite)
@@ -46,6 +51,11 @@ namespace Demo
             return animatedSprite;
         }
 
+        public void SetContainedItem(Item item)
+        {
+            this.containedItem = item;
+        }
+
         public void SetCollisionBox(IBox collisionBox)
         {
             this.collisionBox = collisionBox;
@@ -56,9 +66,14 @@ namespace Demo
             return collisionBox;
         }
 
-        public bool isDestroyed()
+        public bool IsDestroyed()
         {
             return destroyed;
+        }
+
+        public bool ItemPickedUp()
+        {
+            return itemPickedUp;
         }
 
         public void Destroy()
@@ -77,6 +92,19 @@ namespace Demo
             {
                 animatedSprite.Update(gameTime);
             }
+
+            // If the player picks up an item, add it to the inventory.
+            if (containedItem != null && StartArea.player.BoundingBox.Intersects(containedItemBoundingBox) && !itemPickedUp)
+            {
+                switch (containedItem.Name)
+                {
+                    case "Chicken":
+                        Inventory.TotalChickens = Inventory.TotalChickens + 1;
+                        break;
+                }
+
+                itemPickedUp = true;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -85,13 +113,20 @@ namespace Demo
             {
                 animatedSprite.Draw(spriteBatch);
             }
+
+            // If the object is destroyed, drop an item. (Draw and create a bounding box).
+            if (destroyed && !itemPickedUp)
+            {
+                spriteBatch.Draw(containedItem.ItemTexture, new Rectangle((int) position.X - 15, (int) position.Y, 16, 16), Color.White);
+                containedItemBoundingBox = new Rectangle((int)position.X - 15, (int)position.Y, 1, 1);
+            }
         }
 
         public MapObject(string objectName, Vector2 position)
         {
             this.name = objectName;
             this.position = position;
-            this.boundingBox = new Rectangle((int)position.X, (int)position.Y - 5, 10, 10);
+            this.objectBoundingBox = new Rectangle((int)position.X, (int)position.Y - 5, 10, 10);
         }
     }
 }
