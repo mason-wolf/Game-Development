@@ -88,14 +88,14 @@ namespace Demo.Scenes
 
             player.sprite = new AnimatedSprite(player.playerAnimation);
             player.Position = playerStartingPosition;
-            player.State = Action.Idle;
+            player.State = Action.IdleSouth1;
             player.MaxHealth = 150;
             player.CurrentHealth = 150;
             player.AttackDamage = 2.5;
 
             sittingWarriorEntity.CurrentHealth = 1;
             sittingWarriorEntity.Position = new Vector2(player.Position.X - 100, player.Position.Y + 65);
-            sittingWarriorEntity.State = Action.IdleEast;
+            sittingWarriorEntity.State = Action.IdleEast1;
             startingAreaMap.AddCollidable(sittingWarriorEntity.Position.X, sittingWarriorEntity.Position.Y - 16, 16, 31);
 
             escapeMenu = new EscapeMenu(game, window, Content);

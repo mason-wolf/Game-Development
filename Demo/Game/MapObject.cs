@@ -17,6 +17,7 @@ namespace Demo
     public class MapObject : Scene
     {
         string name;
+        GameTime gameTime;
         Vector2 position;
         Rectangle objectBoundingBox;
         AnimatedSprite animatedSprite;
@@ -88,6 +89,8 @@ namespace Demo
 
         public override void Update(GameTime gameTime)
         {
+            this.gameTime = gameTime;
+
             if (animatedSprite != null)
             {
                 animatedSprite.Update(gameTime);
@@ -107,8 +110,11 @@ namespace Demo
             }
         }
 
+        bool itemDrawn = false;
+
         public override void Draw(SpriteBatch spriteBatch)
         {
+
             if (animatedSprite != null)
             {
                 animatedSprite.Draw(spriteBatch);
@@ -117,8 +123,24 @@ namespace Demo
             // If the object is destroyed, drop an item. (Draw and create a bounding box).
             if (destroyed && !itemPickedUp)
             {
-                spriteBatch.Draw(containedItem.ItemTexture, new Rectangle((int) position.X - 15, (int) position.Y, 16, 16), Color.White);
-                containedItemBoundingBox = new Rectangle((int)position.X - 15, (int)position.Y, 1, 1);
+                itemDrawn = true;
+
+                int x = 0;
+                int y = 0;
+
+                // Spawn the item to the left or right of the container depending on the direction the player intersects.
+                if (position.X < StartArea.player.Position.X && itemDrawn)
+                {
+                    x = (int)position.X - 5;
+                    y = (int)position.Y;
+                }
+                else if (position.X > StartArea.player.Position.X && itemDrawn)
+                {
+                    x = (int)position.X + 3;
+                    y = (int)position.Y;
+                }
+                spriteBatch.Draw(containedItem.ItemTexture, new Rectangle(x, y, 16, 16), Color.White);
+                containedItemBoundingBox = new Rectangle(x, y, 1, 1);
             }
         }
 

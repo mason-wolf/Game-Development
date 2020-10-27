@@ -9,27 +9,38 @@ using MonoGame.Extended.Shapes;
 using MonoGame.Extended.Sprites;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
+using Demo.Scenes;
+using Humper;
+using Humper.Responses;
 
 namespace Demo
 {
     public enum Action
     {
-        Idle,
-        WalkSouth,
+        IdleSouth1,
+        IdleSouth2,
+        WalkSouthPattern1,
+        WalkSouthPattern2,
         AttackSouthPattern1,
         AttackSouthPattern2,
-        WalkWest,
+        WalkWestPattern1,
+        WalkWestPattern2,
         AttackWestPattern1,
         AttackWestPattern2,
-        IdleWest,
-        WalkEast,
+        IdleWest1,
+        IdleWest2,
+        WalkEastPattern1,
+        WalkEastPattern2,
         AttackEastPattern1,
         AttackEastPattern2,
-        IdleEast,
-        WalkNorth,
+        IdleEast1,
+        IdleEast2,
+        WalkNorthPattern1,
+        WalkNorthPattern2,
         AttackNorthPattern1,
         AttackNorthPattern2,
-        IdleNorth,
+        IdleNorth1,
+        IdleNorth2,
         Dead
     }
 
@@ -59,8 +70,7 @@ namespace Demo
         public double CurrentHealth { get; set; } = 0;
         public double AttackDamage { get; set; } = 0;
         public bool Dead { get; set; } = false;
- 
-
+        public bool Aggroed { get; set; } = false;
         public void LoadContent(ContentManager content)
         {
             statusBar = content.Load<Texture2D>(@"interface\statusbar");
@@ -81,53 +91,77 @@ namespace Demo
 
                     switch (state)
                     {
-                        case Action.Idle:
-                            sprite.Play("idle");
+                        case Action.IdleSouth1:
+                            sprite.Play("idleSouth1");
                             break;
-                        case Action.WalkSouth:
-                            sprite.Play("walkSouth", () => State = Action.Idle);
+                        case Action.IdleSouth2:
+                            sprite.Play("idleSouth2");
+                            break;
+                        case Action.WalkSouthPattern1:
+                            sprite.Play("walkSouthPattern1", () => State = Action.IdleSouth1);
+                            break;
+                        case Action.WalkSouthPattern2:
+                            sprite.Play("walkSouthPattern2", () => State = Action.IdleSouth2);
                             break;
                         case Action.AttackSouthPattern1:
-                            sprite.Play("attackSouthPattern1", () => State = Action.Idle);
+                            sprite.Play("attackSouthPattern1", () => State = Action.IdleSouth1);
                             break;
                         case Action.AttackSouthPattern2:
-                            sprite.Play("attackSouthPattern2", () => State = Action.Idle);
+                            sprite.Play("attackSouthPattern2", () => State = Action.IdleSouth2);
                             break;
-                        case Action.WalkWest:
-                            sprite.Play("walkWest", () => State = Action.IdleWest);
+                        case Action.WalkWestPattern1:
+                            sprite.Play("walkWestPattern1", () => State = Action.IdleWest1);
+                            break;
+                        case Action.WalkWestPattern2:
+                            sprite.Play("walkWestPattern2", () => State = Action.IdleWest2);
                             break;
                         case Action.AttackWestPattern1:
-                            sprite.Play("attackWestPattern1", () => State = Action.IdleWest);
+                            sprite.Play("attackWestPattern1", () => State = Action.IdleWest1);
                             break;
                         case Action.AttackWestPattern2:
-                            sprite.Play("attackWestPattern2", () => State = Action.IdleWest);
+                            sprite.Play("attackWestPattern2", () => State = Action.IdleWest2);
                             break;
-                        case Action.IdleWest:
-                            sprite.Play("idleWest");
+                        case Action.IdleWest1:
+                            sprite.Play("idleWest1");
                             break;
-                        case Action.WalkEast:
-                            sprite.Play("walkEast", () => State = Action.IdleEast);
+                        case Action.IdleWest2:
+                            sprite.Play("idleWest2");
+                            break;
+                        case Action.WalkEastPattern1:
+                            sprite.Play("walkEastPattern1", () => State = Action.IdleEast1);
+                            break;
+                        case Action.WalkEastPattern2:
+                            sprite.Play("walkEastPattern2", () => State = Action.IdleEast2);
                             break;
                         case Action.AttackEastPattern1:
-                            sprite.Play("attackEastPattern1", () => State = Action.IdleEast);
+                            sprite.Play("attackEastPattern1", () => State = Action.IdleEast1);
                             break;
                         case Action.AttackEastPattern2:
-                            sprite.Play("attackEastPattern2", () => State = Action.IdleEast);
+                            sprite.Play("attackEastPattern2", () => State = Action.IdleEast2);
                             break;
-                        case Action.IdleEast:
-                            sprite.Play("idleEast");
+                        case Action.IdleEast1:
+                            sprite.Play("idleEast1");
                             break;
-                        case Action.WalkNorth:
-                            sprite.Play("walkNorth", () => State = Action.IdleNorth);
+                        case Action.IdleEast2:
+                            sprite.Play("idleEast2");
+                            break;
+                        case Action.WalkNorthPattern1:
+                            sprite.Play("walkNorthPattern1", () => State = Action.IdleNorth1);
+                            break;
+                        case Action.WalkNorthPattern2:
+                            sprite.Play("walkNorthPattern2", () => State = Action.IdleNorth2);
                             break;
                         case Action.AttackNorthPattern1:
-                            sprite.Play("attackNorthPattern1", () => State = Action.IdleNorth);
+                            sprite.Play("attackNorthPattern1", () => State = Action.IdleNorth1);
                             break;
                         case Action.AttackNorthPattern2:
-                            sprite.Play("attackNorthPattern2", () => State = Action.IdleNorth);
+                            sprite.Play("attackNorthPattern2", () => State = Action.IdleNorth2);
                             break;
-                        case Action.IdleNorth:
-                            sprite.Play("idleNorth");
+                        case Action.IdleNorth1:
+                            sprite.Play("idleNorth1");
+                            break;
+                        case Action.IdleNorth2:
+                            sprite.Play("idleNorth2");
                             break;
                         case Action.Dead:
                             sprite.Play("dead");
@@ -166,25 +200,25 @@ namespace Demo
 
                     if (rotation < -179 || rotation == 180)
                     {
-                        entity.State = Action.WalkNorth;
+                        entity.State = Action.WalkNorthPattern1;
                     }
                     else if (rotation >= 89 && rotation < 180)
                     {
-                        entity.State = Action.WalkEast;
+                        entity.State = Action.WalkEastPattern1;
                     }
                     else if (rotation <= -90 && rotation > -179)
                     {
 
-                        entity.State = Action.WalkWest;
+                        entity.State = Action.WalkWestPattern1;
                     }
                     else if (rotation >= 0 && rotation <= 1)
                     {
-                        entity.State = Action.WalkSouth;
+                        entity.State = Action.WalkSouthPattern1;
                     }
 
                     if (rotation < -0 && rotation > -90)
                     {
-                        entity.State = Action.WalkSouth;
+                        entity.State = Action.WalkSouthPattern1;
                     }
 
                     float Distance = Vector2.Distance(entity.Position, DestinationWaypoint[WayPointIndex]);
@@ -246,6 +280,29 @@ namespace Demo
                 }
             }
         }
+
+        Entity projectile;
+        Vector2 projectilePosition;
+        bool targetHit = false;
+        string direction = "";
+
+        /// <summary>
+        /// Shoots a projectile.
+        /// </summary>
+        /// <param name="sprite">AnimatedSprite of the projectile.</param>
+        /// <param name="direction">Direction (North, South, East, West)</param>
+        public void ShootProjectile(AnimatedSprite sprite, string direction)
+        {
+            projectile = new Entity();
+            projectile.sprite = sprite;
+            projectilePosition = new Vector2(StartArea.player.Position.X, StartArea.player.Position.Y - 5);
+            projectile.Position = projectilePosition;
+            projectile.MaxHealth = 10;
+            projectile.CurrentHealth = 10;
+            this.direction = direction;
+            targetHit = false;
+        }
+
         public void Update(GameTime gameTime)
         {
            if (CurrentHealth <= 0)
@@ -254,12 +311,62 @@ namespace Demo
                 Dead = true;
             }
 
+            if (projectile != null)
+            {
+                int speed = 7;
+
+                if (direction == "north")
+                {
+                    projectile.State = Action.IdleNorth1;
+                    projectilePosition.Y -= speed;
+                    projectile.Position = projectilePosition;
+                }
+
+                if (direction == "south")
+                {
+                    projectile.State = Action.AttackSouthPattern1;
+                    projectilePosition.Y += speed;
+                    projectile.Position = projectilePosition;
+                }
+
+                if (direction == "east")
+                {
+                    projectile.State = Action.IdleEast1;
+                    projectilePosition.X += speed;
+                    projectile.Position = projectilePosition;
+                }
+
+                if (direction == "west")
+                {
+                    projectile.State = Action.IdleWest1;
+                    projectilePosition.X -= speed;
+                    projectile.Position = projectilePosition;
+                }
+
+                foreach (Entity entity in StartArea.player.EnemyList)
+                {
+                    if (projectile.BoundingBox.Intersects(entity.BoundingBox) && targetHit == false && entity.state != Action.Dead)
+                    {
+                        entity.CurrentHealth -= 4;
+                        entity.Aggroed = true;
+                        targetHit = true;
+                    }
+                }
+
+                projectile.Update(gameTime);
+            }
+
             sprite.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite);
+
+            if (projectile != null && targetHit == false)
+            {
+                spriteBatch.Draw(projectile.sprite);
+            }
         }
 
         /// <summary>

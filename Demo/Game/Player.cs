@@ -32,26 +32,43 @@ namespace Demo
 
         public List<Entity> EnemyList { get; set; }
         public static List<Item> InventoryList = new List<Item>();
+        private string EQUIPPED = "Bow";
+        AnimatedSprite arrow;
 
         public new void LoadContent(ContentManager content)
         {
             playerTexture = content.Load<Texture2D>(@"spritesheets\Player");
             playerAtlas = TextureAtlas.Create(playerTexture, 32, 32);
             playerAnimation = new SpriteSheetAnimationFactory(playerAtlas);
+            Sprites sprites = new Sprites();
+            sprites.LoadContent(content);
+            arrow = new AnimatedSprite(Sprites.arrowAnimation);
             float animationSpeed = .09f;
             float attackSpeed = 0.03f;
-            playerAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }));
-            playerAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 1, 2 }, animationSpeed, isLooping: true));
+            playerAnimation.Add("idleSouth1", new SpriteSheetAnimationData(new[] { 0 }));
+            playerAnimation.Add("idleSouth2", new SpriteSheetAnimationData(new[] { 9 }));
+            playerAnimation.Add("walkSouthPattern1", new SpriteSheetAnimationData(new[] { 1, 2 }, animationSpeed, isLooping: true));
+            playerAnimation.Add("walkSouthPattern2", new SpriteSheetAnimationData(new[] { 9, 10, 11, 10 }, animationSpeed, isLooping: true));
             playerAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 3, 4, 5, 6, 7, 8, 7, 6, 5 }, attackSpeed, isLooping: true));
-            playerAnimation.Add("walkWest", new SpriteSheetAnimationData(new[] { 12, 13, 12, 14 }, animationSpeed, isLooping: true));
+            playerAnimation.Add("attackSouthPattern2", new SpriteSheetAnimationData(new[] { 21, 22, 23 }, .1f, isLooping: true));
+            playerAnimation.Add("walkWestPattern1", new SpriteSheetAnimationData(new[] { 12, 13, 12, 14 }, animationSpeed, isLooping: true));
+            playerAnimation.Add("walkWestPattern2", new SpriteSheetAnimationData(new[] { 33, 34, 33, 35 }, animationSpeed, isLooping: true));
             playerAnimation.Add("attackWestPattern1", new SpriteSheetAnimationData(new[] { 15, 16, 17, 18, 19, 20, 19, 18, 17 }, attackSpeed, isLooping: true));
-            playerAnimation.Add("idleWest", new SpriteSheetAnimationData(new[] { 12 }));
-            playerAnimation.Add("walkEast", new SpriteSheetAnimationData(new[] { 26, 25, 26, 24 }, animationSpeed, isLooping: true));
+            playerAnimation.Add("attackWestPattern2", new SpriteSheetAnimationData(new[] { 45, 46, 47}, .1f, isLooping: true));
+            playerAnimation.Add("idleWest1", new SpriteSheetAnimationData(new[] { 12 }));
+            playerAnimation.Add("idleWest2", new SpriteSheetAnimationData(new[] { 33 }));
+            playerAnimation.Add("walkEastPattern1", new SpriteSheetAnimationData(new[] { 26, 25, 26, 24 }, animationSpeed, isLooping: true));
+            playerAnimation.Add("walkEastPattern2", new SpriteSheetAnimationData(new[] { 59, 57, 59, 58 }, animationSpeed, isLooping: true));
             playerAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 27, 28, 29, 30, 31, 32, 30, 29, 28 }, attackSpeed, isLooping: true));
-            playerAnimation.Add("idleEast", new SpriteSheetAnimationData(new[] { 26 }));
-            playerAnimation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 36, 38 }, animationSpeed, isLooping: true));
+            playerAnimation.Add("attackEastPattern2", new SpriteSheetAnimationData(new[] { 69, 70, 71 }, .1f, isLooping: true));
+            playerAnimation.Add("idleEast1", new SpriteSheetAnimationData(new[] { 26 }));
+            playerAnimation.Add("idleEast2", new SpriteSheetAnimationData(new[] { 59 }));
+            playerAnimation.Add("walkNorthPattern1", new SpriteSheetAnimationData(new[] { 36, 38 }, animationSpeed, isLooping: true));
+            playerAnimation.Add("walkNorthPattern2", new SpriteSheetAnimationData(new[] { 81, 83 }, .1f, isLooping: true));
             playerAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 39, 40, 41, 42, 43, 44, 43, 42, 41 }, attackSpeed, isLooping: true));
-            playerAnimation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 37 }));
+            playerAnimation.Add("attackNorthPattern2", new SpriteSheetAnimationData(new[] { 93, 94, 95}, .1f, isLooping: true));
+            playerAnimation.Add("idleNorth1", new SpriteSheetAnimationData(new[] { 37 }));
+            playerAnimation.Add("idleNorth2", new SpriteSheetAnimationData(new[] { 82 }));
             statusBar = content.Load<Texture2D>(@"interface\statusbar");
             healthBar = content.Load<Texture2D>(@"interface\healthbar");
             staminaBar = content.Load<Texture2D>(@"interface\staminabar");
@@ -120,75 +137,204 @@ namespace Demo
                 }
             }
 
+            // Switch weapons when pressing 1 or 2.
+            if (newState.IsKeyDown(Keys.D1) && oldState.IsKeyDown(Keys.D1))
+            {
+                EQUIPPED = "Sword";
+
+                switch (State)
+                {
+                    case (Action.IdleEast2):
+                        State = Action.IdleEast1;
+                        break;
+                    case (Action.IdleWest2):
+                        State = Action.IdleWest1;
+                        break;
+                    case (Action.IdleNorth2):
+                        State = Action.IdleNorth1;
+                        break;
+                    case (Action.IdleSouth2):
+                        State = Action.IdleSouth1;
+                        break;
+                }
+            }
+
+            if (newState.IsKeyDown(Keys.D2) && oldState.IsKeyDown(Keys.D2))
+            {
+                EQUIPPED = "Bow";
+
+                switch (State)
+                {
+                    case (Action.IdleEast1):
+                        State = Action.IdleEast2;
+                        break;
+                    case (Action.IdleWest1):
+                        State = Action.IdleWest2;
+                        break;
+                    case (Action.IdleNorth1):
+                        State = Action.IdleNorth2;
+                        break;
+                    case (Action.IdleSouth1):
+                        State = Action.IdleSouth2;
+                        break;
+                }
+            }
+
             if (!inMenu && !Inventory.InventoryOpen)
             {
                 // Attacking south
-                if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkSouth ||
-                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.Idle)
+                if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkSouthPattern1 ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleSouth1 ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleSouth2 ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkSouthPattern2)
                 {
-                    player.State = Action.AttackSouthPattern1;
+                    if (EQUIPPED == "Sword")
+                    {
+                        player.State = Action.AttackSouthPattern1;
+                    }
+                    else if (EQUIPPED == "Bow")
+                    {
+                        if (Inventory.TotalArrows > 0)
+                        {
+                            player.State = Action.AttackSouthPattern2;
+                            ShootProjectile(arrow, "south");
+                            Inventory.TotalArrows -= 1;
+                        }
+                    }
                     Attack();
                 }
 
                 // Attacking West
-                else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkWest ||
-                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleWest)
+                else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkWestPattern1 ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleWest1 ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleWest2 ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkWestPattern2)
                 {
-
+                    if (EQUIPPED == "Sword")
+                    {
                         player.State = Action.AttackWestPattern1;
-                        Attack();
+                    }
+                    else if (EQUIPPED == "Bow")
+                    {
+                        if (Inventory.TotalArrows > 0)
+                        {
+                            player.State = Action.AttackWestPattern2;
+                            ShootProjectile(arrow, "west");
+                            Inventory.TotalArrows -= 1;
+                        }
+                    }
+                    Attack();
                 }
 
                 // Attacking East
-                else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkEast ||
-                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleEast)
+                else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkEastPattern1 ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleEast1 ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkEastPattern2 ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleEast2)
                 {
+                    if (EQUIPPED == "Sword")
+                    {
                         player.State = Action.AttackEastPattern1;
-                        Attack();
+                    }
+                    else if (EQUIPPED == "Bow")
+                    {
+                        if (Inventory.TotalArrows > 0)
+                        {
+                            player.State = Action.AttackEastPattern2;
+                            ShootProjectile(arrow, "east");
+                            Inventory.TotalArrows -= 1;
+                        }
+                    }
+                    Attack();
                 }
 
                 // Attacking North
-                else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkNorth ||
-                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleNorth)
+                else if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkNorthPattern1 ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleNorth1 ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkNorthPattern2 ||
+                    newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleNorth2)
                 {
+                    if (EQUIPPED == "Sword")
+                    {
                         player.State = Action.AttackNorthPattern1;
+                    }
+                    else if (EQUIPPED == "Bow")
+                    {
+                        if (Inventory.TotalArrows > 0)
+                        {
+                            player.State = Action.AttackNorthPattern2;
+                            ShootProjectile(arrow, "north");
+                            Inventory.TotalArrows -= 1;
+                        }
+                    }
                         Attack();
                 }
                 else
                 {
-                    if (newState.IsKeyDown(Keys.W) && player.State != Action.AttackNorthPattern1)
+                    if (newState.IsKeyDown(Keys.W) && player.State != Action.AttackNorthPattern1 && player.State != Action.AttackNorthPattern2)
                     {
                         // Walk east if W and D are pressed
                         if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.D))
                         {
                             motion.Y -= speed;
                             player.Position = motion;
-                            player.State = Action.WalkEast;
+
+                            if (EQUIPPED == "Sword")
+                            {
+                                player.State = Action.WalkEastPattern1;
+                            }
+                            else if (EQUIPPED == "Bow")
+                            {
+                                player.State = Action.WalkEastPattern2;
+                            }
                         }
                         // Walk west if W and A are pressed.
                         else if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.A))
                         {
                             motion.Y -= speed;
                             player.Position = motion;
-                            player.State = Action.WalkWest;
+
+                            if (EQUIPPED == "Sword")
+                            {
+                                player.State = Action.WalkWestPattern1;
+                            }
+                            else if (EQUIPPED == "Bow")
+                            {
+                                player.State = Action.WalkWestPattern2;
+                            }
                         }
                         else
                         {
                             // Walk north.
                             motion.Y -= speed;
                             player.Position = motion;
-                            player.State = Action.WalkNorth;
+                            if (EQUIPPED == "Sword")
+                            {
+                                player.State = Action.WalkNorthPattern1;
+                            }
+                            else if (EQUIPPED == "Bow")
+                            {
+                                player.State = Action.WalkNorthPattern2;
+                            }
                         }
                     }
 
-                    if (newState.IsKeyDown(Keys.S) && player.State != Action.AttackSouthPattern1)
+                    if (newState.IsKeyDown(Keys.S) && player.State != Action.AttackSouthPattern1 && player.State != Action.AttackSouthPattern2)
                     {
                         // Walk east if S and D are pressed.
                         if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.D))
                         {
                             motion.Y += speed;
                             player.Position = motion;
-                            player.State = Action.WalkEast;
+
+                            if (EQUIPPED == "Sword")
+                            {
+                                player.State = Action.WalkEastPattern1;
+                            }
+                            else if (EQUIPPED == "Bow")
+                            {
+                                player.State = Action.WalkEastPattern2;
+                            }
 
                         }
 
@@ -197,31 +343,63 @@ namespace Demo
                         {
                             motion.Y += speed;
                             player.Position = motion;
-                            player.State = Action.WalkWest;
+
+                            if (EQUIPPED == "Sword")
+                            {
+                                player.State = Action.WalkWestPattern1;
+                            }
+                            else if (EQUIPPED == "Bow")
+                            {
+                                player.State = Action.WalkWestPattern2;
+                            }
                         }
                         else
                         {
                             // Walk south
                             motion.Y += speed;
                             player.Position = motion;
-                            player.State = Action.WalkSouth;
+
+                            if (EQUIPPED == "Sword")
+                            {
+                                player.State = Action.WalkSouthPattern1;
+                            }
+                            else if (EQUIPPED == "Bow")
+                            {
+                                player.State = Action.WalkSouthPattern2;
+                            }
                         }
                     }
 
                     // Walk east
-                    if (newState.IsKeyDown(Keys.D) && player.State != Action.AttackEastPattern1)
+                    if (newState.IsKeyDown(Keys.D) && player.State != Action.AttackEastPattern1 && player.State != Action.AttackEastPattern2)
                     {
                         motion.X += speed;
                         player.Position = motion;
-                        player.State = Action.WalkEast;
+
+                        if (EQUIPPED == "Sword")
+                        {
+                            player.State = Action.WalkEastPattern1;
+                        }
+                        else if (EQUIPPED == "Bow")
+                        {
+                            player.State = Action.WalkEastPattern2;
+                        }
                     }
 
                     // Walk west
-                    if (newState.IsKeyDown(Keys.A) && player.State != Action.AttackWestPattern1)
+                    if (newState.IsKeyDown(Keys.A) && player.State != Action.AttackWestPattern1 && player.State != Action.AttackWestPattern2)
                     {
                         motion.X -= speed;
                         player.Position = motion;
-                        player.State = Action.WalkWest;
+
+                        if (EQUIPPED == "Sword")
+                        {
+                            player.State = Action.WalkWestPattern1;
+                        }
+                        else if (EQUIPPED == "Bow")
+                        {
+                            player.State = Action.WalkWestPattern2;
+                        }
                     }
                 }
 

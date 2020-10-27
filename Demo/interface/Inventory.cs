@@ -26,6 +26,7 @@ namespace Demo.Interface
         Vector2 Position { get; set; }
         public static int TotalItems { get; set; }
         public static int TotalChickens { get; set; }
+        public static int TotalArrows { get; set; }
 
         public enum Items
         {
@@ -48,6 +49,7 @@ namespace Demo.Interface
             selectedItemTexture.SetData(new[] { selectedItemTextureColor });
             InventoryOpen = false;
             TotalChickens = 3;
+            TotalArrows = 25;
         }
 
         public override void Update(GameTime gameTime)
@@ -241,7 +243,6 @@ namespace Demo.Interface
         // Create a delay before drawing to allow time for positioning to update correctly.
         int frames = 0;
         bool itemUsed = false;
-        bool itemsRemoved = false;
 
         public void DrawSelectedItem(SpriteBatch spriteBatch)
         {
@@ -297,7 +298,6 @@ namespace Demo.Interface
                 {
                     TotalChickens -= 1;
                     StartArea.player.CurrentHealth += 10;
-                    itemsRemoved = true;
                 }
             }
 

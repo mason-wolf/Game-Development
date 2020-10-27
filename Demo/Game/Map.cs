@@ -125,8 +125,6 @@ namespace Demo
             {
                 spriteBatch.Draw(transitionTexture, new Rectangle(0, 0, 1080, 1800), color);
             }
-
-
         }
     }
 }

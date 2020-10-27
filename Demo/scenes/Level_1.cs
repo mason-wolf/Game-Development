@@ -14,6 +14,7 @@ using MonoGame.Extended.Sprites;
 using MonoGame.Extended;
 using MonoGame.Extended.Collisions;
 using Microsoft.Xna.Framework.Input;
+using Demo.Interface;
 
 namespace Demo.Scenes
 {
@@ -27,6 +28,7 @@ namespace Demo.Scenes
         List<MapObject> mapObjects = StartArea.level_1Map.GetMapObjects();
         AnimatedSprite torchSprite;
         AnimatedSprite barrelSprite;
+        Texture2D arrowsSprite;
 
         public override void LoadContent(ContentManager content)
         {
@@ -37,7 +39,7 @@ namespace Demo.Scenes
                     case ("Skeleton"):
                         Entity skeletonEntity = new Entity(Sprites.skeletonAnimation);
                         skeletonEntity.LoadContent(content);
-                        skeletonEntity.State = Action.IdleEast;
+                        skeletonEntity.State = Action.IdleEast1;
                         skeletonEntity.MaxHealth = 15;
                         skeletonEntity.CurrentHealth = 15;
                         skeletonEntity.AttackDamage = 0.05;
@@ -47,7 +49,7 @@ namespace Demo.Scenes
                     case ("Bat"):
                         Entity batEntity = new Entity(Sprites.batAnimation);
                         batEntity.LoadContent(content);
-                        batEntity.State = Action.IdleEast;
+                        batEntity.State = Action.IdleEast1;
                         batEntity.MaxHealth = 15;
                         batEntity.CurrentHealth = 15;
                         batEntity.AttackDamage = 0.05;
@@ -75,7 +77,7 @@ namespace Demo.Scenes
             grid = new RoyT.AStar.Grid(map.Width() * 16, map.Height() * 16, 1);
 
             StartArea.player.EnemyList = enemyList;
-
+            arrowsSprite = content.Load<Texture2D>(@"objects\arrows");
             // Block cells in the collision layer for path finding.
             foreach (Tile tile in map.GetCollisionLayer())
             {
@@ -137,8 +139,6 @@ namespace Demo.Scenes
 
         }
 
-        float timer = 3;
-
         public override void Draw(SpriteBatch spriteBatch)
         {
             foreach (Entity enemy in enemyList)
@@ -148,8 +148,6 @@ namespace Demo.Scenes
                 enemy.DrawHUD(spriteBatch, AIHealthPosition, false);
             }
 
-            timer -= elapsedTime;
-
             foreach (MapObject mapObject in mapObjects)
             {
                 Item item = new Item();
@@ -157,13 +155,10 @@ namespace Demo.Scenes
                 item.Name = "Chicken";
                 mapObject.SetContainedItem(item);
                 mapObject.Draw(spriteBatch);
-
-                if (mapObject.ItemPickedUp())
-                {
-                    spriteBatch.DrawString(StartArea.font, "You picked up", new Vector2(player.Position.X - 170, player.Position.Y + 100), Color.White);
-                }
             }
 
+            spriteBatch.Draw(arrowsSprite, new Vector2(player.Position.X + 145, player.Position.Y - 110), Color.White);
+            spriteBatch.DrawString(StartArea.font, Inventory.TotalArrows.ToString(), new Vector2(player.Position.X + 165, player.Position.Y - 105), Color.White);
         }
     }
 }

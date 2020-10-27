@@ -52,6 +52,11 @@ namespace Demo
         // Chicken sprite
         public static Texture2D chickenTexture;
 
+        // Arrow sprite
+        public Texture2D arrowTexture;
+        public TextureAtlas arrowAtlas;
+        public static SpriteSheetAnimationFactory arrowAnimation;
+
         public void LoadContent(ContentManager content)
         {
             //Bat
@@ -60,61 +65,61 @@ namespace Demo
             batAnimation = new SpriteSheetAnimationFactory(batAtlas);
             float animationSpeed = .2f;
             float attackSpeed = 0.2f;
-            batAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
-            batAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            batAnimation.Add("idleSouth1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            batAnimation.Add("walkSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             batAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            batAnimation.Add("walkWest", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            batAnimation.Add("walkWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             batAnimation.Add("attackWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            batAnimation.Add("idleWest", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
-            batAnimation.Add("walkEast", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            batAnimation.Add("idleWest1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
+            batAnimation.Add("walkEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             batAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            batAnimation.Add("idleEast", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
-            batAnimation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            batAnimation.Add("idleEast1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
+            batAnimation.Add("walkNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             batAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            batAnimation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
+            batAnimation.Add("idleNorth1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
             batAnimation.Add("dead", new SpriteSheetAnimationData(new[] { 3 }, .2f, isLooping: false));
 
             // Fire Bat
             fireBatTexture = content.Load<Texture2D>(@"spritesheets\FireBat");
             fireBatAtlas = TextureAtlas.Create(fireBatTexture, 32, 32);
             fireBatAnimation = new SpriteSheetAnimationFactory(fireBatAtlas);
-            fireBatAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
-            fireBatAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            fireBatAnimation.Add("idleSouth1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            fireBatAnimation.Add("walkSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             fireBatAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            fireBatAnimation.Add("walkWest", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            fireBatAnimation.Add("walkWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             fireBatAnimation.Add("attackWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            fireBatAnimation.Add("idleWest", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
-            fireBatAnimation.Add("walkEast", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            fireBatAnimation.Add("idleWest1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
+            fireBatAnimation.Add("walkEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             fireBatAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            fireBatAnimation.Add("idleEast", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
-            fireBatAnimation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            fireBatAnimation.Add("idleEast1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
+            fireBatAnimation.Add("walkNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             fireBatAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            fireBatAnimation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
+            fireBatAnimation.Add("idleNorth1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
             fireBatAnimation.Add("dead", new SpriteSheetAnimationData(new[] { 3 }, .2f, isLooping: false));
 
             // Skeleton
             skeletonTexture = content.Load<Texture2D>(@"spritesheets\Skeleton");
             skeletonAtlas = TextureAtlas.Create(skeletonTexture, 32, 32);
             skeletonAnimation = new SpriteSheetAnimationFactory(skeletonAtlas);
-            skeletonAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
-            skeletonAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            skeletonAnimation.Add("idleSouth1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            skeletonAnimation.Add("walkSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             skeletonAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            skeletonAnimation.Add("walkWest", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            skeletonAnimation.Add("walkWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             skeletonAnimation.Add("attackWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            skeletonAnimation.Add("idleWest", new SpriteSheetAnimationData(new[] { 0 }));
-            skeletonAnimation.Add("walkEast", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            skeletonAnimation.Add("idleWest1", new SpriteSheetAnimationData(new[] { 0 }));
+            skeletonAnimation.Add("walkEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             skeletonAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            skeletonAnimation.Add("idleEast", new SpriteSheetAnimationData(new[] { 0 }));
-            skeletonAnimation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
+            skeletonAnimation.Add("idleEast1", new SpriteSheetAnimationData(new[] { 0 }));
+            skeletonAnimation.Add("walkNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             skeletonAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            skeletonAnimation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 0 }));
+            skeletonAnimation.Add("idleNorth1", new SpriteSheetAnimationData(new[] { 0 }));
             skeletonAnimation.Add("dead", new SpriteSheetAnimationData(new[] { 3 }, .2f, isLooping: false));
 
             // Sitting Warrior
             sittingWarriorTexture = content.Load<Texture2D>(@"spritesheets\Sitting Warrior");
             sittingWarriorAtlas = TextureAtlas.Create(sittingWarriorTexture, 32, 32);
             sittingWarriorAnimation = new SpriteSheetAnimationFactory(sittingWarriorAtlas);
-            sittingWarriorAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }, animationSpeed, isLooping: true));
+            sittingWarriorAnimation.Add("idleSouth1", new SpriteSheetAnimationData(new[] { 0 }, animationSpeed, isLooping: true));
             sittingWarriorAnimation.Add("walkSouth", new SpriteSheetAnimationData(new[] { 0, 1 }, animationSpeed, isLooping: true));
             sittingWarriorAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
             sittingWarriorAnimation.Add("walkWest", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
@@ -122,7 +127,7 @@ namespace Demo
             sittingWarriorAnimation.Add("idleWest", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
             sittingWarriorAnimation.Add("walkEast", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             sittingWarriorAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            sittingWarriorAnimation.Add("idleEast", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 3, 3, 3, 3, 3, 3}, 0.7f, isLooping: true));
+            sittingWarriorAnimation.Add("idleEast1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 3, 3, 3, 3, 3, 3}, 0.7f, isLooping: true));
             sittingWarriorAnimation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             sittingWarriorAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
             sittingWarriorAnimation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
@@ -151,6 +156,19 @@ namespace Demo
 
             // Chicken
             chickenTexture = content.Load<Texture2D>(@"items\Chicken");
+
+            // Arrow
+            arrowTexture = content.Load<Texture2D>(@"objects\Arrow");
+            arrowAtlas = TextureAtlas.Create(arrowTexture, 32, 32);
+            arrowAnimation = new SpriteSheetAnimationFactory(arrowAtlas);
+            arrowAnimation.Add("attackWestPattern1", new SpriteSheetAnimationData(new[] { 0 }, 0.09f, isLooping: false));
+            arrowAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 1 }, 0.07f, isLooping: false));
+            arrowAnimation.Add("idleNorth1", new SpriteSheetAnimationData(new[] { 2 }, 0.07f, isLooping: false));
+            arrowAnimation.Add("idleEast1", new SpriteSheetAnimationData(new[] { 1 }, 0.07f, isLooping: false));
+            arrowAnimation.Add("idleWest1", new SpriteSheetAnimationData(new[] { 0 }, 0.07f, isLooping: false));
+            arrowAnimation.Add("idleSouth1", new SpriteSheetAnimationData(new[] { 3 }, 0.07f, isLooping: false));
+            arrowAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 2 }, 0.07f, isLooping: false));
+            arrowAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 3 }, 0.07f, isLooping: false));
         }
     }
 }
