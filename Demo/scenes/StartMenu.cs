@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Demo
 {
-    class Start : SceneManager
+    class StartMenu : SceneManager
     {
         public MainMenu buttonMenu;
         SpriteFont spriteFont;
@@ -19,7 +19,7 @@ namespace Demo
         GameWindow window;
 
 
-        public Start(Game game, GameWindow window)
+        public StartMenu(Game game, GameWindow window)
             : base(game)
         {
             LoadContent();

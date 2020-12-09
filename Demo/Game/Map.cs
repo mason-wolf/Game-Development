@@ -66,8 +66,7 @@ namespace Demo
             return map.GetMapObjects();
         }
 
-        // Adds a scene associated with this map.
-        public void AddScene(Scene scene)
+        public void LoadScene(Scene scene)
         {
             this.scene = scene;
 

@@ -43,7 +43,7 @@ namespace Demo
             Services.AddService(typeof(ContentManager), Content);
  
             // Show the start screen
-            start = new Start(this, Window);
+            start = new StartMenu(this, Window);
 
             Components.Add(start);
             start.Show();

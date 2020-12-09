@@ -41,8 +41,9 @@ namespace Demo.Scenes
         public Inventory inventory;
 
         // Create teleporters.
-        private Rectangle teleporterToLevel_1;
-        private Rectangle teleporterToStartingLevel;
+        private List<Teleporter> teleporterList = new List<Teleporter>();
+        private Teleporter teleporterToLevel_1;
+        private Teleporter teleporterToStartingLevel;
 
         private GameWindow window;
         public static Scene SelectedScene { get; set; }
@@ -84,14 +85,14 @@ namespace Demo.Scenes
             sprites.LoadContent(Content);
 
             sittingWarriorEntity = new Entity(Sprites.sittingWarriorAnimation);
-            level_1Map.AddScene(new Level_1());
+            level_1Map.LoadScene(new Level_1());
 
             player.sprite = new AnimatedSprite(player.playerAnimation);
             player.Position = playerStartingPosition;
             player.State = Action.IdleSouth1;
             player.MaxHealth = 150;
             player.CurrentHealth = 150;
-            player.AttackDamage = 2.5;
+            player.AttackDamage = 3.5;
 
             sittingWarriorEntity.CurrentHealth = 1;
             sittingWarriorEntity.Position = new Vector2(player.Position.X - 100, player.Position.Y + 65);
@@ -118,9 +119,13 @@ namespace Demo.Scenes
             campfire = Sprites.campfireSprite;
             campfire.Position = new Vector2(300, 260);
             startingAreaMap.AddCollidable(campfire.Position.X, campfire.Position.Y, 8, 8);
-
-            teleporterToLevel_1 = new Rectangle(340, 134, 8, 1);
-            teleporterToStartingLevel = new Rectangle(407, 915, 8, 1);
+          
+            // TODO: Determine a more efficient way of creating teleporters. These instances
+            // still exist on other levels, the player may intersect another one unintentionally. 
+            teleporterToLevel_1 = new Teleporter(new Rectangle(340, 134, 8, 1), Scene.StartingArea.ToString());
+            teleporterToStartingLevel = new Teleporter(new Rectangle(407, 915, 8, 1), Scene.Level_1.ToString());
+            teleporterList.Add(teleporterToLevel_1);
+            teleporterList.Add(teleporterToStartingLevel);
             SelectedScene = Scene.Level_1;
             playerCollision = startingAreaMap.GetCollisionWorld();
             player.Position = new Vector2(808, 862);
@@ -136,19 +141,22 @@ namespace Demo.Scenes
 
         public override void Update(GameTime gameTime)
         {
+
             escapeMenu.Position = new Vector2(player.Position.X, player.Position.Y - 125);
 
             // If player intersects the teleporter, transport to Level 1.
-            if (player.BoundingBox.Intersects(teleporterToLevel_1) && SelectedScene != Scene.Level_1)
+            if (player.BoundingBox.Intersects(teleporterToLevel_1.GetRectangle()) && teleporterToLevel_1.Enabled)
             {
                 FadeInMap(level_1Map);
                 SelectedScene = Scene.Level_1;
                 player.Position = new Vector2(410, 812);
             }
 
-            if (player.BoundingBox.Intersects(teleporterToStartingLevel))
+            if (player.BoundingBox.Intersects(teleporterToStartingLevel.GetRectangle()) && teleporterToStartingLevel.Enabled)
             {
                 FadeInMap(startingAreaMap);
+                Content.Unload();
+                LoadContent();
                 SelectedScene = Scene.StartingArea;
                 player.Position = new Vector2(325, 150);
             }
@@ -173,6 +181,7 @@ namespace Demo.Scenes
                     break;
             }
 
+            ToggleTeleporters(SelectedScene);
             dialogBox.Update();
             inventory.Update(gameTime);
 
@@ -274,6 +283,24 @@ namespace Demo.Scenes
             Visible = true;
         }
 
+        /// <summary>
+        /// Enables/Disables teleporters depending on which scene is selected.
+        /// </summary>
+        /// <param name="selectedScene">Which scene to enable teleporters</param>
+        public void ToggleTeleporters(Scene selectedScene)
+        {
+            foreach (Teleporter teleporter in teleporterList)
+            {
+                if (teleporter.GetScene() != selectedScene.ToString())
+                {
+                    teleporter.Enabled = false;
+                }
+                else
+                {
+                    teleporter.Enabled = true;
+                }
+            }
+        }
         public override void Hide()
         {
             base.Hide();

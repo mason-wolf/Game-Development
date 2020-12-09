@@ -50,8 +50,6 @@ namespace Demo.Interface
         /// </summary>
         public override void Initialize()
         {
-            // TODO: Add your initialization code here
-
             base.Initialize();
         }
 
@@ -61,8 +59,6 @@ namespace Demo.Interface
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
-
             base.Update(gameTime);
         }
 

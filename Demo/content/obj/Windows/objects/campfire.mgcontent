@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/objects/Campfire.png</SourceFile>
-  <SourceTime>2020-06-21T20:54:55.7317144-05:00</SourceTime>
-  <DestFile>C:/Users/Mason/Documents/Game-Development/Demo/Content/bin/Windows/objects/Campfire.xnb</DestFile>
-  <DestTime>2020-10-26T19:26:52.2652968-05:00</DestTime>
+  <SourceFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/objects/Campfire.png</SourceFile>
+  <SourceTime>2020-12-07T21:12:02.4800267-06:00</SourceTime>
+  <DestFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/bin/Windows/objects/Campfire.xnb</DestFile>
+  <DestTime>2020-12-07T21:15:52.3614097-06:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

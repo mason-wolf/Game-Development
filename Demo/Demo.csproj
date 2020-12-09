@@ -47,6 +47,7 @@
     <Compile Include="Game\MapRenderer.cs" />
     <Compile Include="Game\Map.cs" />
     <Compile Include="Game\Sprites.cs" />
+    <Compile Include="Game\Teleporter.cs" />
     <Compile Include="Game\Tile.cs" />
     <Compile Include="Game\Waypoint.cs" />
     <Compile Include="Interface\Background.cs" />
