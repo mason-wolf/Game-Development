@@ -23,7 +23,7 @@ using Demo.Interface;
 
 namespace Demo.Scenes
 {
-    class StartArea : SceneManager
+    class Init : SceneManager
     {
         public static ViewportAdapter viewPortAdapter;
         // Monitor keyboard states.
@@ -38,6 +38,8 @@ namespace Demo.Scenes
         private Vector2 playerStartingPosition = new Vector2(350, 200);
 
         public EscapeMenu escapeMenu;
+        public SaveMenu saveMenu;
+
         public Inventory inventory;
 
         // Create teleporters.
@@ -56,7 +58,7 @@ namespace Demo.Scenes
         // Store the player's collision state to pass to different scenes.
         IBox playerCollision;
 
-        public StartArea(Game game, GameWindow window) : base(game)
+        public Init(Game game, GameWindow window) : base(game)
         {
             this.window = window;
             viewPortAdapter = new BoxingViewportAdapter(window, GraphicsDevice, 1080, 720);
@@ -77,6 +79,7 @@ namespace Demo.Scenes
         public enum Scene
         {
             EscapeMenu,
+            SaveMenu,
             Inventory,
             StartingArea,
             Level_1
@@ -103,6 +106,8 @@ namespace Demo.Scenes
             startingAreaMap.AddCollidable(sittingWarriorEntity.Position.X, sittingWarriorEntity.Position.Y - 16, 16, 31);
 
             escapeMenu = new EscapeMenu(game, window, Content);
+            saveMenu = new SaveMenu(game, window, Content);
+
             string[] items = { "Continue", "Save", "Load", "Quit" };
             escapeMenu.SetMenuItems(items);
 
@@ -142,9 +147,8 @@ namespace Demo.Scenes
 
         public override void Update(GameTime gameTime)
         {
-            Console.WriteLine(player.Position);
             escapeMenu.Position = new Vector2(player.Position.X, player.Position.Y - 125);
-
+            saveMenu.Position = new Vector2(player.Position.X, player.Position.Y - 125);
             // To Level 1
             if (player.BoundingBox.Intersects(teleporterToLevel_1.GetRectangle()) && teleporterToLevel_1.Enabled)
             {
@@ -172,6 +176,9 @@ namespace Demo.Scenes
             {
                 case Scene.EscapeMenu:
                     escapeMenu.Update(gameTime);
+                    break;
+                case Scene.SaveMenu:
+                    saveMenu.Update(gameTime);
                     break;
                 case Scene.StartingArea:
                     playerCollision = startingAreaMap.GetCollisionWorld();
@@ -229,6 +236,10 @@ namespace Demo.Scenes
             if (SelectedScene == Scene.EscapeMenu)
             {
                 escapeMenu.Draw(spriteBatch);
+            }
+            else if (SelectedScene == Scene.SaveMenu)
+            {
+                saveMenu.Draw(spriteBatch);
             }
             else
             {

@@ -95,7 +95,7 @@ namespace Demo
         public static bool pressedContinued = false;
         public static bool isAttacking = false;
         // Store currently running scene to revert back after exiting escape menu.
-        StartArea.Scene currentScene = StartArea.SelectedScene;
+        Init.Scene currentScene = Init.SelectedScene;
 
         // Handle attacking and movement animations.
         public void HandleInput(GameTime gameTime, Entity player, IBox playerCollisionBox, KeyboardState newState, KeyboardState oldState)
@@ -112,14 +112,14 @@ namespace Demo
             {
                 if (inMenu)
                 {
-                    StartArea.SelectedScene = currentScene;
+                    Init.SelectedScene = currentScene;
                     inMenu = false;
                     pressedContinued = false;
                 }
                 else
                 {
-                    currentScene = StartArea.SelectedScene;
-                    StartArea.SelectedScene = StartArea.Scene.EscapeMenu;
+                    currentScene = Init.SelectedScene;
+                    Init.SelectedScene = Init.Scene.EscapeMenu;
                     inMenu = true;
                 }
             }

@@ -58,7 +58,8 @@
     <Compile Include="Interface\EscapeMenu.cs" />
     <Compile Include="Interface\Inventory.cs" />
     <Compile Include="Scenes\Level_1.cs" />
-    <Compile Include="Scenes\StartArea.cs" />
+    <Compile Include="Scenes\SaveMenu.cs" />
+    <Compile Include="Scenes\Init.cs" />
     <Compile Include="Interface\MainMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

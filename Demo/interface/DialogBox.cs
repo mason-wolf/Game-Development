@@ -228,7 +228,7 @@ namespace Demo
             if (Active)
             {
                 // Button press will proceed to the next page of the dialog box
-                if ((StartArea.newState.IsKeyDown(Keys.E) && StartArea.oldState.IsKeyUp(Keys.E)))
+                if ((Init.newState.IsKeyDown(Keys.E) && Init.oldState.IsKeyUp(Keys.E)))
                 {
                     if (_currentPage >= _pages.Count - 1)
                     {
@@ -242,7 +242,7 @@ namespace Demo
                 }
 
                 // Shortcut button to skip entire dialog box
-                if ((StartArea.newState.IsKeyDown(Keys.X) && StartArea.oldState.IsKeyUp(Keys.X)))
+                if ((Init.newState.IsKeyDown(Keys.X) && Init.oldState.IsKeyUp(Keys.X)))
                 {
                     Hide();
                 }

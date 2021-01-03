@@ -97,7 +97,7 @@ namespace Demo
             }
 
             // If the player picks up an item, add it to the inventory.
-            if (containedItem != null && StartArea.player.BoundingBox.Intersects(containedItemBoundingBox) && !itemPickedUp)
+            if (containedItem != null && Init.player.BoundingBox.Intersects(containedItemBoundingBox) && !itemPickedUp)
             {
                 switch (containedItem.Name)
                 {
@@ -129,12 +129,12 @@ namespace Demo
                 int y = 0;
 
                 // Spawn the item to the left or right of the container depending on the direction the player intersects.
-                if (position.X < StartArea.player.Position.X && itemDrawn)
+                if (position.X < Init.player.Position.X && itemDrawn)
                 {
                     x = (int)position.X - 5;
                     y = (int)position.Y;
                 }
-                else if (position.X > StartArea.player.Position.X && itemDrawn)
+                else if (position.X > Init.player.Position.X && itemDrawn)
                 {
                     x = (int)position.X + 3;
                     y = (int)position.Y;

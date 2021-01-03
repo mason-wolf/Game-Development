@@ -50,6 +50,7 @@ namespace Demo.Interface
             InventoryOpen = false;
             TotalChickens = 3;
             TotalArrows = 25;
+            GenerateGrid();
         }
 
         public override void Update(GameTime gameTime)
@@ -60,7 +61,7 @@ namespace Demo.Interface
                 newKeyboardState = Keyboard.GetState();
             }
 
-            Position = new Vector2(StartArea.player.Position.X - 150, StartArea.player.Position.Y - 90);
+            Position = new Vector2(Init.player.Position.X - 150, Init.player.Position.Y - 90);
             inventoryInterface = new Rectangle((int)Position.X, (int)Position.Y, 300, 200);
 
             // Handle item selection in inventory menu: move right.
@@ -244,7 +245,7 @@ namespace Demo.Interface
         int frames = 0;
         bool itemUsed = false;
 
-        public void DrawSelectedItem(SpriteBatch spriteBatch)
+        void GenerateGrid()
         {
             int x = (int)Position.X + 25;
             int y = (int)Position.Y + 30;
@@ -280,11 +281,6 @@ namespace Demo.Interface
                 itemList[i].Index = i;
             }
 
-            int itemPositionX = itemList[SelectedItem].ItemRectangle.X;
-            int itemPositionY = itemList[SelectedItem].ItemRectangle.Y;
-            int itemWidth = itemList[SelectedItem].ItemRectangle.Width;
-            int itemHeight = itemList[SelectedItem].ItemRectangle.Height;
-
             TotalItems = 0;
 
             for (int i = 0; i < TotalChickens; i++)
@@ -297,10 +293,16 @@ namespace Demo.Interface
                 if (itemList[SelectedItem].Name == "Chicken")
                 {
                     TotalChickens -= 1;
-                    StartArea.player.CurrentHealth += 10;
+                    if (Init.player.CurrentHealth < Init.player.MaxHealth)
+                    {
+                        Init.player.CurrentHealth += 10;
+                    }
                 }
             }
-
+        }
+        public void DrawSelectedItem(SpriteBatch spriteBatch)
+        {
+            GenerateGrid();
             itemUsed = false;
 
             frames++;
@@ -320,6 +322,10 @@ namespace Demo.Interface
                         spriteBatch.DrawString(inventoryFont, itemList[SelectedItem].Description, new Vector2(Position.X + 25, Position.Y + 185), Color.White, 0, new Vector2(0, 0), .7f, SpriteEffects.None, 0);
                     }
                 }
+                int itemPositionX = itemList[SelectedItem].ItemRectangle.X;
+                int itemPositionY = itemList[SelectedItem].ItemRectangle.Y;
+                int itemWidth = itemList[SelectedItem].ItemRectangle.Width;
+                int itemHeight = itemList[SelectedItem].ItemRectangle.Height;
 
                 spriteBatch.Draw(selectedItemTexture, new Rectangle(itemPositionX, itemPositionY, 1, itemHeight + 1), Color.White);
                 spriteBatch.Draw(selectedItemTexture, new Rectangle(itemPositionX, itemPositionY, itemWidth + 1, 1), Color.White);

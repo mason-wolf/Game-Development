@@ -24,8 +24,8 @@ namespace Demo.Scenes
         public static EnemyAI enemyAI;
         public static List<Entity> enemyList = new List<Entity>();
         public RoyT.AStar.Grid grid;
-        Player player = StartArea.player;
-        List<MapObject> mapObjects = StartArea.level_1Map.GetMapObjects();
+        Player player = Init.player;
+        List<MapObject> mapObjects = Init.level_1Map.GetMapObjects();
         AnimatedSprite torchSprite;
         AnimatedSprite barrelSprite;
         Texture2D arrowsSprite;
@@ -67,16 +67,16 @@ namespace Demo.Scenes
                         barrelSprite.Play("idle");
                         barrelSprite.Position = mapObject.GetPosition();
                         mapObject.SetSprite(barrelSprite);
-                        IBox barrelCollidable = StartArea.level_1Map.GetWorld().Create(barrelSprite.Position.X, barrelSprite.Position.Y - 4, 16, 16);
+                        IBox barrelCollidable = Init.level_1Map.GetWorld().Create(barrelSprite.Position.X, barrelSprite.Position.Y - 4, 16, 16);
                         mapObject.SetCollisionBox(barrelCollidable);
                         break;
                 }
             }
  
-            MapRenderer map = StartArea.level_1Map.map;
+            MapRenderer map = Init.level_1Map.map;
             grid = new RoyT.AStar.Grid(map.Width() * 16, map.Height() * 16, 1);
 
-            StartArea.player.EnemyList = enemyList;
+            Init.player.EnemyList = enemyList;
             arrowsSprite = content.Load<Texture2D>(@"objects\arrows");
             // Block cells in the collision layer for path finding.
             foreach (Tile tile in map.GetCollisionLayer())
@@ -100,7 +100,7 @@ namespace Demo.Scenes
                     }
                 }
             }
-            enemyAI = new EnemyAI(grid, enemyList, StartArea.player);
+            enemyAI = new EnemyAI(grid, enemyList, Init.player);
         }
 
         float elapsedTime;
@@ -132,7 +132,7 @@ namespace Demo.Scenes
                     {
                         mapObject.GetSprite().Play("broken");
                         mapObject.Destroy();
-                        StartArea.level_1Map.GetWorld().Remove(mapObject.GetCollisionBox());
+                        Init.level_1Map.GetWorld().Remove(mapObject.GetCollisionBox());
                     }
                 }
             }
@@ -158,7 +158,7 @@ namespace Demo.Scenes
             }
 
             spriteBatch.Draw(arrowsSprite, new Vector2(player.Position.X + 145, player.Position.Y - 110), Color.White);
-            spriteBatch.DrawString(StartArea.font, Inventory.TotalArrows.ToString(), new Vector2(player.Position.X + 165, player.Position.Y - 105), Color.White);
+            spriteBatch.DrawString(Init.font, Inventory.TotalArrows.ToString(), new Vector2(player.Position.X + 165, player.Position.Y - 105), Color.White);
         }
     }
 }

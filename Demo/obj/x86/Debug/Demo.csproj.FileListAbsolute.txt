@@ -400,3 +400,4 @@ C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Cont
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Arrows.xnb
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Bow.xnb
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.csproj.CoreCompileInputs.cache
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\menuItemSelected.xnb

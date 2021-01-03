@@ -18,14 +18,13 @@ namespace Demo.Interface
     public class EscapeMenu : Scene
     {
         SpriteFont spriteFont;
-        Texture2D buttonImage;
-
+        Texture2D menuItem;
         SpriteBatch spriteBatch;
-
         Color normalColor = Color.Yellow;
         Color selectedColor = Color.White;
         int selectedIndex = 0;
         Game game;
+
         private StringCollection menuItems = new StringCollection();
 
         public EscapeMenu(Game game, GameWindow window, ContentManager content)
@@ -53,18 +52,17 @@ namespace Demo.Interface
         {
             menuItems.Clear();
             menuItems.AddRange(items);
-
             CalculateBounds();
         }
 
         private void CalculateBounds()
         {
-            Width = buttonImage.Width;
+            Width = menuItem.Width;
             Height = 0;
             foreach (string item in menuItems)
             {
                 Height += 5;
-                Height += buttonImage.Height;
+                Height += menuItem.Height;
             }
         }
 
@@ -72,7 +70,7 @@ namespace Demo.Interface
 
         public override void LoadContent(ContentManager content)
         {
-            buttonImage = content.Load<Texture2D>(@"interface\menu");
+            menuItem = content.Load<Texture2D>(@"interface\menu");
             spriteFont = content.Load<SpriteFont>(@"interface\font");
         }
 
@@ -96,6 +94,11 @@ namespace Demo.Interface
                 Player.pressedContinued = true;
             }
 
+            if (SelectedIndex == 1 && newState.IsKeyDown(Keys.E))
+            {
+                Init.SelectedScene = Init.Scene.SaveMenu;
+            }
+
             if (SelectedIndex == 3 && newState.IsKeyDown(Keys.E))
             {
                 game.Exit();
@@ -110,7 +113,7 @@ namespace Demo.Interface
         {
 
             textPosition = Position;
-            Rectangle buttonRectangle = new Rectangle((int)Position.X - 20, (int)Position.Y + 75, buttonImage.Width, buttonImage.Height);
+            Rectangle buttonRectangle = new Rectangle((int)Position.X - 20, (int)Position.Y + 75, menuItem.Width, menuItem.Height);
             Color color;
 
             for (int i = 0; i < menuItems.Count; i++)
@@ -124,13 +127,13 @@ namespace Demo.Interface
                     color = selectedColor;
                 }
 
-                spriteBatch.Draw(buttonImage, buttonRectangle, Color.White);
-                textPosition = new Vector2(buttonRectangle.X + (buttonImage.Width / 2), buttonRectangle.Y + (buttonImage.Height / 2));
+                spriteBatch.Draw(menuItem, buttonRectangle, Color.White);
+                textPosition = new Vector2(buttonRectangle.X + (menuItem.Width / 2), buttonRectangle.Y + (menuItem.Height / 2));
                 Vector2 textSize = spriteFont.MeasureString(menuItems[i]);
                 textPosition.X -= textSize.X / 2;
                 textPosition.Y -= spriteFont.LineSpacing / 3;
                 spriteBatch.DrawString(spriteFont, menuItems[i], textPosition, color);
-                buttonRectangle.Y += buttonImage.Height;
+                buttonRectangle.Y += menuItem.Height;
                 buttonRectangle.Y += 5;
             }
         }

@@ -1,0 +1,6 @@
+player_health=148.5
+arrows=25
+location=SaveMenu
+player_postiion={X:456.1999 Y:706}
+inventory_item=Chicken
+item_quantity=3
