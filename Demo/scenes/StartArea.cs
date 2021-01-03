@@ -61,6 +61,15 @@ namespace Demo.Scenes
             this.window = window;
             viewPortAdapter = new BoxingViewportAdapter(window, GraphicsDevice, 1080, 720);
             camera = new Camera2D(viewPortAdapter);
+            player = new Player();
+            player.LoadContent(Content);
+            player.sprite = new AnimatedSprite(player.playerAnimation);
+            player.Position = playerStartingPosition;
+            player.State = Action.IdleSouth1;
+            player.MaxHealth = 150;
+            player.CurrentHealth = 150;
+            player.AttackDamage = 3.5;
+
             base.Initialize();
         }
 
@@ -78,21 +87,15 @@ namespace Demo.Scenes
             startingAreaMap = new Map(Content, "Content/maps/StartingArea.tmx");
             level_1Map = new Map(Content, "Content/maps/level_1.tmx");
             font = Content.Load<SpriteFont>(@"interface\font");
-            player = new Player();
             player.LoadContent(Content);
-
+            player.sprite = new AnimatedSprite(player.playerAnimation);
+            player.Position = playerStartingPosition;
+            player.State = Action.IdleSouth1;
             Sprites sprites = new Sprites();
             sprites.LoadContent(Content);
 
             sittingWarriorEntity = new Entity(Sprites.sittingWarriorAnimation);
             level_1Map.LoadScene(new Level_1());
-
-            player.sprite = new AnimatedSprite(player.playerAnimation);
-            player.Position = playerStartingPosition;
-            player.State = Action.IdleSouth1;
-            player.MaxHealth = 150;
-            player.CurrentHealth = 150;
-            player.AttackDamage = 3.5;
 
             sittingWarriorEntity.CurrentHealth = 1;
             sittingWarriorEntity.Position = new Vector2(player.Position.X - 100, player.Position.Y + 65);
@@ -119,17 +122,15 @@ namespace Demo.Scenes
             campfire = Sprites.campfireSprite;
             campfire.Position = new Vector2(300, 260);
             startingAreaMap.AddCollidable(campfire.Position.X, campfire.Position.Y, 8, 8);
-          
-            // TODO: Determine a more efficient way of creating teleporters. These instances
-            // still exist on other levels, the player may intersect another one unintentionally. 
-            teleporterToLevel_1 = new Teleporter(new Rectangle(340, 134, 8, 1), Scene.StartingArea.ToString());
+
+            teleporterToLevel_1 = new Teleporter(new Rectangle(340, 115, 8, 1), Scene.StartingArea.ToString());
             teleporterToStartingLevel = new Teleporter(new Rectangle(407, 915, 8, 1), Scene.Level_1.ToString());
             teleporterList.Add(teleporterToLevel_1);
             teleporterList.Add(teleporterToStartingLevel);
             SelectedScene = Scene.Level_1;
             playerCollision = startingAreaMap.GetCollisionWorld();
-            player.Position = new Vector2(808, 862);
-
+            //    player.Position = new Vector2(808, 862);
+            player.Position = new Vector2(408, 894);
             Item chickenItem = new Item();
             chickenItem.HealthAmount = 10;
             chickenItem.ItemTexture = Sprites.chickenTexture;
@@ -141,24 +142,26 @@ namespace Demo.Scenes
 
         public override void Update(GameTime gameTime)
         {
-
+            Console.WriteLine(player.Position);
             escapeMenu.Position = new Vector2(player.Position.X, player.Position.Y - 125);
 
-            // If player intersects the teleporter, transport to Level 1.
+            // To Level 1
             if (player.BoundingBox.Intersects(teleporterToLevel_1.GetRectangle()) && teleporterToLevel_1.Enabled)
             {
                 FadeInMap(level_1Map);
+                player.Position = new Vector2(422, 828);
                 SelectedScene = Scene.Level_1;
-                player.Position = new Vector2(410, 812);
             }
 
+            // To Starting level
             if (player.BoundingBox.Intersects(teleporterToStartingLevel.GetRectangle()) && teleporterToStartingLevel.Enabled)
             {
                 FadeInMap(startingAreaMap);
+                player.EnemyList.Clear();
                 Content.Unload();
                 LoadContent();
                 SelectedScene = Scene.StartingArea;
-                player.Position = new Vector2(325, 150);
+                player.Position = new Vector2(335, 177);
             }
 
             newState = Keyboard.GetState();
@@ -176,6 +179,7 @@ namespace Demo.Scenes
                     startingAreaMap.Update(gameTime);
                     break;
                 case Scene.Level_1:
+                    UnloadContent();
                     playerCollision = level_1Map.GetCollisionWorld();
                     level_1Map.Update(gameTime);
                     break;

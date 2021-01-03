@@ -32,7 +32,7 @@ namespace Demo
 
         public List<Entity> EnemyList { get; set; }
         public static List<Item> InventoryList = new List<Item>();
-        private string EQUIPPED = "Bow";
+        private string EQUIPPED = "Sword";
         AnimatedSprite arrow;
 
         public new void LoadContent(ContentManager content)
