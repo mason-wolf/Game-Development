@@ -23,6 +23,7 @@ namespace Demo.Interface
         public static int SelectedItem { get; set; }
         public static List<Item> itemList = Player.InventoryList;
         public static bool InventoryOpen { get; set; }
+        public static bool SavedGameLoaded { get; set; }
         Vector2 Position { get; set; }
         public static int TotalItems { get; set; }
         public static int TotalChickens { get; set; }
@@ -48,8 +49,13 @@ namespace Demo.Interface
             inventoryTexture.SetData(new[] { interfaceColor });
             selectedItemTexture.SetData(new[] { selectedItemTextureColor });
             InventoryOpen = false;
-            TotalChickens = 3;
-            TotalArrows = 25;
+
+            if (!SavedGameLoaded)
+            {
+                TotalChickens = 3;
+                TotalArrows = 25;
+            }
+
             GenerateGrid();
         }
 

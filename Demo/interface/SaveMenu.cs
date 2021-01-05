@@ -143,7 +143,6 @@ namespace Demo.Scenes
 
         void SaveGame(int saveSlot)
         {
-            Console.WriteLine("Game savd");
             using (StreamWriter streamWriter = new StreamWriter("Save_" + saveSlot + ".txt"))
             {
                 streamWriter.WriteLine("player_health="+Init.Player.CurrentHealth);

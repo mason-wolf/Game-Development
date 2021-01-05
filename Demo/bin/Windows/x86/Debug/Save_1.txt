@@ -1,7 +1,5 @@
-player_health=145.449999999999
-arrows=25
+player_health=149.05
+arrows=9
 location=Level_1
-player_position=394.0001,709.1968
-inventory_item=Chicken,3
-inventory_item=Chicken,3
+player_position=730.5975,679.6001
 inventory_item=Chicken,3

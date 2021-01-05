@@ -66,6 +66,10 @@ namespace Demo
             return map.GetMapObjects();
         }
 
+        public List<Tile> GetCollisionTiles()
+        {
+            return map.GetCollisionLayer();
+        }
         public void LoadScene(Scene scene)
         {
             this.scene = scene;

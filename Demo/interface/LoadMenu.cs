@@ -139,6 +139,10 @@ namespace Demo.Scenes
             oldState = newState;
         }
 
+        /// <summary>
+        /// Load saved game from file.
+        /// </summary>
+        /// <param name="saveSlot"></param>
         void LoadGame(int saveSlot)
         {
             savedGame = new SavedGame();
@@ -181,6 +185,7 @@ namespace Demo.Scenes
                 }
 
                 Init.Player.CurrentHealth = savedGame.PlayerHealth;
+                Inventory.SavedGameLoaded = true;
                 Inventory.TotalArrows = savedGame.Arrows;
                 Init.SelectedScene = (Init.Scene)Enum.Parse(typeof(Init.Scene), savedGame.Location);
                 Player.PressedContinue = true;

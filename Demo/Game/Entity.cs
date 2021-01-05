@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Demo.Scenes;
 using Humper;
 using Humper.Responses;
+using Demo.Engine;
 
 namespace Demo
 {
@@ -175,7 +176,6 @@ namespace Demo
   
         public Entity()
         {
- 
         }
 
         public Entity(SpriteSheetAnimationFactory animations)
@@ -283,9 +283,9 @@ namespace Demo
 
         Entity projectile;
         Vector2 projectilePosition;
+        Vector2 projectileStartingPosition;
         bool targetHit = false;
         string direction = "";
-
         /// <summary>
         /// Shoots a projectile.
         /// </summary>
@@ -297,21 +297,43 @@ namespace Demo
             projectile.sprite = sprite;
             projectilePosition = new Vector2(Init.Player.Position.X, Init.Player.Position.Y - 5);
             projectile.Position = projectilePosition;
+            projectileStartingPosition = projectilePosition;
             projectile.MaxHealth = 10;
             projectile.CurrentHealth = 10;
             this.direction = direction;
             targetHit = false;
         }
 
+        /// <summary>
+        /// Checks to see if the projectile intersects any of the collision tiles on the current map.
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <returns></returns>
+        RectangleF projectileBoundingBox;
+        bool ProjectileCollision(Entity projectile)
+        {
+            bool collided = false;
+            Vector2 offsetPosition = new Vector2(projectilePosition.X + 5, projectilePosition.Y + 5);
+            projectileBoundingBox = new RectangleF(offsetPosition, new SizeF(2, 2));
+            foreach (Tile tile in Init.SelectedMap.GetCollisionTiles())
+            {
+                if (projectileBoundingBox.Intersects(tile.Rectangle))
+                {
+                    collided = true;
+                }
+            }
+            return collided;
+        }
         public void Update(GameTime gameTime)
         {
+
            if (CurrentHealth <= 0)
             {
                 State = Action.Dead;
                 Dead = true;
             }
 
-            if (projectile != null)
+            if (projectile != null && !ProjectileCollision(projectile))
             {
                 int speed = 7;
 
@@ -331,6 +353,7 @@ namespace Demo
 
                 if (direction == "east")
                 {
+                    ProjectileCollision(projectile);
                     projectile.State = Action.IdleEast1;
                     projectilePosition.X += speed;
                     projectile.Position = projectilePosition;

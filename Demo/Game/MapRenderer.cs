@@ -182,6 +182,7 @@ namespace Demo.Engine
                 if (tile.TileID != 0)
                 {
                     world.Create(tile.Position.X + 8, tile.Position.Y + 2, 16, 16);
+                    tile.Rectangle = new Rectangle((int)tile.Position.X, (int)tile.Position.Y, 16, 16);
                 }
             }
 
