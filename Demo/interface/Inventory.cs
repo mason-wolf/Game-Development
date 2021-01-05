@@ -61,7 +61,7 @@ namespace Demo.Interface
                 newKeyboardState = Keyboard.GetState();
             }
 
-            Position = new Vector2(Init.player.Position.X - 150, Init.player.Position.Y - 90);
+            Position = new Vector2(Init.Player.Position.X - 150, Init.Player.Position.Y - 90);
             inventoryInterface = new Rectangle((int)Position.X, (int)Position.Y, 300, 200);
 
             // Handle item selection in inventory menu: move right.
@@ -241,8 +241,6 @@ namespace Demo.Interface
             return isDuplicate;
         }
 
-        // Create a delay before drawing to allow time for positioning to update correctly.
-        int frames = 0;
         bool itemUsed = false;
 
         void GenerateGrid()
@@ -293,13 +291,16 @@ namespace Demo.Interface
                 if (itemList[SelectedItem].Name == "Chicken")
                 {
                     TotalChickens -= 1;
-                    if (Init.player.CurrentHealth < Init.player.MaxHealth)
+                    if (Init.Player.CurrentHealth < Init.Player.MaxHealth)
                     {
-                        Init.player.CurrentHealth += 10;
+                        Init.Player.CurrentHealth += 10;
                     }
                 }
             }
         }
+
+        // Create a delay before drawing to allow time for positioning to update correctly.
+        int frames = 0;
         public void DrawSelectedItem(SpriteBatch spriteBatch)
         {
             GenerateGrid();

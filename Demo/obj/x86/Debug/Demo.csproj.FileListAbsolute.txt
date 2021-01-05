@@ -323,7 +323,6 @@ C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\RoyT.AStar.
 C:\Users\Mason\Documents\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\player.xnb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\music\chopping_block.wma
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\music\chopping_block.xnb
-C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\buildMenu.xnb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\button.xnb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\cursor.xnb
 C:\Users\mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\font.xnb
@@ -401,3 +400,4 @@ C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Cont
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Bow.xnb
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.csproj.CoreCompileInputs.cache
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\menuItemSelected.xnb
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\floppy.xnb

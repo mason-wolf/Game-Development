@@ -11,7 +11,6 @@
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/interface/statusbar.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/tilesets/tileset_1.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/interface/titlescreen.png</File>
-    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/interface/buildMenu.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/interface/cursor.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/interface/staminabar.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/interface/healthbar.png</File>
@@ -29,5 +28,6 @@
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/objects/Arrow.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/objects/Arrows.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/interface/menuItemSelected.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/interface/floppy.png</File>
   </SourceFiles>
 </SourceFileCollection>

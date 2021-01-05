@@ -1,4 +1,5 @@
-﻿using Humper;
+﻿using Demo.Scenes;
+using Humper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Demo
 {
-    public abstract class Scene 
+    public abstract class Scene
     {
         public abstract void LoadContent(ContentManager content);
         public abstract void Update(GameTime gameTime);

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/interface/menu.png</SourceFile>
-  <SourceTime>2021-01-03T15:38:25.8226547-06:00</SourceTime>
+  <SourceTime>2021-01-05T09:43:10.235971-06:00</SourceTime>
   <DestFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/bin/Windows/interface/menu.xnb</DestFile>
-  <DestTime>2021-01-03T16:16:52.3792525-06:00</DestTime>
+  <DestTime>2021-01-05T09:43:13.5383067-06:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

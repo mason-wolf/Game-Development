@@ -27,18 +27,19 @@ namespace Demo.Scenes
     {
         public static ViewportAdapter viewPortAdapter;
         // Monitor keyboard states.
-        public static KeyboardState oldState;
-        public static KeyboardState newState;
-        public static Player player;
-        public static Camera2D camera;
+        public static KeyboardState KeyBoardOldState;
+        public static KeyboardState KeyBoardNewState;
+        public static Player Player;
+        public static Camera2D Camera;
         // Store the maps.
-        public static Map startingAreaMap;
-        public static Map level_1Map;
-        public static SpriteFont font;
+        public static Map StartingAreaMap;
+        public static Map Level_1Map;
+        public static SpriteFont Font;
         private Vector2 playerStartingPosition = new Vector2(350, 200);
 
         public EscapeMenu escapeMenu;
-        public SaveMenu saveMenu;
+        public static SaveMenu saveMenu;
+        public LoadMenu loadMenu;
 
         public Inventory inventory;
 
@@ -49,6 +50,7 @@ namespace Demo.Scenes
 
         private GameWindow window;
         public static Scene SelectedScene { get; set; }
+        public static Map SelectedMap { get; set; }
         DialogBox dialogBox;
 
         // Create entities for this map.
@@ -58,20 +60,20 @@ namespace Demo.Scenes
         // Store the player's collision state to pass to different scenes.
         IBox playerCollision;
 
+        public static bool Reloaded = false;
         public Init(Game game, GameWindow window) : base(game)
         {
             this.window = window;
             viewPortAdapter = new BoxingViewportAdapter(window, GraphicsDevice, 1080, 720);
-            camera = new Camera2D(viewPortAdapter);
-            player = new Player();
-            player.LoadContent(Content);
-            player.sprite = new AnimatedSprite(player.playerAnimation);
-            player.Position = playerStartingPosition;
-            player.State = Action.IdleSouth1;
-            player.MaxHealth = 150;
-            player.CurrentHealth = 150;
-            player.AttackDamage = 3.5;
-
+            Camera = new Camera2D(viewPortAdapter);
+            Player = new Player();
+            Player.LoadContent(Content);
+            Player.sprite = new AnimatedSprite(Player.playerAnimation);
+            Player.Position = playerStartingPosition;
+            Player.State = Action.IdleSouth1;
+            Player.MaxHealth = 150;
+            Player.CurrentHealth = 150;
+            Player.AttackDamage = 3.5;
             base.Initialize();
         }
 
@@ -80,6 +82,7 @@ namespace Demo.Scenes
         {
             EscapeMenu,
             SaveMenu,
+            LoadMenu,
             Inventory,
             StartingArea,
             Level_1
@@ -87,33 +90,34 @@ namespace Demo.Scenes
 
         protected override void LoadContent()
         {
-            startingAreaMap = new Map(Content, "Content/maps/StartingArea.tmx");
-            level_1Map = new Map(Content, "Content/maps/level_1.tmx");
-            font = Content.Load<SpriteFont>(@"interface\font");
-            player.LoadContent(Content);
-            player.sprite = new AnimatedSprite(player.playerAnimation);
-            player.Position = playerStartingPosition;
-            player.State = Action.IdleSouth1;
+            StartingAreaMap = new Map(Content, "Content/maps/StartingArea.tmx");
+            Level_1Map = new Map(Content, "Content/maps/level_1.tmx");
+            Font = Content.Load<SpriteFont>(@"interface\font");
+            Player.LoadContent(Content);
+            Player.sprite = new AnimatedSprite(Player.playerAnimation);
+            Player.Position = playerStartingPosition;
+            Player.State = Action.IdleSouth1;
             Sprites sprites = new Sprites();
             sprites.LoadContent(Content);
 
             sittingWarriorEntity = new Entity(Sprites.sittingWarriorAnimation);
-            level_1Map.LoadScene(new Level_1());
+            Level_1Map.LoadScene(new Level_1());
 
             sittingWarriorEntity.CurrentHealth = 1;
-            sittingWarriorEntity.Position = new Vector2(player.Position.X - 100, player.Position.Y + 65);
+            sittingWarriorEntity.Position = new Vector2(Player.Position.X - 100, Player.Position.Y + 65);
             sittingWarriorEntity.State = Action.IdleEast1;
-            startingAreaMap.AddCollidable(sittingWarriorEntity.Position.X, sittingWarriorEntity.Position.Y - 16, 16, 31);
+            StartingAreaMap.AddCollidable(sittingWarriorEntity.Position.X, sittingWarriorEntity.Position.Y - 16, 16, 31);
 
             escapeMenu = new EscapeMenu(game, window, Content);
             saveMenu = new SaveMenu(game, window, Content);
+            loadMenu = new LoadMenu(game, window, Content);
 
             string[] items = { "Continue", "Save", "Load", "Quit" };
             escapeMenu.SetMenuItems(items);
 
             inventory = new Inventory(Content);
 
-            dialogBox = new DialogBox(game, font)
+            dialogBox = new DialogBox(game, Font)
             {
                 Text = "\n" + 
                        "Oh..are you here to ascend the mount?\n" +
@@ -122,20 +126,20 @@ namespace Demo.Scenes
                        "Help me find them and we'll be sure to repay you.\n"
             };
 
-            dialogBox.Position = new Vector2(player.Position.X - 175, player.Position.Y + 100);
+            dialogBox.Position = new Vector2(Player.Position.X - 175, Player.Position.Y + 100);
 
             campfire = Sprites.campfireSprite;
             campfire.Position = new Vector2(300, 260);
-            startingAreaMap.AddCollidable(campfire.Position.X, campfire.Position.Y, 8, 8);
+            StartingAreaMap.AddCollidable(campfire.Position.X, campfire.Position.Y, 8, 8);
 
             teleporterToLevel_1 = new Teleporter(new Rectangle(340, 115, 8, 1), Scene.StartingArea.ToString());
             teleporterToStartingLevel = new Teleporter(new Rectangle(407, 915, 8, 1), Scene.Level_1.ToString());
             teleporterList.Add(teleporterToLevel_1);
             teleporterList.Add(teleporterToStartingLevel);
             SelectedScene = Scene.Level_1;
-            playerCollision = startingAreaMap.GetCollisionWorld();
+            playerCollision = StartingAreaMap.GetCollisionWorld();
             //    player.Position = new Vector2(808, 862);
-            player.Position = new Vector2(408, 894);
+            Player.Position = new Vector2(408, 894);
             Item chickenItem = new Item();
             chickenItem.HealthAmount = 10;
             chickenItem.ItemTexture = Sprites.chickenTexture;
@@ -147,28 +151,37 @@ namespace Demo.Scenes
 
         public override void Update(GameTime gameTime)
         {
-            escapeMenu.Position = new Vector2(player.Position.X, player.Position.Y - 125);
-            saveMenu.Position = new Vector2(player.Position.X, player.Position.Y - 125);
-            // To Level 1
-            if (player.BoundingBox.Intersects(teleporterToLevel_1.GetRectangle()) && teleporterToLevel_1.Enabled)
+            escapeMenu.Position = new Vector2(Player.Position.X, Player.Position.Y - 125);
+            saveMenu.Position = new Vector2(Player.Position.X, Player.Position.Y - 125);
+            loadMenu.Position = new Vector2(Player.Position.X, Player.Position.Y - 125);
+
+            if (Reloaded)
             {
-                FadeInMap(level_1Map);
-                player.Position = new Vector2(422, 828);
+                Player.EnemyList.Clear();
+                Content.Unload();
+                LoadContent();
+                Reloaded = false;
+            }
+            // To Level 1
+            if (Player.BoundingBox.Intersects(teleporterToLevel_1.GetRectangle()) && teleporterToLevel_1.Enabled)
+            {
+                FadeInMap(Level_1Map);
+                Player.Position = new Vector2(422, 828);
                 SelectedScene = Scene.Level_1;
             }
 
             // To Starting level
-            if (player.BoundingBox.Intersects(teleporterToStartingLevel.GetRectangle()) && teleporterToStartingLevel.Enabled)
+            if (Player.BoundingBox.Intersects(teleporterToStartingLevel.GetRectangle()) && teleporterToStartingLevel.Enabled)
             {
-                FadeInMap(startingAreaMap);
-                player.EnemyList.Clear();
+                FadeInMap(StartingAreaMap);
+                Player.EnemyList.Clear();
                 Content.Unload();
                 LoadContent();
                 SelectedScene = Scene.StartingArea;
-                player.Position = new Vector2(335, 177);
+                Player.Position = new Vector2(335, 177);
             }
 
-            newState = Keyboard.GetState();
+            KeyBoardNewState = Keyboard.GetState();
 
             HandleDialog();
 
@@ -180,15 +193,19 @@ namespace Demo.Scenes
                 case Scene.SaveMenu:
                     saveMenu.Update(gameTime);
                     break;
+                case Scene.LoadMenu:
+                    loadMenu.Update(gameTime);
+                    break;
                 case Scene.StartingArea:
-                    playerCollision = startingAreaMap.GetCollisionWorld();
+                    playerCollision = StartingAreaMap.GetCollisionWorld();
                     sittingWarriorEntity.Update(gameTime);
-                    startingAreaMap.Update(gameTime);
+                    StartingAreaMap.Update(gameTime);
+                    SelectedMap = StartingAreaMap;
                     break;
                 case Scene.Level_1:
-                    UnloadContent();
-                    playerCollision = level_1Map.GetCollisionWorld();
-                    level_1Map.Update(gameTime);
+                    playerCollision = Level_1Map.GetCollisionWorld();
+                    Level_1Map.Update(gameTime);
+                    SelectedMap = Level_1Map;
                     break;
             }
 
@@ -197,39 +214,39 @@ namespace Demo.Scenes
             inventory.Update(gameTime);
 
             // Handle player's collision.
-            playerCollision.Move(player.Position.X, player.Position.Y, (collision) => CollisionResponses.Slide);
-            player.Update(gameTime);
+            playerCollision.Move(Player.Position.X, Player.Position.Y, (collision) => CollisionResponses.Slide);
+            Player.Update(gameTime);
 
             campfire.Update(gameTime);
 
-            camera.Zoom = 3;
+            Camera.Zoom = 3;
 
             if (!inDialog)
             {
-                player.HandleInput(gameTime, player, playerCollision, newState, oldState);
+                Player.HandleInput(gameTime, Player, playerCollision, KeyBoardNewState, KeyBoardOldState);
             }
-            camera.LookAt(player.Position);
+            Camera.LookAt(Player.Position);
 
-            oldState = newState;
-            newState = Keyboard.GetState();
+            KeyBoardOldState = KeyBoardNewState;
+            KeyBoardNewState = Keyboard.GetState();
 
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: camera.GetViewMatrix());
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.GetViewMatrix());
 
             // Draw the selected screen.
             switch (SelectedScene)
             {
                 case Scene.StartingArea:
-                    startingAreaMap.Draw(spriteBatch);
+                    StartingAreaMap.Draw(spriteBatch);
                     campfire.Draw(spriteBatch);
                     sittingWarriorEntity.Draw(spriteBatch);
                     break;
                 case Scene.Level_1:
-                    level_1Map.Draw(spriteBatch);
+                    Level_1Map.Draw(spriteBatch);
                     break;
             }
 
@@ -241,16 +258,20 @@ namespace Demo.Scenes
             {
                 saveMenu.Draw(spriteBatch);
             }
+            else if (SelectedScene == Scene.LoadMenu)
+            {
+                loadMenu.Draw(spriteBatch);
+            }
             else
             {
-                Vector2 playerHealthPosition = new Vector2(player.Position.X - 170, player.Position.Y - 110);
+                Vector2 playerHealthPosition = new Vector2(Player.Position.X - 170, Player.Position.Y - 110);
 
-                player.Draw(spriteBatch);
-                player.DrawHUD(spriteBatch, playerHealthPosition, true);
+                Player.Draw(spriteBatch);
+                Player.DrawHUD(spriteBatch, playerHealthPosition, true);
 
-                int health = (int)player.CurrentHealth;
+                int health = (int)Player.CurrentHealth;
                 Vector2 healthStatus = new Vector2(playerHealthPosition.X + 57, playerHealthPosition.Y);
-                spriteBatch.DrawString(font, health.ToString() + " / 150", healthStatus, Color.White);
+                spriteBatch.DrawString(Font, health.ToString() + " / 150", healthStatus, Color.White);
                 dialogBox.Draw(spriteBatch);
                 inventory.Draw(spriteBatch);
             }
@@ -262,7 +283,7 @@ namespace Demo.Scenes
 
         public void HandleDialog()
         {
-            if (player.BoundingBox.Intersects(sittingWarriorEntity.BoundingBox) && newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
+            if (Player.BoundingBox.Intersects(sittingWarriorEntity.BoundingBox) && KeyBoardNewState.IsKeyDown(Keys.E) && KeyBoardOldState.IsKeyUp(Keys.E))
             {
                 dialogBox.Show();
             }
@@ -280,7 +301,7 @@ namespace Demo.Scenes
         /// Creates a transition effect on the map.
         /// </summary>
         /// <param name="map">Map to fade in.</param>
-        public void FadeInMap(Map map)
+        public static void FadeInMap(Map map)
         {
             // Fade in the screen.
             map.FadeIn();
@@ -290,6 +311,11 @@ namespace Demo.Scenes
                 map.hasFaded = false;
                 map.color = new Color(255, 255, 255, 255);
             }
+        }
+
+        public static void OpenSaveMenu(Game game, GameWindow window, ContentManager content)
+        {
+            saveMenu = new SaveMenu(game, window, content);
         }
         public override void Show()
         {
@@ -315,6 +341,12 @@ namespace Demo.Scenes
                     teleporter.Enabled = true;
                 }
             }
+        }
+
+        public static void Reload()
+        {
+            FadeInMap(SelectedMap);
+            Reloaded = true;
         }
         public override void Hide()
         {

@@ -32,8 +32,16 @@ namespace Demo
 
         public List<Entity> EnemyList { get; set; }
         public static List<Item> InventoryList = new List<Item>();
-        private string EQUIPPED = "Sword";
+        public static bool PressedContinue = false;
+        public static bool IsAttacking = false;
+        public static string CurrentLevel { get; set; }
+        private string EquipedWeapon = "Sword";
         AnimatedSprite arrow;
+
+        bool inMenu = false;
+        // Store currently running scene to revert back after exiting escape menu.
+        Init.Scene currentScene = Init.SelectedScene;
+        Random random = new Random();
 
         public new void LoadContent(ContentManager content)
         {
@@ -74,8 +82,6 @@ namespace Demo
             staminaBar = content.Load<Texture2D>(@"interface\staminabar");
         }
 
-        Random random = new Random();
-
         // Loop through list of enemies and do damage if close.
         public void Attack()
         {
@@ -91,12 +97,6 @@ namespace Demo
             }
         }
 
-        bool inMenu = false;
-        public static bool pressedContinued = false;
-        public static bool isAttacking = false;
-        // Store currently running scene to revert back after exiting escape menu.
-        Init.Scene currentScene = Init.SelectedScene;
-
         // Handle attacking and movement animations.
         public void HandleInput(GameTime gameTime, Entity player, IBox playerCollisionBox, KeyboardState newState, KeyboardState oldState)
         {
@@ -108,19 +108,24 @@ namespace Demo
             newMouseState = Mouse.GetState();
 
             // Handle escape menu.
-            if (newState.IsKeyDown(Keys.Escape) && oldState.IsKeyUp(Keys.Escape) || pressedContinued == true)
+            if (newState.IsKeyDown(Keys.Escape) && oldState.IsKeyUp(Keys.Escape) || PressedContinue == true)
             {
+                // Exit the menu if Escape is pressed and the menu is open.
                 if (inMenu)
                 {
                     Init.SelectedScene = currentScene;
                     inMenu = false;
-                    pressedContinued = false;
+                    PressedContinue = false;
                 }
                 else
                 {
+                    // Open the menu if escape is pressed.
                     currentScene = Init.SelectedScene;
+                    // Store the current level to save progress later.
+                    CurrentLevel = currentScene.ToString();
                     Init.SelectedScene = Init.Scene.EscapeMenu;
                     inMenu = true;
+                    SaveMenu.GameSaved = false;
                 }
             }
 
@@ -140,7 +145,7 @@ namespace Demo
             // Switch weapons when pressing 1 or 2.
             if (newState.IsKeyDown(Keys.D1) && oldState.IsKeyDown(Keys.D1))
             {
-                EQUIPPED = "Sword";
+                EquipedWeapon = "Sword";
 
                 switch (State)
                 {
@@ -161,7 +166,7 @@ namespace Demo
 
             if (newState.IsKeyDown(Keys.D2) && oldState.IsKeyDown(Keys.D2))
             {
-                EQUIPPED = "Bow";
+                EquipedWeapon = "Bow";
 
                 switch (State)
                 {
@@ -188,11 +193,11 @@ namespace Demo
                     newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleSouth2 ||
                     newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkSouthPattern2)
                 {
-                    if (EQUIPPED == "Sword")
+                    if (EquipedWeapon == "Sword")
                     {
                         player.State = Action.AttackSouthPattern1;
                     }
-                    else if (EQUIPPED == "Bow")
+                    else if (EquipedWeapon == "Bow")
                     {
                         if (Inventory.TotalArrows > 0)
                         {
@@ -210,11 +215,11 @@ namespace Demo
                     newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleWest2 ||
                     newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkWestPattern2)
                 {
-                    if (EQUIPPED == "Sword")
+                    if (EquipedWeapon == "Sword")
                     {
                         player.State = Action.AttackWestPattern1;
                     }
-                    else if (EQUIPPED == "Bow")
+                    else if (EquipedWeapon == "Bow")
                     {
                         if (Inventory.TotalArrows > 0)
                         {
@@ -232,11 +237,11 @@ namespace Demo
                     newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkEastPattern2 ||
                     newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleEast2)
                 {
-                    if (EQUIPPED == "Sword")
+                    if (EquipedWeapon == "Sword")
                     {
                         player.State = Action.AttackEastPattern1;
                     }
-                    else if (EQUIPPED == "Bow")
+                    else if (EquipedWeapon == "Bow")
                     {
                         if (Inventory.TotalArrows > 0)
                         {
@@ -254,11 +259,11 @@ namespace Demo
                     newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkNorthPattern2 ||
                     newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.IdleNorth2)
                 {
-                    if (EQUIPPED == "Sword")
+                    if (EquipedWeapon == "Sword")
                     {
                         player.State = Action.AttackNorthPattern1;
                     }
-                    else if (EQUIPPED == "Bow")
+                    else if (EquipedWeapon == "Bow")
                     {
                         if (Inventory.TotalArrows > 0)
                         {
@@ -279,11 +284,11 @@ namespace Demo
                             motion.Y -= speed;
                             player.Position = motion;
 
-                            if (EQUIPPED == "Sword")
+                            if (EquipedWeapon == "Sword")
                             {
                                 player.State = Action.WalkEastPattern1;
                             }
-                            else if (EQUIPPED == "Bow")
+                            else if (EquipedWeapon == "Bow")
                             {
                                 player.State = Action.WalkEastPattern2;
                             }
@@ -294,11 +299,11 @@ namespace Demo
                             motion.Y -= speed;
                             player.Position = motion;
 
-                            if (EQUIPPED == "Sword")
+                            if (EquipedWeapon == "Sword")
                             {
                                 player.State = Action.WalkWestPattern1;
                             }
-                            else if (EQUIPPED == "Bow")
+                            else if (EquipedWeapon == "Bow")
                             {
                                 player.State = Action.WalkWestPattern2;
                             }
@@ -308,11 +313,11 @@ namespace Demo
                             // Walk north.
                             motion.Y -= speed;
                             player.Position = motion;
-                            if (EQUIPPED == "Sword")
+                            if (EquipedWeapon == "Sword")
                             {
                                 player.State = Action.WalkNorthPattern1;
                             }
-                            else if (EQUIPPED == "Bow")
+                            else if (EquipedWeapon == "Bow")
                             {
                                 player.State = Action.WalkNorthPattern2;
                             }
@@ -327,11 +332,11 @@ namespace Demo
                             motion.Y += speed;
                             player.Position = motion;
 
-                            if (EQUIPPED == "Sword")
+                            if (EquipedWeapon == "Sword")
                             {
                                 player.State = Action.WalkEastPattern1;
                             }
-                            else if (EQUIPPED == "Bow")
+                            else if (EquipedWeapon == "Bow")
                             {
                                 player.State = Action.WalkEastPattern2;
                             }
@@ -344,11 +349,11 @@ namespace Demo
                             motion.Y += speed;
                             player.Position = motion;
 
-                            if (EQUIPPED == "Sword")
+                            if (EquipedWeapon == "Sword")
                             {
                                 player.State = Action.WalkWestPattern1;
                             }
-                            else if (EQUIPPED == "Bow")
+                            else if (EquipedWeapon == "Bow")
                             {
                                 player.State = Action.WalkWestPattern2;
                             }
@@ -359,11 +364,11 @@ namespace Demo
                             motion.Y += speed;
                             player.Position = motion;
 
-                            if (EQUIPPED == "Sword")
+                            if (EquipedWeapon == "Sword")
                             {
                                 player.State = Action.WalkSouthPattern1;
                             }
-                            else if (EQUIPPED == "Bow")
+                            else if (EquipedWeapon == "Bow")
                             {
                                 player.State = Action.WalkSouthPattern2;
                             }
@@ -376,11 +381,11 @@ namespace Demo
                         motion.X += speed;
                         player.Position = motion;
 
-                        if (EQUIPPED == "Sword")
+                        if (EquipedWeapon == "Sword")
                         {
                             player.State = Action.WalkEastPattern1;
                         }
-                        else if (EQUIPPED == "Bow")
+                        else if (EquipedWeapon == "Bow")
                         {
                             player.State = Action.WalkEastPattern2;
                         }
@@ -392,11 +397,11 @@ namespace Demo
                         motion.X -= speed;
                         player.Position = motion;
 
-                        if (EQUIPPED == "Sword")
+                        if (EquipedWeapon == "Sword")
                         {
                             player.State = Action.WalkWestPattern1;
                         }
-                        else if (EQUIPPED == "Bow")
+                        else if (EquipedWeapon == "Bow")
                         {
                             player.State = Action.WalkWestPattern2;
                         }
@@ -406,31 +411,31 @@ namespace Demo
                 switch(player.State)
                 {
                     case (Action.AttackEastPattern1):
-                        isAttacking = true;
+                        IsAttacking = true;
                         break;
                     case (Action.AttackEastPattern2):
-                        isAttacking = true;
+                        IsAttacking = true;
                         break;
                     case (Action.AttackNorthPattern1):
-                        isAttacking = true;
+                        IsAttacking = true;
                         break;
                     case (Action.AttackNorthPattern2):
-                        isAttacking = true;
+                        IsAttacking = true;
                         break;
                     case (Action.AttackSouthPattern1):
-                        isAttacking = true;
+                        IsAttacking = true;
                         break;
                     case (Action.AttackSouthPattern2):
-                        isAttacking = true;
+                        IsAttacking = true;
                         break;
                     case (Action.AttackWestPattern1):
-                        isAttacking = true;
+                        IsAttacking = true;
                         break;
                     case (Action.AttackWestPattern2):
-                        isAttacking = true;
+                        IsAttacking = true;
                         break;
                     default:
-                        isAttacking = false;
+                        IsAttacking = false;
                         break;
                 }
             }

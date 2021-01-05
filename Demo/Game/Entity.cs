@@ -295,7 +295,7 @@ namespace Demo
         {
             projectile = new Entity();
             projectile.sprite = sprite;
-            projectilePosition = new Vector2(Init.player.Position.X, Init.player.Position.Y - 5);
+            projectilePosition = new Vector2(Init.Player.Position.X, Init.Player.Position.Y - 5);
             projectile.Position = projectilePosition;
             projectile.MaxHealth = 10;
             projectile.CurrentHealth = 10;
@@ -343,7 +343,7 @@ namespace Demo
                     projectile.Position = projectilePosition;
                 }
 
-                foreach (Entity entity in Init.player.EnemyList)
+                foreach (Entity entity in Init.Player.EnemyList)
                 {
                     if (projectile.BoundingBox.Intersects(entity.BoundingBox) && targetHit == false && entity.state != Action.Dead)
                     {

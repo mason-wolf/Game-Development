@@ -41,6 +41,7 @@
     <Compile Include="Game\EnemyAI.cs" />
     <Compile Include="Game\Item.cs" />
     <Compile Include="Game\MapObject.cs" />
+    <Compile Include="Game\SavedGame.cs" />
     <Compile Include="Game\Scene.cs" />
     <Compile Include="Game\PathFinder.cs" />
     <Compile Include="Game\Layer.cs" />
@@ -58,13 +59,14 @@
     <Compile Include="Interface\EscapeMenu.cs" />
     <Compile Include="Interface\Inventory.cs" />
     <Compile Include="Scenes\Level_1.cs" />
-    <Compile Include="Scenes\SaveMenu.cs" />
+    <Compile Include="Interface\LoadMenu.cs" />
+    <Compile Include="Interface\SaveMenu.cs" />
     <Compile Include="Scenes\Init.cs" />
     <Compile Include="Interface\MainMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scenes\SceneManager.cs" />
-    <Compile Include="Scenes\StartMenu.cs" />
+    <Compile Include="Game\SceneManager.cs" />
+    <Compile Include="Interface\StartMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Humper, Version=1.0.6093.38709, Culture=neutral, processorArchitecture=MSIL">

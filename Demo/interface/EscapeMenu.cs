@@ -17,19 +17,26 @@ namespace Demo.Interface
 {
     public class EscapeMenu : Scene
     {
-        SpriteFont spriteFont;
-        Texture2D menuItem;
-        SpriteBatch spriteBatch;
+        public SpriteFont spriteFont;
+        public Texture2D menuItem;
+        public Texture2D menuItemSelected;
+        public SpriteBatch spriteBatch;
         Color normalColor = Color.Yellow;
         Color selectedColor = Color.White;
         int selectedIndex = 0;
         Game game;
-
+        public Vector2 textPosition;
         private StringCollection menuItems = new StringCollection();
+        public KeyboardState oldState = Keyboard.GetState();
+        public KeyboardState newState;
+        ContentManager content;
+        GameWindow window;
 
         public EscapeMenu(Game game, GameWindow window, ContentManager content)
         {
             this.game = game;
+            this.content = content;
+            this.window = window;
             spriteBatch = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
             LoadContent(content);
         }
@@ -66,17 +73,17 @@ namespace Demo.Interface
             }
         }
 
-        KeyboardState oldState = Keyboard.GetState();
 
         public override void LoadContent(ContentManager content)
         {
             menuItem = content.Load<Texture2D>(@"interface\menu");
+            menuItemSelected = content.Load<Texture2D>(@"interface\menuItemSelected");
             spriteFont = content.Load<SpriteFont>(@"interface\font");
         }
 
         public override void Update(GameTime gameTime)
         {
-            KeyboardState newState = Keyboard.GetState();
+            newState = Keyboard.GetState();
 
             if (newState.IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S))
             {
@@ -91,12 +98,20 @@ namespace Demo.Interface
             if (SelectedIndex == 0 && newState.IsKeyDown(Keys.E))
             {
                 // Sends a signal to player object that player selected 'Continue' option.
-                Player.pressedContinued = true;
+                Player.PressedContinue = true;
             }
 
+            // Save Menu
             if (SelectedIndex == 1 && newState.IsKeyDown(Keys.E))
             {
+                Init.OpenSaveMenu(game, window, content);
                 Init.SelectedScene = Init.Scene.SaveMenu;
+            }
+
+            // Load Menu
+            if (SelectedIndex == 2 && newState.IsKeyDown(Keys.E))
+            {
+                Init.SelectedScene = Init.Scene.LoadMenu;
             }
 
             if (SelectedIndex == 3 && newState.IsKeyDown(Keys.E))
@@ -106,8 +121,6 @@ namespace Demo.Interface
 
             oldState = newState;
         }
-
-        Vector2 textPosition;
 
         public override void Draw(SpriteBatch spriteBatch)
         {
