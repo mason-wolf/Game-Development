@@ -38,7 +38,7 @@ namespace Demo
         private string EquipedWeapon = "Sword";
         AnimatedSprite arrow;
 
-        bool inMenu = false;
+        public bool InMenu = false;
         // Store currently running scene to revert back after exiting escape menu.
         Init.Scene currentScene = Init.SelectedScene;
         Random random = new Random();
@@ -110,11 +110,11 @@ namespace Demo
             // Handle escape menu.
             if (newState.IsKeyDown(Keys.Escape) && oldState.IsKeyUp(Keys.Escape) || PressedContinue == true)
             {
-                // Exit the menu if Escape is pressed and the menu is open.
-                if (inMenu)
+                // Exit the menu if Escape is pressed or if player pressed continue.
+                if (InMenu)
                 {
                     Init.SelectedScene = currentScene;
-                    inMenu = false;
+                    InMenu = false;
                     PressedContinue = false;
                 }
                 else
@@ -124,7 +124,8 @@ namespace Demo
                     // Store the current level to save progress later.
                     CurrentLevel = currentScene.ToString();
                     Init.SelectedScene = Init.Scene.EscapeMenu;
-                    inMenu = true;
+
+                    InMenu = true;
                     SaveMenu.GameSaved = false;
                 }
             }
@@ -185,7 +186,7 @@ namespace Demo
                 }
             }
 
-            if (!inMenu && !Inventory.InventoryOpen)
+            if (!InMenu && !Inventory.InventoryOpen)
             {
                 // Attacking south
                 if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released && player.State == Action.WalkSouthPattern1 ||

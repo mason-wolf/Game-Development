@@ -26,7 +26,7 @@ namespace Demo.Scenes
             get { return selectedIndex; }
             set
             {
-                selectedIndex = (int)MathHelper.Clamp(value, 0, 2);
+                selectedIndex = MathHelper.Clamp(value, 0, 2);
             }
         }
 

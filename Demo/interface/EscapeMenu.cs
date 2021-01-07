@@ -124,7 +124,6 @@ namespace Demo.Interface
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-
             textPosition = Position;
             Rectangle buttonRectangle = new Rectangle((int)Position.X - 20, (int)Position.Y + 75, menuItem.Width, menuItem.Height);
             Color color;

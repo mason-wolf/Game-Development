@@ -345,7 +345,11 @@ namespace Demo.Scenes
 
         public static void Reload()
         {
-            FadeInMap(SelectedMap);
+            if (SelectedMap != null)
+            {
+                FadeInMap(SelectedMap);
+            }
+
             Reloaded = true;
         }
         public override void Hide()

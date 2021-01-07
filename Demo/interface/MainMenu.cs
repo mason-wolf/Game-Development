@@ -42,8 +42,7 @@ namespace Demo.Interface
             this.spriteFont = spriteFont;
             this.buttonImage = buttonImage;
             this.background = background;
-            spriteBatch =
-                (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
+            spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
         }
 
         public int Width
@@ -62,10 +61,7 @@ namespace Demo.Interface
             get { return selectedIndex; }
             set
             {
-                selectedIndex = (int)MathHelper.Clamp(
-                        value,
-                        0,
-                        menuItems.Count - 1);
+                selectedIndex = MathHelper.Clamp( value, 0, 2);
             }
         }
 
@@ -117,14 +113,14 @@ namespace Demo.Interface
         {
             KeyboardState newState = Keyboard.GetState();
 
-            if (newState.IsKeyDown(Keys.S) && oldState.IsKeyDown(Keys.S))
+            if (newState.IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S))
             {
-                selectedIndex = 1;
+                SelectedIndex++;
             }
 
-            if (newState.IsKeyDown(Keys.W) && oldState.IsKeyDown(Keys.W))
+            if (newState.IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W))
             {
-                selectedIndex = 0;
+                SelectedIndex--;
             }
 
             camera.Zoom = 4;
@@ -148,7 +144,7 @@ namespace Demo.Interface
 
             Color myColor;
 
-            spriteBatch.Draw(background, new Vector2(textPosition.X - 121, textPosition.Y - 122), Color.White);
+            spriteBatch.Draw(background, new Vector2(textPosition.X - 121, textPosition.Y - 106), Color.White);
 
             for (int i = 0; i < menuItems.Count; i++)
             {

@@ -27,16 +27,10 @@ namespace Demo
             this.window = window;
             this.game = game;
 
-            string[] items = { "START", "QUIT" };
+            string[] items = { "New Game", "Load", "Quit" };
 
-            buttonMenu = new MainMenu(
-                game,
-                window,
-                spriteFont,
-                buttonImage, background);
-
-            buttonMenu.SetMenuItems(items);
-            
+            buttonMenu = new MainMenu(game, window, spriteFont, buttonImage, background);
+            buttonMenu.SetMenuItems(items);          
             Components.Add(buttonMenu);
             buttonMenu.Show();
         }
@@ -67,9 +61,23 @@ namespace Demo
                     gameStart = true;
                     buttonMenu.Hide();
                     UnloadContent();
-                    Init startingArea = new Init(game, window);
-                    Components.Add(startingArea);
-                    startingArea.Show();
+                    Init init = new Init(game, window);
+                    Components.Add(init);
+                    init.Show();
+                }
+
+                if (keyboardState.IsKeyDown(Keys.E) && SelectedIndex == 1)
+                {
+                    gameStart = true;
+                    buttonMenu.Hide();
+                    UnloadContent();
+                    Init init = new Init(game, window);
+                    Components.Add(init);
+                    init.Show();
+                    Init.Player.InMenu = true;
+                    // Store the loaded state to tigger loading from file.
+                    LoadMenu.GameLoaded = true;
+                    Init.SelectedScene = Init.Scene.LoadMenu;
                 }
             }
 

@@ -22,7 +22,7 @@ namespace Demo.Scenes
         int[] savedSlots = new int[3];
         Texture2D floppy;
         SavedGame savedGame;
-
+        public static bool GameLoaded { get; set; }
         new int SelectedIndex
         {
             get { return selectedIndex; }
@@ -188,7 +188,7 @@ namespace Demo.Scenes
                 Inventory.SavedGameLoaded = true;
                 Inventory.TotalArrows = savedGame.Arrows;
                 Init.SelectedScene = (Init.Scene)Enum.Parse(typeof(Init.Scene), savedGame.Location);
-                Player.PressedContinue = true;
+                Init.Player.InMenu = false;
                 foreach (Item item in savedGame.InventoryList)
                 {
                     switch(item.Name)
