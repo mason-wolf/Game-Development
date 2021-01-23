@@ -90,7 +90,7 @@ namespace Demo
                 color.B -= 5;
                 color.G -= 5;
 
-                if (color.A == 0)
+                if (color.A <= 0)
                 {
                     hasFaded = true;
                 }

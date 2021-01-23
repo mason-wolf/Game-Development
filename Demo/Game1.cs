@@ -25,7 +25,7 @@ namespace Demo
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.IsFullScreen = false;
+            graphics.IsFullScreen = true;
             graphics.PreferredBackBufferWidth = 1080;
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
@@ -57,7 +57,7 @@ namespace Demo
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(new Color(25, 25, 25));
+            GraphicsDevice.Clear(new Color(0, 0, 0));
             base.Draw(gameTime);
         }
     }

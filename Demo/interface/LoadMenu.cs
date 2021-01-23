@@ -22,6 +22,11 @@ namespace Demo.Scenes
         int[] savedSlots = new int[3];
         Texture2D floppy;
         SavedGame savedGame;
+        Texture2D transitionTexture;
+        bool fadeIn = false;
+        bool hasFaded = false;
+        public Color transitionColor;
+
         public static bool GameLoaded { get; set; }
         new int SelectedIndex
         {
@@ -41,6 +46,9 @@ namespace Demo.Scenes
             floppy = content.Load<Texture2D>(@"interface\floppy");
             LoadContent(content);
             CheckSaves();
+            transitionTexture = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);
+            transitionTexture.SetData(new Color[] { Color.Black });
+            transitionColor = new Color(0, 0, 0, 0);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -54,6 +62,7 @@ namespace Demo.Scenes
 
             Rectangle[] saveSlots = new Rectangle[3];
 
+            // Draw three save slots.
             for (int i = 0; i < 3; i++)
             {
                 if (i == SelectedIndex)
@@ -79,12 +88,18 @@ namespace Demo.Scenes
                 buttonRectangle.Y += 5;
             }
 
+            // Draw the saved slots for the files found.
             for (int i = 0; i < savedSlots.Length; i++)
             {
                 if (savedSlots[i] == 1)
                 {
                     spriteBatch.Draw(floppy, saveSlots[i], Color.White);
                 }
+            }
+
+            if (fadeIn == true)
+            {
+                spriteBatch.Draw(transitionTexture, new Rectangle(0, 0, 1080, 1800), transitionColor);
             }
         }
 
@@ -101,8 +116,22 @@ namespace Demo.Scenes
                 }
             }
         }
+
+        int selectedSave = 0;
         public override void Update(GameTime gameTime)
         {
+            if (fadeIn && hasFaded == false)
+            {
+                transitionColor.A += 15;
+                transitionColor.B += 15;
+                transitionColor.G += 15;
+
+                if (transitionColor.A >= 255)
+                {
+                    hasFaded = true;
+                }
+            }
+
             KeyboardState newState = Keyboard.GetState();
 
             if (newState.IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S))
@@ -118,26 +147,35 @@ namespace Demo.Scenes
             // Save Slot 1
             if (SelectedIndex == 0 && newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
             {
-                Init.Reload();
-                LoadGame(1);
+                fadeIn = true;
+                selectedSave = 1;
             }
 
             // Save Slot 2
             if (SelectedIndex == 1 && newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
             {
-                Init.Reload();
-                LoadGame(2);
+                fadeIn = true;
+                selectedSave = 2;
             }
 
             // Save Slot 3
             if (SelectedIndex == 2 && newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
             {
-                Init.Reload();
-                LoadGame(3);
+                fadeIn = true;
+                selectedSave = 3;
             }
 
+            if (hasFaded)
+            {
+                fadeIn = false;
+                hasFaded = false;
+                transitionColor = new Color(0, 0, 0, 0);
+                Init.Reload();
+                LoadGame(selectedSave);
+            }
             oldState = newState;
         }
+
 
         /// <summary>
         /// Load saved game from file.
@@ -184,10 +222,12 @@ namespace Demo.Scenes
                     }
                 }
 
+                Init.SavedGamePosition = savedGame.Position;
                 Init.Player.CurrentHealth = savedGame.PlayerHealth;
                 Inventory.SavedGameLoaded = true;
                 Inventory.TotalArrows = savedGame.Arrows;
-                Init.SelectedScene = (Init.Scene)Enum.Parse(typeof(Init.Scene), savedGame.Location);
+                Init.SavedGameLocation = savedGame.Location;
+
                 Init.Player.InMenu = false;
                 foreach (Item item in savedGame.InventoryList)
                 {
@@ -198,6 +238,7 @@ namespace Demo.Scenes
                             break;
                     }
                 }
+
             }
         }
     }

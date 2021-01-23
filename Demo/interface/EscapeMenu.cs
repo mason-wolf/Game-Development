@@ -111,6 +111,7 @@ namespace Demo.Interface
             // Load Menu
             if (SelectedIndex == 2 && newState.IsKeyDown(Keys.E))
             {
+                Init.OpenLoadMenu(game, window, content);
                 Init.SelectedScene = Init.Scene.LoadMenu;
             }
 

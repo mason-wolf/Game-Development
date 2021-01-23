@@ -56,6 +56,7 @@ namespace Demo
 
             if (!gameStart)
             {
+                // New Game
                 if (keyboardState.IsKeyDown(Keys.E) && SelectedIndex == 0)
                 {
                     gameStart = true;
@@ -66,6 +67,7 @@ namespace Demo
                     init.Show();
                 }
 
+                // Load Game
                 if (keyboardState.IsKeyDown(Keys.E) && SelectedIndex == 1)
                 {
                     gameStart = true;
@@ -74,6 +76,7 @@ namespace Demo
                     Init init = new Init(game, window);
                     Components.Add(init);
                     init.Show();
+                    // Pause player movement because they're in the menu.
                     Init.Player.InMenu = true;
                     // Store the loaded state to tigger loading from file.
                     LoadMenu.GameLoaded = true;
