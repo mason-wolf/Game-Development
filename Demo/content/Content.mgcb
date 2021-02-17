@@ -28,12 +28,6 @@
 /processorParam:TextureFormat=Color
 /build:interface/button.png
 
-#begin music/chopping_block.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:music/chopping_block.mp3
-
 #begin interface/font.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -303,4 +297,40 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:interface/floppy.png
+
+#begin sounds/sword-swing.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/sword-swing.mp3
+
+#begin sounds/dead-bat.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/dead-bat.wav
+
+#begin sounds/dead-skeleton.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/dead-skeleton.wav
+
+#begin sounds/destroyed-barrel.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/destroyed-barrel.wav
+
+#begin sounds/bow-shoot.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/bow-shoot.mp3
+
+#begin music/level_1.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:music/level_1.mp3
 

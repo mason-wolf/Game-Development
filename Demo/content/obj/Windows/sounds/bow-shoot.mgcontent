@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/bow-shoot.mp3</SourceFile>
+  <SourceTime>2021-02-17T11:25:00.7518805-06:00</SourceTime>
+  <DestFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/bin/Windows/sounds/bow-shoot.xnb</DestFile>
+  <DestTime>2021-02-17T11:50:05.2918785-06:00</DestTime>
+  <Importer>Mp3Importer</Importer>
+  <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
+  <Processor>SoundEffectProcessor</Processor>
+  <ProcessorTime>2016-03-30T01:36:08-05:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

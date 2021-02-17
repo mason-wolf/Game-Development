@@ -53,7 +53,7 @@ namespace Demo
         public static Texture2D chickenTexture;
 
         // Arrow sprite
-        public Texture2D arrowTexture;
+        public static Texture2D arrowTexture;
         public TextureAtlas arrowAtlas;
         public static SpriteSheetAnimationFactory arrowAnimation;
 

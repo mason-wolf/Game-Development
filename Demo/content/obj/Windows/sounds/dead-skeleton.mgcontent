@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-skeleton.wav</SourceFile>
+  <SourceTime>2021-02-17T10:59:11.4107643-06:00</SourceTime>
+  <DestFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/bin/Windows/sounds/dead-skeleton.xnb</DestFile>
+  <DestTime>2021-02-17T11:50:05.0206035-06:00</DestTime>
+  <Importer>WavImporter</Importer>
+  <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
+  <Processor>SoundEffectProcessor</Processor>
+  <ProcessorTime>2016-03-30T01:36:08-05:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3536" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="100">
+<map version="1.2" tiledversion="1.2.3536" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="113">
  <tileset firstgid="1" source="tileset_2.tsx"/>
  <layer id="2" name="Layer 1" width="64" height="64">
   <data encoding="csv">
@@ -145,15 +145,12 @@
   <object id="8" name="Skeleton" x="888" y="698"/>
   <object id="9" name="Bat" x="602.167" y="692.417"/>
   <object id="10" name="Bat" x="939.333" y="568"/>
-  <object id="12" name="Bat" x="896.667" y="448"/>
   <object id="13" name="Bat" x="305.5" y="690"/>
   <object id="14" name="Skeleton" x="440.182" y="95.8182"/>
-  <object id="15" name="Skeleton" x="985.091" y="154"/>
   <object id="16" name="Skeleton" x="651.515" y="298.818"/>
   <object id="17" name="Skeleton" x="433" y="529.667"/>
   <object id="19" name="Bat" x="441.205" y="427.932"/>
   <object id="20" name="Bat" x="992" y="354.5"/>
-  <object id="21" name="Bat" x="839" y="300.5"/>
   <object id="22" name="Bat" x="103.333" y="327.333"/>
   <object id="24" name="Torch" x="353.333" y="657.333"/>
   <object id="25" name="Torch" x="216.75" y="657"/>
@@ -188,6 +185,6 @@
   <object id="93" name="Barrel" x="704.708" y="881.083"/>
   <object id="96" name="Skeleton" x="735.667" y="448.667"/>
   <object id="97" name="Skeleton" x="988.667" y="492.667"/>
-  <object id="98" name="Skeleton" x="979.333" y="264"/>
+  <object id="112" name="StartingArea" type="teleporter" x="407.5" y="919.75"/>
  </objectgroup>
 </map>

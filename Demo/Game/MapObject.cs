@@ -17,6 +17,7 @@ namespace Demo
     public class MapObject : Scene
     {
         string name;
+        string type;
         GameTime gameTime;
         Vector2 position;
         Rectangle objectBoundingBox;
@@ -30,6 +31,11 @@ namespace Demo
         public string GetName()
         {
             return name;
+        }
+
+        public string GetType()
+        {
+            return type;
         }
 
         public Vector2 GetPosition()
@@ -104,6 +110,9 @@ namespace Demo
                     case "Chicken":
                         Inventory.TotalChickens = Inventory.TotalChickens + 1;
                         break;
+                    case "Arrow":
+                        Inventory.TotalArrows = Inventory.TotalArrows + 5;
+                        break;
                 }
 
                 itemPickedUp = true;
@@ -139,14 +148,19 @@ namespace Demo
                     x = (int)position.X + 3;
                     y = (int)position.Y;
                 }
-                spriteBatch.Draw(containedItem.ItemTexture, new Rectangle(x, y, 16, 16), Color.White);
+
+                if (containedItem.ItemTexture != null)
+                {
+                    spriteBatch.Draw(containedItem.ItemTexture, new Rectangle(x, y, containedItem.Width, containedItem.Height), Color.White);
+                }
                 containedItemBoundingBox = new Rectangle(x, y, 1, 1);
             }
         }
 
-        public MapObject(string objectName, Vector2 position)
+        public MapObject(string objectName, string objectType, Vector2 position)
         {
             this.name = objectName;
+            this.type = objectType;
             this.position = position;
             this.objectBoundingBox = new Rectangle((int)position.X, (int)position.Y - 5, 10, 10);
         }

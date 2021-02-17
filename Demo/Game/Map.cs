@@ -42,6 +42,16 @@ namespace Demo
             transitionTexture.SetData(new Color[] { Color.Black });
             color = new Color(255, 255, 255, 255);
             fadeIn = false;
+
+            foreach (MapObject mapObject in mapObjects)
+            {
+                if (mapObject.GetType() == "teleporter")
+                {
+                    Rectangle tRect = new Rectangle((int)mapObject.GetPosition().X, (int)mapObject.GetPosition().Y, 8, 1);
+                    Teleporter teleporter = new Teleporter(tRect, mapObject.GetName());
+                    Init.teleporterList.Add(teleporter);
+                }
+            }
         }
 
         public Map() { }

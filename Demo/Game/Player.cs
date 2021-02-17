@@ -42,6 +42,7 @@ namespace Demo
         // Store currently running scene to revert back after exiting escape menu.
         Init.Scene currentScene = Init.SelectedScene;
         Random random = new Random();
+        List<SoundEffect> soundEffects;
 
         public new void LoadContent(ContentManager content)
         {
@@ -80,6 +81,10 @@ namespace Demo
             statusBar = content.Load<Texture2D>(@"interface\statusbar");
             healthBar = content.Load<Texture2D>(@"interface\healthbar");
             staminaBar = content.Load<Texture2D>(@"interface\staminabar");
+
+            soundEffects = new List<SoundEffect>();
+            soundEffects.Add(content.Load<SoundEffect>(@"sounds\sword-swing"));
+            soundEffects.Add(content.Load<SoundEffect>(@"sounds\bow-shoot"));
         }
 
         // Loop through list of enemies and do damage if close.
@@ -197,6 +202,7 @@ namespace Demo
                     if (EquipedWeapon == "Sword")
                     {
                         player.State = Action.AttackSouthPattern1;
+                        soundEffects[0].Play();
                     }
                     else if (EquipedWeapon == "Bow")
                     {
@@ -205,6 +211,7 @@ namespace Demo
                             player.State = Action.AttackSouthPattern2;
                             ShootProjectile(arrow, "south");
                             Inventory.TotalArrows -= 1;
+                            soundEffects[1].Play();
                         }
                     }
                     Attack();
@@ -219,6 +226,7 @@ namespace Demo
                     if (EquipedWeapon == "Sword")
                     {
                         player.State = Action.AttackWestPattern1;
+                        soundEffects[0].Play();
                     }
                     else if (EquipedWeapon == "Bow")
                     {
@@ -227,6 +235,7 @@ namespace Demo
                             player.State = Action.AttackWestPattern2;
                             ShootProjectile(arrow, "west");
                             Inventory.TotalArrows -= 1;
+                            soundEffects[1].Play();
                         }
                     }
                     Attack();
@@ -241,6 +250,7 @@ namespace Demo
                     if (EquipedWeapon == "Sword")
                     {
                         player.State = Action.AttackEastPattern1;
+                        soundEffects[0].Play();
                     }
                     else if (EquipedWeapon == "Bow")
                     {
@@ -249,6 +259,7 @@ namespace Demo
                             player.State = Action.AttackEastPattern2;
                             ShootProjectile(arrow, "east");
                             Inventory.TotalArrows -= 1;
+                            soundEffects[1].Play();
                         }
                     }
                     Attack();
@@ -263,6 +274,7 @@ namespace Demo
                     if (EquipedWeapon == "Sword")
                     {
                         player.State = Action.AttackNorthPattern1;
+                        soundEffects[0].Play();
                     }
                     else if (EquipedWeapon == "Bow")
                     {
@@ -271,6 +283,7 @@ namespace Demo
                             player.State = Action.AttackNorthPattern2;
                             ShootProjectile(arrow, "north");
                             Inventory.TotalArrows -= 1;
+                            soundEffects[1].Play();
                         }
                     }
                         Attack();

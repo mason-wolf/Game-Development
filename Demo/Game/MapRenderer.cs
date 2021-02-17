@@ -100,7 +100,7 @@ namespace Demo.Engine
                     {
                         string objectName = reader.GetAttribute("name");
                         Vector2 objectPosition = new Vector2(float.Parse(reader.GetAttribute("x")), float.Parse(reader.GetAttribute("y")));
-                        MapObject newObject = new MapObject(reader.GetAttribute("name"), objectPosition);
+                        MapObject newObject = new MapObject(reader.GetAttribute("name"), reader.GetAttribute("type"), objectPosition);
                         mapObjects.Add(newObject);
                     }
                 }

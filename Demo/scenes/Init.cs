@@ -44,9 +44,7 @@ namespace Demo.Scenes
         public Inventory inventory;
 
         // Create teleporters.
-        private List<Teleporter> teleporterList = new List<Teleporter>();
-        private Teleporter teleporterToLevel_1;
-        private Teleporter teleporterToStartingLevel;
+        public static List<Teleporter> teleporterList;
 
         private GameWindow window;
         public static Scene SelectedScene { get; set; }
@@ -63,6 +61,7 @@ namespace Demo.Scenes
         IBox playerCollision;
 
         public static bool Reloaded = false;
+
         public Init(Game game, GameWindow window) : base(game)
         {
             this.window = window;
@@ -92,12 +91,15 @@ namespace Demo.Scenes
 
         protected override void LoadContent()
         {
+            teleporterList = new List<Teleporter>();
             StartingAreaMap = new Map(Content, "Content/maps/StartingArea.tmx");
             Level_1Map = new Map(Content, "Content/maps/level_1.tmx");
             Font = Content.Load<SpriteFont>(@"interface\font");
             Player.LoadContent(Content);
             Player.sprite = new AnimatedSprite(Player.playerAnimation);
             Player.State = Action.IdleSouth1;
+
+
             Player.Position = playerStartingPosition;
             Sprites sprites = new Sprites();
             sprites.LoadContent(Content);
@@ -133,11 +135,6 @@ namespace Demo.Scenes
             campfire = Sprites.campfireSprite;
             campfire.Position = new Vector2(300, 260);
             StartingAreaMap.AddCollidable(campfire.Position.X, campfire.Position.Y, 8, 8);
-
-            teleporterToLevel_1 = new Teleporter(new Rectangle(340, 115, 8, 1), Scene.StartingArea.ToString());
-            teleporterToStartingLevel = new Teleporter(new Rectangle(407, 915, 8, 1), Scene.Level_1.ToString());
-            teleporterList.Add(teleporterToLevel_1);
-            teleporterList.Add(teleporterToStartingLevel);
             SelectedScene = Scene.Level_1;
             playerCollision = StartingAreaMap.GetCollisionWorld();
             Item chickenItem = new Item();
@@ -148,6 +145,8 @@ namespace Demo.Scenes
             base.LoadContent();
         }
 
+        bool transitionState = false;
+        int counter = 0;
         public override void Update(GameTime gameTime)
         {
             escapeMenu.Position = new Vector2(Player.Position.X, Player.Position.Y - 125);
@@ -175,23 +174,35 @@ namespace Demo.Scenes
                 Reloaded = false;
             }
 
-            // To Level 1
-            if (Player.BoundingBox.Intersects(teleporterToLevel_1.GetRectangle()) && teleporterToLevel_1.Enabled)
+            foreach(Teleporter teleporter in teleporterList)
             {
-                FadeInMap(Level_1Map);
-                Player.Position = new Vector2(422, 828);
-                SelectedScene = Scene.Level_1;
+                if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetScene() == "StartingArea")
+                {
+                    transitionState = true;
+                    Player.EnemyList.Clear();
+                    Content.Unload();
+                    LoadContent();
+                    FadeInMap(StartingAreaMap);
+                    SelectedScene = Scene.StartingArea;
+                    Player.Position = new Vector2(335f, 150f);
+                }
+
+                if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetScene() == "Level_1")
+                {
+                    transitionState = true;
+                    FadeInMap(Level_1Map);
+                    SelectedScene = Scene.Level_1;
+                    Player.Position = new Vector2(408f, 880f);
+                }
             }
 
-            // To Starting level
-            if (Player.BoundingBox.Intersects(teleporterToStartingLevel.GetRectangle()) && teleporterToStartingLevel.Enabled)
+            // Create a short pause after transitioning to next level.
+            counter++;
+
+            if (counter > 70)
             {
-                FadeInMap(StartingAreaMap);
-                Player.EnemyList.Clear();
-                Content.Unload();
-                LoadContent();
-                SelectedScene = Scene.StartingArea;
-                Player.Position = new Vector2(335, 177);
+                counter = 0;
+                transitionState = false;
             }
 
             KeyBoardNewState = Keyboard.GetState();
@@ -234,12 +245,12 @@ namespace Demo.Scenes
 
             Camera.Zoom = 3;
 
-            if (!inDialog)
+            if (!inDialog && !transitionState)
             {
                 Player.HandleInput(gameTime, Player, playerCollision, KeyBoardNewState, KeyBoardOldState);
             }
-            Camera.LookAt(Player.Position);
 
+            Camera.LookAt(Player.Position);
             KeyBoardOldState = KeyBoardNewState;
             KeyBoardNewState = Keyboard.GetState();
 

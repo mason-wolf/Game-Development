@@ -15,6 +15,8 @@ using MonoGame.Extended;
 using MonoGame.Extended.Collisions;
 using Microsoft.Xna.Framework.Input;
 using Demo.Interface;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace Demo.Scenes
 {
@@ -29,6 +31,8 @@ namespace Demo.Scenes
         AnimatedSprite torchSprite;
         AnimatedSprite barrelSprite;
         Texture2D arrowsSprite;
+        List<SoundEffect> soundEffects;
+        Song song;
 
         public override void LoadContent(ContentManager content)
         {
@@ -44,6 +48,7 @@ namespace Demo.Scenes
                         skeletonEntity.CurrentHealth = 15;
                         skeletonEntity.AttackDamage = 0.05;
                         skeletonEntity.Position = mapObject.GetPosition();
+                        skeletonEntity.Name = "Skeleton";
                         enemyList.Add(skeletonEntity);
                         break;
                     case ("Bat"):
@@ -54,6 +59,7 @@ namespace Demo.Scenes
                         batEntity.CurrentHealth = 15;
                         batEntity.AttackDamage = 0.05;
                         batEntity.Position = mapObject.GetPosition();
+                        batEntity.Name = "Bat";
                         enemyList.Add(batEntity);
                         break;
                     case ("Torch"):
@@ -101,6 +107,10 @@ namespace Demo.Scenes
                 }
             }
             enemyAI = new EnemyAI(grid, enemyList, Init.Player);
+            soundEffects = new List<SoundEffect>();
+            soundEffects.Add(content.Load<SoundEffect>(@"sounds\destroyed-barrel"));
+            song = content.Load<Song>(@"music\level_1");
+         //   MediaPlayer.Play(song);
         }
 
         float elapsedTime;
@@ -132,6 +142,7 @@ namespace Demo.Scenes
                     {
                         mapObject.GetSprite().Play("broken");
                         mapObject.Destroy();
+                        soundEffects[0].Play();
                         Init.Level_1Map.GetWorld().Remove(mapObject.GetCollisionBox());
                     }
                 }
@@ -139,6 +150,7 @@ namespace Demo.Scenes
 
         }
 
+        bool objectsPopulated = false;
         public override void Draw(SpriteBatch spriteBatch)
         {
             foreach (Entity enemy in enemyList)
@@ -148,14 +160,41 @@ namespace Demo.Scenes
                 enemy.DrawHUD(spriteBatch, AIHealthPosition, false);
             }
 
+            Random random = new Random();
+
             foreach (MapObject mapObject in mapObjects)
             {
                 Item item = new Item();
-                item.ItemTexture = Sprites.chickenTexture;
-                item.Name = "Chicken";
-                mapObject.SetContainedItem(item);
+
+                if (objectsPopulated == false)
+                {
+                    int lootChance = random.Next(1, 4);
+
+                    switch (lootChance)
+                    {
+                        case (1):
+                            item.ItemTexture = Sprites.chickenTexture;
+                            item.Name = "Chicken";
+                            item.Width = 16;
+                            item.Height = 16;
+                            break;
+                        case (2):
+                            item.ItemTexture = arrowsSprite;
+                            item.Name = "Arrow";
+                            item.Width = 13;
+                            item.Height = 19;
+                            break;
+                    }
+
+                    if (item != null)
+                    {
+                        mapObject.SetContainedItem(item);
+                    }
+                }
                 mapObject.Draw(spriteBatch);
             }
+
+            objectsPopulated = true;
 
             spriteBatch.Draw(arrowsSprite, new Vector2(player.Position.X + 145, player.Position.Y - 110), Color.White);
             spriteBatch.DrawString(Init.Font, Inventory.TotalArrows.ToString(), new Vector2(player.Position.X + 165, player.Position.Y - 105), Color.White);
