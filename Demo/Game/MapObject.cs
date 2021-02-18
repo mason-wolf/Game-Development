@@ -33,7 +33,7 @@ namespace Demo
             return name;
         }
 
-        public string GetType()
+        public string GetObjectType()
         {
             return type;
         }

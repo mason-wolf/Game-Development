@@ -3,7 +3,7 @@
   <SourceFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/destroyed-barrel.wav</SourceFile>
   <SourceTime>2021-02-17T11:10:27.7799635-06:00</SourceTime>
   <DestFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/bin/Windows/sounds/destroyed-barrel.xnb</DestFile>
-  <DestTime>2021-02-17T11:50:05.1542461-06:00</DestTime>
+  <DestTime>2021-02-17T18:18:58.0339035-06:00</DestTime>
   <Importer>WavImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>

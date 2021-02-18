@@ -37,7 +37,6 @@ namespace Demo
         public static string CurrentLevel { get; set; }
         private string EquipedWeapon = "Sword";
         AnimatedSprite arrow;
-
         public bool InMenu = false;
         // Store currently running scene to revert back after exiting escape menu.
         Init.Scene currentScene = Init.SelectedScene;

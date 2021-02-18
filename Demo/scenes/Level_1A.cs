@@ -20,13 +20,13 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Demo.Scenes
 {
-    public class Level_1 : Scene
+    public class Level_1A : Scene
     {
         public static EnemyAI enemyAI;
         public static List<Entity> enemyList = new List<Entity>();
         public RoyT.AStar.Grid grid;
         Player player = Init.Player;
-        List<MapObject> mapObjects = Init.Level_1Map.GetMapObjects();
+        List<MapObject> mapObjects = Init.Level_1AMap.GetMapObjects();
         AnimatedSprite torchSprite;
         AnimatedSprite barrelSprite;
         Texture2D arrowsSprite;
@@ -72,37 +72,37 @@ namespace Demo.Scenes
                         barrelSprite.Play("idle");
                         barrelSprite.Position = mapObject.GetPosition();
                         mapObject.SetSprite(barrelSprite);
-                        IBox barrelCollidable = Init.Level_1Map.GetWorld().Create(barrelSprite.Position.X, barrelSprite.Position.Y - 4, 16, 16);
+                        IBox barrelCollidable = Init.Level_1AMap.GetWorld().Create(barrelSprite.Position.X, barrelSprite.Position.Y - 4, 16, 16);
                         mapObject.SetCollisionBox(barrelCollidable);
                         break;
                 }
             }
 
-            grid = Init.Level_1Map.GenerateAStarGrid();
+            grid = Init.Level_1AMap.GenerateAStarGrid();
             enemyAI = new EnemyAI(grid, enemyList, Init.Player);
             soundEffects = new List<SoundEffect>();
             soundEffects.Add(content.Load<SoundEffect>(@"sounds\destroyed-barrel"));
             arrowsSprite = content.Load<Texture2D>(@"objects\arrows");
             song = content.Load<Song>(@"music\level_1");
-         //   MediaPlayer.Play(song);
+            //   MediaPlayer.Play(song);
         }
 
         public override void Update(GameTime gameTime)
         {
             enemyAI.Update(gameTime);
 
-            foreach(Entity e in enemyList)
+            foreach (Entity e in enemyList)
             {
                 e.Update(gameTime);
             }
 
-            foreach(MapObject o in mapObjects)
+            foreach (MapObject o in mapObjects)
             {
                 o.Update(gameTime);
             }
 
             // Handle the player destroying objects.
-            foreach(MapObject mapObject in mapObjects)
+            foreach (MapObject mapObject in mapObjects)
             {
                 if (player.BoundingBox.Intersects(mapObject.GetBoundingBox()) && Player.IsAttacking && mapObject.GetName() == "Barrel")
                 {
@@ -111,7 +111,7 @@ namespace Demo.Scenes
                         mapObject.GetSprite().Play("broken");
                         mapObject.Destroy();
                         soundEffects[0].Play();
-                        Init.Level_1Map.GetWorld().Remove(mapObject.GetCollisionBox());
+                        Init.Level_1AMap.GetWorld().Remove(mapObject.GetCollisionBox());
                     }
                 }
             }

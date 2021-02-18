@@ -14,6 +14,7 @@ using Humper;
 using Humper.Responses;
 using Demo.Engine;
 using Microsoft.Xna.Framework.Audio;
+using Demo.Interface;
 
 namespace Demo
 {

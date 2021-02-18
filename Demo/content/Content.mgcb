@@ -310,12 +310,6 @@
 /processorParam:Quality=Best
 /build:sounds/dead-bat.wav
 
-#begin sounds/dead-skeleton.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sounds/dead-skeleton.wav
-
 #begin sounds/destroyed-barrel.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -333,4 +327,10 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:music/level_1.mp3
+
+#begin sounds/dead-skeleton.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/dead-skeleton.mp3
 

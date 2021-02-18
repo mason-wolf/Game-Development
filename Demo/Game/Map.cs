@@ -17,7 +17,7 @@ namespace Demo
     {
         public ContentManager content;
         public MapRenderer map;
-        public string mapName;
+        public string MapName;
         IBox collisionWorld;
         Scene scene;
         Texture2D transitionTexture;
@@ -32,7 +32,7 @@ namespace Demo
         /// <param name="mapName">Map Name</param>
         public Map(ContentManager content, string mapName)
         {
-            this.mapName = mapName;
+            this.MapName = mapName;
             map = new MapRenderer();
             map.LoadMap(content, mapName);
             mapObjects = map.GetMapObjects();
@@ -45,10 +45,11 @@ namespace Demo
 
             foreach (MapObject mapObject in mapObjects)
             {
-                if (mapObject.GetType() == "teleporter")
+                if (mapObject.GetObjectType() == "teleporter")
                 {
                     Rectangle tRect = new Rectangle((int)mapObject.GetPosition().X, (int)mapObject.GetPosition().Y, 8, 1);
-                    Teleporter teleporter = new Teleporter(tRect, mapObject.GetName());
+                    Teleporter teleporter = new Teleporter(tRect, mapObject.GetName(), mapName);
+                    teleporter.Enabled = true;
                     Init.teleporterList.Add(teleporter);
                 }
             }
@@ -79,6 +80,36 @@ namespace Demo
         public List<Tile> GetCollisionTiles()
         {
             return map.GetCollisionLayer();
+        }
+
+        public RoyT.AStar.Grid GenerateAStarGrid()
+        {
+            RoyT.AStar.Grid grid = new RoyT.AStar.Grid(map.Width() * 16, map.Height() * 16, 1);
+
+            // Block cells in the collision layer for path finding.
+            foreach (Tile tile in map.GetCollisionLayer())
+            {
+                if (tile.TileID != 0)
+                {
+                    int x = (int)tile.Position.X;
+                    int y = (int)tile.Position.Y;
+
+                    for (int i = 0; i < 16; i++)
+                    {
+                        for (int j = 0; j < 16; j++)
+                        {
+                            grid.BlockCell(new RoyT.AStar.Position(x, y));
+                            x++;
+                        }
+
+                        x = (int)tile.Position.X;
+                        grid.BlockCell(new RoyT.AStar.Position(x, y));
+                        y++;
+                    }
+                }
+            }
+
+            return grid;
         }
         public void LoadScene(Scene scene)
         {
@@ -136,7 +167,7 @@ namespace Demo
 
             if (fadeIn == true)
             {
-                spriteBatch.Draw(transitionTexture, new Rectangle(0, 0, 1080, 1800), color);
+                spriteBatch.Draw(transitionTexture, new Rectangle(-1000, -500, 2000, 2000), color);
             }
         }
     }

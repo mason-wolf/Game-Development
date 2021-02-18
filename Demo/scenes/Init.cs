@@ -34,6 +34,7 @@ namespace Demo.Scenes
         // Store the maps.
         public static Map StartingAreaMap;
         public static Map Level_1Map;
+        public static Map Level_1AMap;
         public static SpriteFont Font;
         private Vector2 playerStartingPosition = new Vector2(408, 894);
 
@@ -42,7 +43,7 @@ namespace Demo.Scenes
         public static LoadMenu loadMenu;
 
         public Inventory inventory;
-
+        private Texture2D HUDArrows;
         // Create teleporters.
         public static List<Teleporter> teleporterList;
 
@@ -86,7 +87,8 @@ namespace Demo.Scenes
             LoadMenu,
             Inventory,
             StartingArea,
-            Level_1
+            Level_1,
+            Level_1A
         }
 
         protected override void LoadContent()
@@ -94,6 +96,7 @@ namespace Demo.Scenes
             teleporterList = new List<Teleporter>();
             StartingAreaMap = new Map(Content, "Content/maps/StartingArea.tmx");
             Level_1Map = new Map(Content, "Content/maps/level_1.tmx");
+            Level_1AMap = new Map(Content, "Content/maps/level_1a.tmx");
             Font = Content.Load<SpriteFont>(@"interface\font");
             Player.LoadContent(Content);
             Player.sprite = new AnimatedSprite(Player.playerAnimation);
@@ -106,7 +109,7 @@ namespace Demo.Scenes
 
             sittingWarriorEntity = new Entity(Sprites.sittingWarriorAnimation);
             Level_1Map.LoadScene(new Level_1());
-
+            Level_1AMap.LoadScene(new Level_1A());
             sittingWarriorEntity.CurrentHealth = 1;
             sittingWarriorEntity.Position = new Vector2(Player.Position.X - 100, Player.Position.Y + 65);
             sittingWarriorEntity.State = Action.IdleEast1;
@@ -140,6 +143,7 @@ namespace Demo.Scenes
             Item chickenItem = new Item();
             chickenItem.HealthAmount = 10;
             chickenItem.ItemTexture = Sprites.chickenTexture;
+            HUDArrows = Content.Load<Texture2D>(@"objects\arrows");
             //Player.InventoryList[0] = chickenItem;
             //Player.InventoryList[1] = chickenItem;
             base.LoadContent();
@@ -149,14 +153,14 @@ namespace Demo.Scenes
         int counter = 0;
         public override void Update(GameTime gameTime)
         {
-            escapeMenu.Position = new Vector2(Player.Position.X, Player.Position.Y - 125);
-            saveMenu.Position = new Vector2(Player.Position.X, Player.Position.Y - 125);
-            loadMenu.Position = new Vector2(Player.Position.X, Player.Position.Y - 125);
-
             // If save was loaded, create transition effects, assign the player's saved scene and position.
             if (Reloaded)
             {
-                Player.EnemyList.Clear();
+                if (Player.EnemyList != null)
+                {
+                    Player.EnemyList.Clear();
+                }
+
                 Content.Unload();
                 LoadContent();
                 SelectedScene = (Init.Scene)Enum.Parse(typeof(Init.Scene), SavedGameLocation);
@@ -169,6 +173,9 @@ namespace Demo.Scenes
                     case (Scene.Level_1):
                         FadeInMap(Level_1Map);
                         break;
+                    case (Scene.Level_1A):
+                        FadeInMap(Level_1AMap);
+                        break;
                 }
                 Player.Position = SavedGamePosition;
                 Reloaded = false;
@@ -176,23 +183,47 @@ namespace Demo.Scenes
 
             foreach(Teleporter teleporter in teleporterList)
             {
-                if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetScene() == "StartingArea")
+                if (teleporter.Enabled)
                 {
-                    transitionState = true;
-                    Player.EnemyList.Clear();
-                    Content.Unload();
-                    LoadContent();
-                    FadeInMap(StartingAreaMap);
-                    SelectedScene = Scene.StartingArea;
-                    Player.Position = new Vector2(335f, 150f);
-                }
+                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "StartingArea")
+                    {
+                        transitionState = true;
 
-                if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetScene() == "Level_1")
-                {
-                    transitionState = true;
-                    FadeInMap(Level_1Map);
-                    SelectedScene = Scene.Level_1;
-                    Player.Position = new Vector2(408f, 880f);
+                        if (Player.EnemyList != null)
+                        {
+                            Player.EnemyList.Clear();
+                        }
+
+                        Content.Unload();
+                        LoadContent();
+                        FadeInMap(StartingAreaMap);
+                        SelectedScene = Scene.StartingArea;
+                        Player.Position = new Vector2(335f, 150f);
+                    }
+
+                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1South")
+                    {
+                        transitionState = true;
+                        FadeInMap(Level_1Map);
+                        SelectedScene = Scene.Level_1;
+                        Player.Position = new Vector2(408f, 880f);
+                    }
+
+                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1NorthWest")
+                    {
+                        transitionState = true;
+                        FadeInMap(Level_1Map);
+                        SelectedScene = Scene.Level_1;
+                        Player.Position = new Vector2(42f, 76f);
+                    }
+
+                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1A")
+                    {
+                        transitionState = true;
+                        FadeInMap(Level_1AMap);
+                        SelectedScene = Scene.Level_1A;
+                        Player.Position = new Vector2(110f, 980f);
+                    }
                 }
             }
 
@@ -225,15 +256,23 @@ namespace Demo.Scenes
                     sittingWarriorEntity.Update(gameTime);
                     StartingAreaMap.Update(gameTime);
                     SelectedMap = StartingAreaMap;
+                    ToggleTeleporters(SelectedMap.MapName);
                     break;
                 case Scene.Level_1:
                     playerCollision = Level_1Map.GetCollisionWorld();
                     Level_1Map.Update(gameTime);
                     SelectedMap = Level_1Map;
+                    ToggleTeleporters(SelectedMap.MapName);
+                    Player.EnemyList = Level_1.enemyList;
+                    break;
+                case Scene.Level_1A:
+                    playerCollision = Level_1AMap.GetCollisionWorld();
+                    Level_1AMap.Update(gameTime);
+                    SelectedMap = Level_1AMap;
+                    ToggleTeleporters(SelectedMap.MapName);
+                    Player.EnemyList = Level_1A.enemyList;
                     break;
             }
-
-            ToggleTeleporters(SelectedScene);
             dialogBox.Update();
             inventory.Update(gameTime);
 
@@ -253,6 +292,9 @@ namespace Demo.Scenes
             Camera.LookAt(Player.Position);
             KeyBoardOldState = KeyBoardNewState;
             KeyBoardNewState = Keyboard.GetState();
+            escapeMenu.Position = new Vector2(Player.Position.X, Player.Position.Y - 125);
+            saveMenu.Position = new Vector2(Player.Position.X, Player.Position.Y - 125);
+            loadMenu.Position = new Vector2(Player.Position.X, Player.Position.Y - 125);
 
             base.Update(gameTime);
         }
@@ -270,10 +312,10 @@ namespace Demo.Scenes
                     sittingWarriorEntity.Draw(spriteBatch);
                     break;
                 case Scene.Level_1:
-                    if (!Reloaded)
-                    {
-                        Level_1Map.Draw(spriteBatch);
-                    }
+                    Level_1Map.Draw(spriteBatch);
+                    break;
+                case Scene.Level_1A:
+                    Level_1AMap.Draw(spriteBatch);
                     break;
             }
 
@@ -301,6 +343,8 @@ namespace Demo.Scenes
 
                 Player.Draw(spriteBatch);
                 Player.DrawHUD(spriteBatch, playerHealthPosition, true);
+                spriteBatch.Draw(HUDArrows, new Vector2(Init.Player.Position.X + 145, Init.Player.Position.Y - 110), Color.White);
+                spriteBatch.DrawString(Init.Font, Inventory.TotalArrows.ToString(), new Vector2(Init.Player.Position.X + 165, Init.Player.Position.Y - 105), Color.White);
 
                 int health = (int)Player.CurrentHealth;
                 Vector2 healthStatus = new Vector2(playerHealthPosition.X + 32, playerHealthPosition.Y);
@@ -366,17 +410,17 @@ namespace Demo.Scenes
         /// Enables/Disables teleporters depending on which scene is selected.
         /// </summary>
         /// <param name="selectedScene">Which scene to enable teleporters</param>
-        public void ToggleTeleporters(Scene selectedScene)
+        public void ToggleTeleporters(string selectedMap)
         {
             foreach (Teleporter teleporter in teleporterList)
             {
-                if (teleporter.GetScene() != selectedScene.ToString())
+                if (teleporter.GetSourceMap() == selectedMap)
                 {
-                    teleporter.Enabled = false;
+                    teleporter.Enabled = true;
                 }
                 else
                 {
-                    teleporter.Enabled = true;
+                    teleporter.Enabled = false;
                 }
             }
         }

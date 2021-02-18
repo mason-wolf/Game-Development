@@ -30,9 +30,9 @@
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/interface/floppy.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/sword-swing.mp3</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-bat.wav</File>
-    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-skeleton.wav</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/destroyed-barrel.wav</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/bow-shoot.mp3</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/music/level_1.mp3</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-skeleton.mp3</File>
   </SourceFiles>
 </SourceFileCollection>

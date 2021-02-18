@@ -11,16 +11,22 @@ namespace Demo
     public class Teleporter
     {
         private Rectangle rectangle;
-        private string assignedScene;
+        private string destinationMap;
+        private string sourceMap;
 
         public Rectangle GetRectangle()
         {
             return rectangle;
         }
 
-        public string GetScene()
+        public string GetDestinationMap()
         {
-            return assignedScene;
+            return destinationMap;
+        }
+
+        public string GetSourceMap()
+        {
+            return sourceMap;
         }
         public bool Enabled { get; set; }
 
@@ -28,11 +34,12 @@ namespace Demo
         /// Creates a rectangle for the player to intersect and transport to another area.
         /// </summary>
         /// <param name="rectangle">Rectangle dimensions and position</param>
-        /// <param name="assignedScene">Name of the scene the teleporter is assigned to</param>
-        public Teleporter(Rectangle rectangle, string assignedScene)
+        /// <param name="destinationMap">Name of the scene the teleporter is assigned to</param>
+        public Teleporter(Rectangle rectangle, string destinationMap, string sourceMap)
         {
             this.rectangle = rectangle;
-            this.assignedScene = assignedScene;
+            this.destinationMap = destinationMap;
+            this.sourceMap = sourceMap;
         }
     }
 }
