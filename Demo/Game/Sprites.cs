@@ -28,6 +28,11 @@ namespace Demo
         public TextureAtlas skeletonAtlas;
         public static SpriteSheetAnimationFactory skeletonAnimation;
 
+        // Goblin Sprite
+        public Texture2D goblinTexture;
+        public TextureAtlas goblinAtlas;
+        public static SpriteSheetAnimationFactory goblinAnimation;
+
         // Sitting Warrior Sprite
         public Texture2D sittingWarriorTexture;
         public TextureAtlas sittingWarriorAtlas;
@@ -114,6 +119,24 @@ namespace Demo
             skeletonAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
             skeletonAnimation.Add("idleNorth1", new SpriteSheetAnimationData(new[] { 0 }));
             skeletonAnimation.Add("dead", new SpriteSheetAnimationData(new[] { 3 }, .2f, isLooping: false));
+
+            // Goblin
+            goblinTexture = content.Load<Texture2D>(@"spritesheets\Goblin");
+            goblinAtlas = TextureAtlas.Create(goblinTexture, 32, 32);
+            goblinAnimation = new SpriteSheetAnimationFactory(goblinAtlas);
+            goblinAnimation.Add("idleSouth1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3}, animationSpeed, isLooping: true));
+            goblinAnimation.Add("walkSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, animationSpeed, isLooping: true));
+            goblinAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3}, attackSpeed, isLooping: true));
+            goblinAnimation.Add("walkWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, animationSpeed, isLooping: true));
+            goblinAnimation.Add("attackWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3}, attackSpeed, isLooping: true));
+            goblinAnimation.Add("idleWest1", new SpriteSheetAnimationData(new[] { 0 }));
+            goblinAnimation.Add("walkEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, animationSpeed, isLooping: true));
+            goblinAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, attackSpeed, isLooping: true));
+            goblinAnimation.Add("idleEast1", new SpriteSheetAnimationData(new[] { 0 }));
+            goblinAnimation.Add("walkNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, animationSpeed, isLooping: true));
+            goblinAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, attackSpeed, isLooping: true));
+            goblinAnimation.Add("idleNorth1", new SpriteSheetAnimationData(new[] { 0 }));
+            goblinAnimation.Add("dead", new SpriteSheetAnimationData(new[] { 4 }, .2f, isLooping: false));
 
             // Sitting Warrior
             sittingWarriorTexture = content.Load<Texture2D>(@"spritesheets\Sitting Warrior");

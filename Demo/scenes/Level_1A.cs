@@ -50,16 +50,27 @@ namespace Demo.Scenes
                         skeletonEntity.Name = "Skeleton";
                         enemyList.Add(skeletonEntity);
                         break;
-                    case ("Bat"):
-                        Entity batEntity = new Entity(Sprites.batAnimation);
-                        batEntity.LoadContent(content);
-                        batEntity.State = Action.IdleEast1;
-                        batEntity.MaxHealth = 15;
-                        batEntity.CurrentHealth = 15;
-                        batEntity.AttackDamage = 0.05;
-                        batEntity.Position = mapObject.GetPosition();
-                        batEntity.Name = "Bat";
-                        enemyList.Add(batEntity);
+                    case ("Fire Bat"):
+                        Entity fireBatEntity = new Entity(Sprites.fireBatAnimation);
+                        fireBatEntity.LoadContent(content);
+                        fireBatEntity.State = Action.IdleEast1;
+                        fireBatEntity.MaxHealth = 15;
+                        fireBatEntity.CurrentHealth = 15;
+                        fireBatEntity.AttackDamage = 0.05;
+                        fireBatEntity.Position = mapObject.GetPosition();
+                        fireBatEntity.Name = "Fire Bat";
+                        enemyList.Add(fireBatEntity);
+                        break;
+                    case ("Goblin"):
+                        Entity goblinEntity = new Entity(Sprites.goblinAnimation);
+                        goblinEntity.LoadContent(content);
+                        goblinEntity.State = Action.IdleEast1;
+                        goblinEntity.MaxHealth = 20;
+                        goblinEntity.CurrentHealth = 20;
+                        goblinEntity.AttackDamage = 0.06;
+                        goblinEntity.Position = mapObject.GetPosition();
+                        goblinEntity.Name = "Goblin";
+                        enemyList.Add(goblinEntity);
                         break;
                     case ("Torch"):
                         torchSprite = new AnimatedSprite(Sprites.torchAnimation);
@@ -82,6 +93,9 @@ namespace Demo.Scenes
             enemyAI = new EnemyAI(grid, enemyList, Init.Player);
             soundEffects = new List<SoundEffect>();
             soundEffects.Add(content.Load<SoundEffect>(@"sounds\destroyed-barrel"));
+            soundEffects.Add(content.Load<SoundEffect>(@"sounds\dead-bat"));
+            soundEffects.Add(content.Load<SoundEffect>(@"sounds\dead-skeleton"));
+            soundEffects.Add(content.Load<SoundEffect>(@"sounds\dead-goblin"));
             arrowsSprite = content.Load<Texture2D>(@"objects\arrows");
             song = content.Load<Song>(@"music\level_1");
             //   MediaPlayer.Play(song);
@@ -91,14 +105,34 @@ namespace Demo.Scenes
         {
             enemyAI.Update(gameTime);
 
-            foreach (Entity e in enemyList)
+            foreach (Entity enemy in enemyList)
             {
-                e.Update(gameTime);
+                enemy.Update(gameTime);
+
+                // If enemy dies
+                if (enemy.CurrentHealth <= 0 && enemy.Dead == false)
+                {
+                    enemy.State = Action.Dead;
+                    enemy.Dead = true;
+
+                    switch (enemy.Name)
+                    {
+                        case ("Bat"):
+                            soundEffects[1].Play();
+                            break;
+                        case ("Skeleton"):
+                            soundEffects[2].Play();
+                            break;
+                        case ("Goblin"):
+                            soundEffects[3].Play();
+                            break;
+                    }
+                }
             }
 
-            foreach (MapObject o in mapObjects)
+            foreach (MapObject mapObject in mapObjects)
             {
-                o.Update(gameTime);
+                mapObject.Update(gameTime);
             }
 
             // Handle the player destroying objects.

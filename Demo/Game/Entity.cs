@@ -67,7 +67,7 @@ namespace Demo
         public Texture2D statusBar;
         public Texture2D healthBar;
         public Texture2D staminaBar;
-        List<SoundEffect> soundEffects;
+
         public int ID { get; set; } = 0;
         public double MaxHealth { get; set; } = 0;
         public double CurrentHealth { get; set; } = 0;
@@ -80,9 +80,6 @@ namespace Demo
             statusBar = content.Load<Texture2D>(@"interface\statusbar");
             healthBar = content.Load<Texture2D>(@"interface\healthbar");
             staminaBar = content.Load<Texture2D>(@"interface\staminabar");
-            soundEffects = new List<SoundEffect>();
-            soundEffects.Add(content.Load<SoundEffect>(@"sounds\dead-bat"));
-            soundEffects.Add(content.Load<SoundEffect>(@"sounds\dead-skeleton"));
         }
 
         // Create standard animation states for the entity.
@@ -330,25 +327,9 @@ namespace Demo
             }
             return collided;
         }
+
         public void Update(GameTime gameTime)
         {
-            // If enemy dies
-           if (CurrentHealth <= 0 && Dead == false)
-            {
-                State = Action.Dead;
-                Dead = true;
-
-                switch(Name)
-                {
-                    case ("Bat"):
-                        soundEffects[0].Play();
-                        break;
-                    case ("Skeleton"):
-                        soundEffects[1].Play();
-                        break;
-                }
-            }
-
             if (projectile != null && !ProjectileCollision(projectile))
             {
                 int speed = 7;

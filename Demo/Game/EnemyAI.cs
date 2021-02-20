@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
@@ -19,7 +20,15 @@ namespace Demo.Engine
         private Entity player;
         private List<Entity> enemyList = new List<Entity>();
         private List<Entity> enemiesInRange = new List<Entity>();
-      
+
+        public void Clear()
+        {
+            if (enemyList != null)
+            {
+                enemyList.Clear();
+            }
+        }
+
         public EnemyAI(Grid movementGrid, List<Entity> enemyList, Entity player)
         {
             this.movementGrid = movementGrid;

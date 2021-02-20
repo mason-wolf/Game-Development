@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-skeleton.mp3</SourceFile>
-  <SourceTime>2021-02-17T18:18:04.2451897-06:00</SourceTime>
-  <DestFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/bin/Windows/sounds/dead-skeleton.xnb</DestFile>
-  <DestTime>2021-02-18T11:25:35.49727-06:00</DestTime>
+  <SourceFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-goblin.mp3</SourceFile>
+  <SourceTime>2021-02-18T11:19:39.7099066-06:00</SourceTime>
+  <DestFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/bin/Windows/sounds/dead-goblin.xnb</DestFile>
+  <DestTime>2021-02-18T11:25:35.6368962-06:00</DestTime>
   <Importer>Mp3Importer</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>

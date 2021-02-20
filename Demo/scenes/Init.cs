@@ -101,13 +101,12 @@ namespace Demo.Scenes
             Player.LoadContent(Content);
             Player.sprite = new AnimatedSprite(Player.playerAnimation);
             Player.State = Action.IdleSouth1;
-
-
             Player.Position = playerStartingPosition;
             Sprites sprites = new Sprites();
             sprites.LoadContent(Content);
 
             sittingWarriorEntity = new Entity(Sprites.sittingWarriorAnimation);
+
             Level_1Map.LoadScene(new Level_1());
             Level_1AMap.LoadScene(new Level_1A());
             sittingWarriorEntity.CurrentHealth = 1;
@@ -156,13 +155,6 @@ namespace Demo.Scenes
             // If save was loaded, create transition effects, assign the player's saved scene and position.
             if (Reloaded)
             {
-                if (Player.EnemyList != null)
-                {
-                    Player.EnemyList.Clear();
-                }
-
-                Content.Unload();
-                LoadContent();
                 SelectedScene = (Init.Scene)Enum.Parse(typeof(Init.Scene), SavedGameLocation);
 
                 switch (SelectedScene)
@@ -187,13 +179,11 @@ namespace Demo.Scenes
                 {
                     if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "StartingArea")
                     {
-                        transitionState = true;
-
-                        if (Player.EnemyList != null)
+                        if (Player.EnemyList.Count > 0)
                         {
                             Player.EnemyList.Clear();
                         }
-
+                        transitionState = true;
                         Content.Unload();
                         LoadContent();
                         FadeInMap(StartingAreaMap);
@@ -214,7 +204,7 @@ namespace Demo.Scenes
                         transitionState = true;
                         FadeInMap(Level_1Map);
                         SelectedScene = Scene.Level_1;
-                        Player.Position = new Vector2(42f, 76f);
+                        Player.Position = new Vector2(42f, 90f);
                     }
 
                     if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1A")
@@ -222,7 +212,7 @@ namespace Demo.Scenes
                         transitionState = true;
                         FadeInMap(Level_1AMap);
                         SelectedScene = Scene.Level_1A;
-                        Player.Position = new Vector2(110f, 980f);
+                        Player.Position = new Vector2(105f, 980f);
                     }
                 }
             }
