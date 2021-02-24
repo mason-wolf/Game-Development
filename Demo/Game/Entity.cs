@@ -71,6 +71,10 @@ namespace Demo
         public int ID { get; set; } = 0;
         public double MaxHealth { get; set; } = 0;
         public double CurrentHealth { get; set; } = 0;
+
+        public double MaxStamina { get; set; } = 0;
+
+        public double CurrentStamina { get; set; } = 0;
         public double AttackDamage { get; set; } = 0;
         public bool Dead { get; set; } = false;
         public bool Aggroed { get; set; } = false;
@@ -181,6 +185,10 @@ namespace Demo
         {
         }
 
+        /// <summary>
+        /// Creates a new entity. Can be an NPC, object or enemy. Has health, stamina, basic movement patterns and damage thresholds.
+        /// </summary>
+        /// <param name="animations">Animated sprite for entity</param>
         public Entity(SpriteSheetAnimationFactory animations)
         {
             sprite = new AnimatedSprite(animations);
@@ -402,8 +410,13 @@ namespace Demo
             {
                 if (CurrentHealth > 0)
                 {
-                    spriteBatch.Draw(statusBar, position, new Rectangle(0, 0, Convert.ToInt32(MaxHealth), 9), Color.Black);
-                    spriteBatch.Draw(healthBar, position, new Rectangle(10, 10, Convert.ToInt32(CurrentHealth), 9), Color.White);
+                    // Draw health bar
+                    spriteBatch.Draw(statusBar, position, new Rectangle(0, 0, Convert.ToInt32(MaxHealth), 4), Color.Black);
+                    spriteBatch.Draw(healthBar, position, new Rectangle(10, 10, Convert.ToInt32(CurrentHealth), 4), Color.White);
+                    // Draw stamina bar
+                    Vector2 staminaPosition = new Vector2(position.X, position.Y + 6);
+                    spriteBatch.Draw(statusBar, staminaPosition, new Rectangle(0, 0, Convert.ToInt32(MaxStamina), 4), Color.Black);
+                    spriteBatch.Draw(staminaBar, staminaPosition, new Rectangle(10, 10, Convert.ToInt32(CurrentStamina), 4), Color.White);
                 }
             }
             else

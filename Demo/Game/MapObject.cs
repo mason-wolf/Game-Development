@@ -78,6 +78,10 @@ namespace Demo
             return destroyed;
         }
 
+        public void PickUpItem()
+        {
+            itemPickedUp = true;
+        }
         public bool ItemPickedUp()
         {
             return itemPickedUp;

@@ -35,6 +35,7 @@ namespace Demo.Scenes
         public static Map StartingAreaMap;
         public static Map Level_1Map;
         public static Map Level_1AMap;
+        public static Map Level_1BMap;
         public static SpriteFont Font;
         private Vector2 playerStartingPosition = new Vector2(408, 894);
 
@@ -44,6 +45,7 @@ namespace Demo.Scenes
 
         public Inventory inventory;
         private Texture2D HUDArrows;
+        private Texture2D HUDKeys;
         // Create teleporters.
         public static List<Teleporter> teleporterList;
 
@@ -74,6 +76,8 @@ namespace Demo.Scenes
             Player.State = Action.IdleSouth1;
             Player.MaxHealth = 100;
             Player.CurrentHealth = 100;
+            Player.MaxStamina = 75;
+            Player.CurrentStamina = 75;
             Player.AttackDamage = 3.5;
             Player.Position = playerStartingPosition;
             base.Initialize();
@@ -88,7 +92,8 @@ namespace Demo.Scenes
             Inventory,
             StartingArea,
             Level_1,
-            Level_1A
+            Level_1A,
+            Level_1B
         }
 
         protected override void LoadContent()
@@ -97,6 +102,7 @@ namespace Demo.Scenes
             StartingAreaMap = new Map(Content, "Content/maps/StartingArea.tmx");
             Level_1Map = new Map(Content, "Content/maps/level_1.tmx");
             Level_1AMap = new Map(Content, "Content/maps/level_1a.tmx");
+            Level_1BMap = new Map(Content, "Content/maps/level_1b.tmx");
             Font = Content.Load<SpriteFont>(@"interface\font");
             Player.LoadContent(Content);
             Player.sprite = new AnimatedSprite(Player.playerAnimation);
@@ -109,6 +115,7 @@ namespace Demo.Scenes
 
             Level_1Map.LoadScene(new Level_1());
             Level_1AMap.LoadScene(new Level_1A());
+            Level_1BMap.LoadScene(new Level_1B());
             sittingWarriorEntity.CurrentHealth = 1;
             sittingWarriorEntity.Position = new Vector2(Player.Position.X - 100, Player.Position.Y + 65);
             sittingWarriorEntity.State = Action.IdleEast1;
@@ -143,6 +150,7 @@ namespace Demo.Scenes
             chickenItem.HealthAmount = 10;
             chickenItem.ItemTexture = Sprites.chickenTexture;
             HUDArrows = Content.Load<Texture2D>(@"objects\arrows");
+            HUDKeys = Content.Load<Texture2D>(@"objects\key");
             //Player.InventoryList[0] = chickenItem;
             //Player.InventoryList[1] = chickenItem;
             base.LoadContent();
@@ -168,6 +176,9 @@ namespace Demo.Scenes
                     case (Scene.Level_1A):
                         FadeInMap(Level_1AMap);
                         break;
+                    case (Scene.Level_1B):
+                        FadeInMap(Level_1BMap);
+                        break;
                 }
                 Player.Position = SavedGamePosition;
                 Reloaded = false;
@@ -186,6 +197,7 @@ namespace Demo.Scenes
                         transitionState = true;
                         Content.Unload();
                         LoadContent();
+
                         FadeInMap(StartingAreaMap);
                         SelectedScene = Scene.StartingArea;
                         Player.Position = new Vector2(335f, 150f);
@@ -193,7 +205,6 @@ namespace Demo.Scenes
 
                     if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1South")
                     {
-                        transitionState = true;
                         FadeInMap(Level_1Map);
                         SelectedScene = Scene.Level_1;
                         Player.Position = new Vector2(408f, 880f);
@@ -213,6 +224,14 @@ namespace Demo.Scenes
                         FadeInMap(Level_1AMap);
                         SelectedScene = Scene.Level_1A;
                         Player.Position = new Vector2(105f, 980f);
+                    }
+
+                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1B")
+                    {
+                        transitionState = true;
+                        FadeInMap(Level_1BMap);
+                        SelectedScene = Scene.Level_1B;
+                        Player.Position = new Vector2(520f, 980f);
                     }
                 }
             }
@@ -262,6 +281,13 @@ namespace Demo.Scenes
                     ToggleTeleporters(SelectedMap.MapName);
                     Player.EnemyList = Level_1A.enemyList;
                     break;
+                case Scene.Level_1B:
+                    playerCollision = Level_1BMap.GetCollisionWorld();
+                    Level_1BMap.Update(gameTime);
+                    SelectedMap = Level_1BMap;
+                    ToggleTeleporters(SelectedMap.MapName);
+                    Player.EnemyList = Level_1B.enemyList;
+                    break;
             }
             dialogBox.Update();
             inventory.Update(gameTime);
@@ -292,7 +318,6 @@ namespace Demo.Scenes
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.GetViewMatrix());
-
             // Draw the selected screen.
             switch (SelectedScene)
             {
@@ -306,6 +331,9 @@ namespace Demo.Scenes
                     break;
                 case Scene.Level_1A:
                     Level_1AMap.Draw(spriteBatch);
+                    break;
+                case Scene.Level_1B:
+                    Level_1BMap.Draw(spriteBatch);
                     break;
             }
 
@@ -333,12 +361,18 @@ namespace Demo.Scenes
 
                 Player.Draw(spriteBatch);
                 Player.DrawHUD(spriteBatch, playerHealthPosition, true);
+
+                // Draw arrows
                 spriteBatch.Draw(HUDArrows, new Vector2(Init.Player.Position.X + 145, Init.Player.Position.Y - 110), Color.White);
                 spriteBatch.DrawString(Init.Font, Inventory.TotalArrows.ToString(), new Vector2(Init.Player.Position.X + 165, Init.Player.Position.Y - 105), Color.White);
 
-                int health = (int)Player.CurrentHealth;
-                Vector2 healthStatus = new Vector2(playerHealthPosition.X + 32, playerHealthPosition.Y);
-                spriteBatch.DrawString(Font, health.ToString() + " / 100", healthStatus, Color.White);
+                // Draw keys
+                spriteBatch.Draw(HUDKeys, new Vector2(Init.Player.Position.X + 135, Init.Player.Position.Y - 90), Color.White);
+                spriteBatch.DrawString(Init.Font, Inventory.TotalKeys.ToString(), new Vector2(Init.Player.Position.X + 165, Init.Player.Position.Y - 80), Color.White);
+
+                //int health = (int)Player.CurrentHealth;
+                //Vector2 healthStatus = new Vector2(playerHealthPosition.X + 32, playerHealthPosition.Y);
+            //    spriteBatch.DrawString(Font, health.ToString() + " / 100", healthStatus, Color.White);
                 dialogBox.Draw(spriteBatch);
                 inventory.Draw(spriteBatch);
             }

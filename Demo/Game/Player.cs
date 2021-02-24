@@ -34,6 +34,7 @@ namespace Demo
         public static List<Item> InventoryList = new List<Item>();
         public static bool PressedContinue = false;
         public static bool IsAttacking = false;
+        public static bool ActionButtonPressed = false;
         public static string CurrentLevel { get; set; }
         private string EquipedWeapon = "Sword";
         AnimatedSprite arrow;
@@ -107,7 +108,30 @@ namespace Demo
             playerEntity = player;
             Vector2 motion = new Vector2(playerCollisionBox.X, playerCollisionBox.Y);
 
-            float speed = 1.4f;
+            float speed = 0;
+            ActionButtonPressed = false;
+            if (newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
+            {
+                ActionButtonPressed = true;
+            }
+
+            if (newState.IsKeyDown(Keys.LeftShift) && CurrentStamina >= 0)
+            {
+                speed = 2.2f;
+                CurrentStamina -= .4;
+            }
+            else if (newState.IsKeyDown(Keys.LeftShift) && currentScene <= 0)
+            {
+                speed = 1.4f; 
+            }
+            else
+            {
+                speed = 1.4f;
+                if (CurrentStamina <= MaxStamina)
+                {
+                    CurrentStamina += 0.5;
+                }
+            }
 
             newMouseState = Mouse.GetState();
 

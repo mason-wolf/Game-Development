@@ -54,6 +54,11 @@ namespace Demo
         public TextureAtlas barrelAtlas;
         public static SpriteSheetAnimationFactory barrelAnimation;
 
+        // Chest sprite
+        public Texture2D chestTexture;
+        public TextureAtlas chestAtlas;
+        public static SpriteSheetAnimationFactory chestAnimation;
+
         // Chicken sprite
         public static Texture2D chickenTexture;
 
@@ -61,6 +66,19 @@ namespace Demo
         public static Texture2D arrowTexture;
         public TextureAtlas arrowAtlas;
         public static SpriteSheetAnimationFactory arrowAnimation;
+
+        // Dynamite sprite
+        public static Texture2D dynamiteTexture;
+        public TextureAtlas dynamiteAtlas;
+        public static SpriteSheetAnimationFactory dynamiteAnimation;
+
+        // Explosion sprite
+        public static Texture2D explosionTexture;
+        public TextureAtlas explosionAtlas;
+        public static SpriteSheetAnimationFactory explosionAnimation;
+
+        // Single dynamite sprite
+        public static Texture2D singleDynamiteTexture;
 
         public void LoadContent(ContentManager content)
         {
@@ -124,11 +142,11 @@ namespace Demo
             goblinTexture = content.Load<Texture2D>(@"spritesheets\Goblin");
             goblinAtlas = TextureAtlas.Create(goblinTexture, 32, 32);
             goblinAnimation = new SpriteSheetAnimationFactory(goblinAtlas);
-            goblinAnimation.Add("idleSouth1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3}, animationSpeed, isLooping: true));
+            goblinAnimation.Add("idleSouth1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, animationSpeed, isLooping: true));
             goblinAnimation.Add("walkSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, animationSpeed, isLooping: true));
-            goblinAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3}, attackSpeed, isLooping: true));
+            goblinAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, attackSpeed, isLooping: true));
             goblinAnimation.Add("walkWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, animationSpeed, isLooping: true));
-            goblinAnimation.Add("attackWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3}, attackSpeed, isLooping: true));
+            goblinAnimation.Add("attackWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, attackSpeed, isLooping: true));
             goblinAnimation.Add("idleWest1", new SpriteSheetAnimationData(new[] { 0 }));
             goblinAnimation.Add("walkEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, animationSpeed, isLooping: true));
             goblinAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, attackSpeed, isLooping: true));
@@ -150,7 +168,7 @@ namespace Demo
             sittingWarriorAnimation.Add("idleWest", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
             sittingWarriorAnimation.Add("walkEast", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             sittingWarriorAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            sittingWarriorAnimation.Add("idleEast1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 3, 3, 3, 3, 3, 3}, 0.7f, isLooping: true));
+            sittingWarriorAnimation.Add("idleEast1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 3, 3, 3, 3, 3, 3 }, 0.7f, isLooping: true));
             sittingWarriorAnimation.Add("walkNorth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
             sittingWarriorAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
             sittingWarriorAnimation.Add("idleNorth", new SpriteSheetAnimationData(new[] { 0, 1, 2 }));
@@ -175,7 +193,7 @@ namespace Demo
             barrelAtlas = TextureAtlas.Create(barrelTexture, 32, 32);
             barrelAnimation = new SpriteSheetAnimationFactory(barrelAtlas);
             barrelAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }, 0.09f, isLooping: false));
-            barrelAnimation.Add("broken", new SpriteSheetAnimationData(new[] { 1, 2, 3}, 0.07f, isLooping: false));
+            barrelAnimation.Add("broken", new SpriteSheetAnimationData(new[] { 1, 2, 3 }, 0.07f, isLooping: false));
 
             // Chicken
             chickenTexture = content.Load<Texture2D>(@"items\Chicken");
@@ -192,6 +210,29 @@ namespace Demo
             arrowAnimation.Add("idleSouth1", new SpriteSheetAnimationData(new[] { 3 }, 0.07f, isLooping: false));
             arrowAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 2 }, 0.07f, isLooping: false));
             arrowAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 3 }, 0.07f, isLooping: false));
+
+            // Chest
+            chestTexture = content.Load<Texture2D>(@"objects\Chest");
+            chestAtlas = TextureAtlas.Create(chestTexture, 32, 32);
+            chestAnimation = new SpriteSheetAnimationFactory(chestAtlas);
+            chestAnimation.Add("Unopened", new SpriteSheetAnimationData(new[] { 0 }, isLooping: false));
+            chestAnimation.Add("Opened", new SpriteSheetAnimationData(new[] { 1 }, isLooping: false));
+
+            // Dynamite
+            dynamiteTexture = content.Load<Texture2D>(@"objects\Dynamite");
+            dynamiteAtlas = TextureAtlas.Create(dynamiteTexture, 16, 16);
+            dynamiteAnimation = new SpriteSheetAnimationFactory(dynamiteAtlas);
+            dynamiteAnimation.Add("burning", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3 }, 0.03f, isLooping: true));
+
+            // Single dynamite
+            singleDynamiteTexture = content.Load<Texture2D>(@"items\Dynamite");
+
+            // Explosion 
+            explosionTexture = content.Load<Texture2D>(@"objects\Explosion");
+            explosionAtlas = TextureAtlas.Create(explosionTexture, 32, 32);
+            explosionAnimation = new SpriteSheetAnimationFactory(explosionAtlas);
+            explosionAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }, .1f, isLooping: false));
+            explosionAnimation.Add("explosion", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 4 }, .1f, isLooping: false ));
         }
     }
 }

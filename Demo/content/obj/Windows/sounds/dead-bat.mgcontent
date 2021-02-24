@@ -3,7 +3,7 @@
   <SourceFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-bat.wav</SourceFile>
   <SourceTime>2021-02-17T10:51:19.9494818-06:00</SourceTime>
   <DestFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/bin/Windows/sounds/dead-bat.xnb</DestFile>
-  <DestTime>2021-02-18T11:25:34.089038-06:00</DestTime>
+  <DestTime>2021-02-23T19:01:07.6291381-06:00</DestTime>
   <Importer>WavImporter</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>

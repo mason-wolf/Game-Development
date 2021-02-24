@@ -29,10 +29,14 @@ namespace Demo.Scenes
         List<MapObject> mapObjects = Init.Level_1AMap.GetMapObjects();
         AnimatedSprite torchSprite;
         AnimatedSprite barrelSprite;
+        AnimatedSprite chestSprite;
         Texture2D arrowsSprite;
         List<SoundEffect> soundEffects;
         Song song;
-
+        int frameCount = 0;
+        string message = "";
+        bool messageEnabled = false;
+        bool objectsPopulated = false;
         public override void LoadContent(ContentManager content)
         {
             foreach (MapObject mapObject in mapObjects)
@@ -86,6 +90,14 @@ namespace Demo.Scenes
                         IBox barrelCollidable = Init.Level_1AMap.GetWorld().Create(barrelSprite.Position.X, barrelSprite.Position.Y - 4, 16, 16);
                         mapObject.SetCollisionBox(barrelCollidable);
                         break;
+                    case ("Chest"):
+                        chestSprite = new AnimatedSprite(Sprites.chestAnimation);
+                        chestSprite.Play("Unopened");
+                        chestSprite.Position = mapObject.GetPosition();
+                        mapObject.SetSprite(chestSprite);
+                        IBox chestCollidable = Init.Level_1AMap.GetWorld().Create(chestSprite.Position.X, chestSprite.Position.Y, 16, 16);
+                        mapObject.SetCollisionBox(chestCollidable);
+                        break;
                 }
             }
 
@@ -104,7 +116,7 @@ namespace Demo.Scenes
         public override void Update(GameTime gameTime)
         {
             enemyAI.Update(gameTime);
-
+            
             foreach (Entity enemy in enemyList)
             {
                 enemy.Update(gameTime);
@@ -135,9 +147,10 @@ namespace Demo.Scenes
                 mapObject.Update(gameTime);
             }
 
-            // Handle the player destroying objects.
+            // Handle the player interacting with objects.
             foreach (MapObject mapObject in mapObjects)
             {
+                // Destroying barrels
                 if (player.BoundingBox.Intersects(mapObject.GetBoundingBox()) && Player.IsAttacking && mapObject.GetName() == "Barrel")
                 {
                     if (!mapObject.IsDestroyed())
@@ -148,11 +161,36 @@ namespace Demo.Scenes
                         Init.Level_1AMap.GetWorld().Remove(mapObject.GetCollisionBox());
                     }
                 }
+
+                if (player.BoundingBox.Intersects(mapObject.GetBoundingBox()) && Player.ActionButtonPressed && mapObject.GetName() == "Chest")
+                {
+                    if (!mapObject.ItemPickedUp())
+                    {
+                        mapObject.GetSprite().Play("Opened");
+                        message = "You obtained a key.";
+                        messageEnabled = true;
+                        mapObject.PickUpItem();
+                        Inventory.TotalKeys = Inventory.TotalKeys += 1;
+                    }
+                }
             }
 
         }
 
-        bool objectsPopulated = false;
+        public void ShowMessage(string message, SpriteBatch spriteBatch)
+        {
+            if (frameCount < 12000)
+            {
+                spriteBatch.DrawString(Init.Font, message, new Vector2(Init.Player.Position.X - 165, Init.Player.Position.Y + 105), Color.White);
+                frameCount++;
+            }
+            else
+            {
+                messageEnabled = false;
+                frameCount = 0;
+            }
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             foreach (Entity enemy in enemyList)
@@ -192,6 +230,11 @@ namespace Demo.Scenes
                     {
                         mapObject.SetContainedItem(item);
                     }
+                }
+
+                if (messageEnabled)
+                {
+                    ShowMessage(message, spriteBatch);
                 }
                 mapObject.Draw(spriteBatch);
             }

@@ -20,6 +20,8 @@ namespace Demo.Interface
         SpriteFont inventoryFont;
         KeyboardState oldKeyboardState;
         KeyboardState newKeyboardState;
+        AnimatedSprite dynamiteSprite;
+        Entity explosionEntity;
         public static int SelectedItem { get; set; }
         public static List<Item> itemList = Player.InventoryList;
         public static bool InventoryOpen { get; set; }
@@ -28,10 +30,15 @@ namespace Demo.Interface
         public static int TotalItems { get; set; }
         public static int TotalChickens { get; set; }
         public static int TotalArrows { get; set; }
+        public static int TotalDynamite { get; set;  }
 
+        public static int TotalKeys { get; set; }
+        public int itemSlot;
+        public bool dynamiteUsed;
         public enum Items
         {
-            Chicken
+            Chicken,
+            Dynamite
         }
 
         public Inventory(ContentManager content)
@@ -50,6 +57,8 @@ namespace Demo.Interface
             selectedItemTexture.SetData(new[] { selectedItemTextureColor });
             InventoryOpen = false;
 
+            TotalDynamite = 5;
+
             if (!SavedGameLoaded)
             {
                 TotalChickens = 3;
@@ -57,10 +66,14 @@ namespace Demo.Interface
             }
 
             GenerateGrid();
+            dynamiteSprite = new AnimatedSprite(Sprites.dynamiteAnimation);
+            explosionEntity = new Entity(Sprites.explosionAnimation);
+            explosionEntity.LoadContent(content);
         }
 
         public override void Update(GameTime gameTime)
         {
+            explosionEntity.Update(gameTime);
             // Store & remember the selected item.
             if (InventoryOpen)
             {
@@ -122,8 +135,13 @@ namespace Demo.Interface
                 oldKeyboardState = newKeyboardState;
                 newKeyboardState = Keyboard.GetState();
             }
+
+            dynamiteSprite.Update(gameTime);
         }
 
+        Vector2 dynamitePosition;
+        int dynamiteTimer = 0;
+        int explosionTimer = 0;
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (InventoryOpen)
@@ -131,6 +149,39 @@ namespace Demo.Interface
                 spriteBatch.Draw(inventoryTexture, null, inventoryInterface);
                 spriteBatch.DrawString(inventoryFont, "Items", new Vector2(Position.X + 25, Position.Y + 10), Color.White, 0, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0);
                 DrawSelectedItem(spriteBatch);
+            }
+
+            if (dynamiteUsed && dynamiteTimer < 120)
+            {
+                dynamiteSprite.Play("burning");
+                dynamiteSprite.Position = dynamitePosition;
+                dynamiteSprite.Draw(spriteBatch);
+                dynamiteTimer++;
+            }
+            else
+            {
+                if (dynamiteTimer >= 120)
+                {
+                    dynamiteUsed = false;
+                    explosionEntity.Position = dynamitePosition;
+                    explosionEntity.sprite.Play("explosion");
+                    explosionEntity.Draw(spriteBatch);
+
+                    if (explosionTimer < 35)
+                    {
+                        explosionTimer++;
+                    }
+                    else
+                    {
+                        explosionEntity.sprite.Play("idle");
+                        dynamiteTimer = 0;
+                        explosionTimer = 0;
+                    }
+                }
+                else
+                {
+                    dynamitePosition = Init.Player.Position;
+                }
             }
         }
 
@@ -142,7 +193,6 @@ namespace Demo.Interface
         {
 
             TotalItems++;
-
             switch (item)
             {
                 case Items.Chicken:
@@ -150,7 +200,7 @@ namespace Demo.Interface
                     Item chicken = new Item();
                     chicken.ItemTexture = Sprites.chickenTexture;
 
-                    int itemSlot = AssignSlot(chicken);
+                    itemSlot = AssignSlot(chicken);
 
                     if (itemSlot < TotalItems)
                     {
@@ -158,6 +208,23 @@ namespace Demo.Interface
                         itemList[itemSlot].Name = "Chicken";
                         itemList[itemSlot].Description = "Restores health.";
                         itemList[itemSlot].Quantity = TotalChickens;
+                    }
+
+                    itemSlot = 0;
+                    break;
+                case Items.Dynamite: 
+
+                    Item dynamite = new Item();
+                    dynamite.ItemTexture = Sprites.singleDynamiteTexture;
+
+                    itemSlot = AssignSlot(dynamite);
+
+                    if (itemSlot < TotalItems)
+                    {
+                        itemList[itemSlot].ItemTexture = dynamite.ItemTexture;
+                        itemList[itemSlot].Name = "Dynamite";
+                        itemList[itemSlot].Description = "Blows stuff up.";
+                        itemList[itemSlot].Quantity = TotalDynamite;
                     }
 
                     itemSlot = 0;
@@ -292,6 +359,10 @@ namespace Demo.Interface
                 AddToInventory(Items.Chicken);
             }
 
+            for (int i = 0; i < TotalDynamite; i++)
+            {
+                AddToInventory(Items.Dynamite);
+            }
             if (itemUsed)
             {
                 if (itemList[SelectedItem].Name == "Chicken")
@@ -301,6 +372,12 @@ namespace Demo.Interface
                     {
                         Init.Player.CurrentHealth += 10;
                     }
+                }
+                if (itemList[SelectedItem].Name == "Dynamite")
+                {
+                    TotalDynamite -= 1;
+                    InventoryOpen = false;
+                    dynamiteUsed = true;
                 }
             }
         }

@@ -68,6 +68,7 @@
     <Compile Include="Game\SceneManager.cs" />
     <Compile Include="Interface\StartMenu.cs" />
     <Compile Include="Scenes\Level_1A.cs" />
+    <Compile Include="Scenes\Level_1B.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Humper, Version=1.0.6093.38709, Culture=neutral, processorArchitecture=MSIL">

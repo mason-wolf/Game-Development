@@ -86,7 +86,7 @@ namespace Demo.Scenes
             soundEffects.Add(content.Load<SoundEffect>(@"sounds\dead-skeleton"));
             arrowsSprite = content.Load<Texture2D>(@"objects\arrows");
             song = content.Load<Song>(@"music\level_1");
-     //      MediaPlayer.Play(song);
+         //   MediaPlayer.Play(song);
         }
 
         public override void Update(GameTime gameTime)

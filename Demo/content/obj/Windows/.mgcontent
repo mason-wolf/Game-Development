@@ -34,7 +34,15 @@
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/bow-shoot.mp3</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/music/level_1.mp3</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-skeleton.mp3</File>
-    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Goblin.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-goblin.mp3</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/../../../../../Downloads/Goblin.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Goblin.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/objects/Chest.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/objects/Key.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Dynamite.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/items/Dynamite</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/../../../../../Downloads/Dynamite.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/objects/Dynamite.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/objects/Explosion.png</File>
   </SourceFiles>
 </SourceFileCollection>

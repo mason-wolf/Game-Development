@@ -407,5 +407,11 @@ C:\Users\Mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.csproj.
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.exe
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.pdb
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\obj\x86\Debug\Demo.csprojAssemblyReference.cache
-C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\Goblin.xnb
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\sounds\dead-goblin.xnb
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\Goblin.xnb
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Chest.xnb
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Key.xnb
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\Dynamite.xnb
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\items\Dynamite.xnb
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Dynamite.xnb
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Explosion.xnb
