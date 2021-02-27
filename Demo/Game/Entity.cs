@@ -50,7 +50,7 @@ namespace Demo
     /// <summary>
     /// Entity class for player, enemy or NPC.
     /// </summary>
-    public class Entity : IUpdate, IActorTarget
+    public class Entity : IUpdate
     {
         public AnimatedSprite sprite;
  
@@ -79,6 +79,17 @@ namespace Demo
         public bool Dead { get; set; } = false;
         public bool Aggroed { get; set; } = false;
         public string Name { get; set; }
+
+        public int WayPointIndex;
+        public bool ReachedDestination;
+
+        Entity projectile;
+        Vector2 projectilePosition;
+        Vector2 projectileStartingPosition;
+        bool targetHit = false;
+        string projectileDirection = "";
+        RectangleF projectileBoundingBox;
+
         public void LoadContent(ContentManager content)
         {
             statusBar = content.Load<Texture2D>(@"interface\statusbar");
@@ -178,8 +189,6 @@ namespace Demo
                 }
             }
         }
-
-        public Vector2 Velocity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
   
         public Entity()
         {
@@ -193,9 +202,6 @@ namespace Demo
         {
             sprite = new AnimatedSprite(animations);
         }
-
-        public int WayPointIndex;
-        public bool ReachedDestination;
 
         // Method to make an entity follow a path of waypoints.
         public void FollowPath(GameTime gameTime, Entity entity, List<Vector2> DestinationWaypoint, float Speed)
@@ -292,11 +298,6 @@ namespace Demo
             }
         }
 
-        Entity projectile;
-        Vector2 projectilePosition;
-        Vector2 projectileStartingPosition;
-        bool targetHit = false;
-        string direction = "";
         /// <summary>
         /// Shoots a projectile.
         /// </summary>
@@ -311,7 +312,7 @@ namespace Demo
             projectileStartingPosition = projectilePosition;
             projectile.MaxHealth = 10;
             projectile.CurrentHealth = 10;
-            this.direction = direction;
+            this.projectileDirection = direction;
             targetHit = false;
         }
 
@@ -320,7 +321,6 @@ namespace Demo
         /// </summary>
         /// <param name="projectile"></param>
         /// <returns></returns>
-        RectangleF projectileBoundingBox;
         bool ProjectileCollision(Entity projectile)
         {
             bool collided = false;
@@ -342,21 +342,21 @@ namespace Demo
             {
                 int speed = 7;
 
-                if (direction == "north")
+                if (projectileDirection == "north")
                 {
                     projectile.State = Action.IdleNorth1;
                     projectilePosition.Y -= speed;
                     projectile.Position = projectilePosition;
                 }
 
-                if (direction == "south")
+                if (projectileDirection == "south")
                 {
                     projectile.State = Action.AttackSouthPattern1;
                     projectilePosition.Y += speed;
                     projectile.Position = projectilePosition;
                 }
 
-                if (direction == "east")
+                if (projectileDirection == "east")
                 {
                     ProjectileCollision(projectile);
                     projectile.State = Action.IdleEast1;
@@ -364,7 +364,7 @@ namespace Demo
                     projectile.Position = projectilePosition;
                 }
 
-                if (direction == "west")
+                if (projectileDirection == "west")
                 {
                     projectile.State = Action.IdleWest1;
                     projectilePosition.X -= speed;

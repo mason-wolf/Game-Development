@@ -142,6 +142,7 @@ namespace Demo.Interface
         Vector2 dynamitePosition;
         int dynamiteTimer = 0;
         int explosionTimer = 0;
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (InventoryOpen)
@@ -167,6 +168,15 @@ namespace Demo.Interface
                     explosionEntity.sprite.Play("explosion");
                     explosionEntity.Draw(spriteBatch);
 
+                    foreach(MapObject mapObject in Init.SelectedMap.GetMapObjects())
+                    {
+                        if (mapObject.GetName() == "Rock" && explosionEntity.BoundingBox.Intersects(mapObject.GetBoundingBox()) && !mapObject.IsDestroyed())
+                        {
+                            mapObject.GetSprite().Play("broken");
+                            mapObject.Destroy();
+                            Init.SelectedMap.GetWorld().Remove(mapObject.GetCollisionBox());
+                        }
+                    }
                     if (explosionTimer < 35)
                     {
                         explosionTimer++;
@@ -182,6 +192,7 @@ namespace Demo.Interface
                 {
                     dynamitePosition = Init.Player.Position;
                 }
+
             }
         }
 

@@ -167,7 +167,7 @@ namespace Demo
 
             if (fadeIn == true)
             {
-                spriteBatch.Draw(transitionTexture, new Rectangle(-1000, -500, 2000, 2000), color);
+                spriteBatch.Draw(transitionTexture, new Rectangle(-1000, -500, 4000, 2000), color);
             }
         }
     }

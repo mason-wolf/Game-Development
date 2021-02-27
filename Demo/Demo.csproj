@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Game\Boss.cs" />
     <Compile Include="Game\EnemyAI.cs" />
     <Compile Include="Game\Item.cs" />
     <Compile Include="Game\MapObject.cs" />

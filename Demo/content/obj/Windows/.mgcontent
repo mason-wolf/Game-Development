@@ -15,7 +15,6 @@
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/interface/healthbar.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/tilesets/tileset_2.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/interface/escapeMenu.png</File>
-    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Skeleton.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Bat.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/FireBat.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Sitting Warrior.png</File>
@@ -35,14 +34,15 @@
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/music/level_1.mp3</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-skeleton.mp3</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-goblin.mp3</File>
-    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/../../../../../Downloads/Goblin.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Goblin.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/objects/Chest.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/objects/Key.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Dynamite.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/items/Dynamite</File>
-    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/../../../../../Downloads/Dynamite.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/objects/Dynamite.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/objects/Explosion.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Skeleton.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/objects/BigRock.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Prospector.png</File>
   </SourceFiles>
 </SourceFileCollection>

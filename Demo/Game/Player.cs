@@ -18,6 +18,7 @@ using Microsoft.Xna.Framework.Audio;
 using System.Timers;
 using Humper;
 using Demo.Interface;
+using Demo.Engine;
 
 namespace Demo
 {
@@ -87,16 +88,87 @@ namespace Demo
             soundEffects.Add(content.Load<SoundEffect>(@"sounds\bow-shoot"));
         }
 
+        /// <summary>
+        /// Calculate the direction in which a target is hit.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public double GetHitDirection(Entity entity)
+        {
+            Vector2 destination = Position - entity.Position;
+            destination.Normalize();
+            Double angle = Math.Atan2(destination.X, destination.Y);
+            double direction = Math.Ceiling(angle);
+            return direction;
+        }
+
+        public bool IntersectsCollidable(Entity entity)
+        {
+            bool intersected = false;
+            foreach (Tile tile in Init.SelectedMap.GetCollisionTiles())
+            {
+                if (entity.BoundingBox.Intersects(tile.Rectangle))
+                {
+                    intersected = true;
+                }
+            }
+
+            return intersected;
+        }
         // Loop through list of enemies and do damage if close.
+
         public void Attack()
         {
             if (EnemyList != null)
             {
                 foreach (Entity enemy in EnemyList)
                 {
-                    if (playerEntity.BoundingBox.Intersects(enemy.BoundingBox))
+                    if (playerEntity.BoundingBox.Intersects(enemy.BoundingBox) && enemy.State != Action.Dead)
                     {
+                        double directionHit = GetHitDirection(enemy);
+                        int distance = 20;
+
                         enemy.CurrentHealth -= AttackDamage;
+
+                        // Hitting enemy from the north 
+                        if (directionHit == -3 || directionHit == 4 || directionHit == -2)
+                        {
+                            if (!IntersectsCollidable(enemy))
+                            {
+                                enemy.Position = new Vector2(enemy.Position.X, enemy.Position.Y + distance);
+                            }
+                        }
+
+                        // Hitting enemy from the west
+                        if (directionHit == -1)
+                        {
+                            if (!IntersectsCollidable(enemy))
+                            {
+                                enemy.Position = new Vector2(enemy.Position.X + distance, enemy.Position.Y);
+                            }
+                        }
+
+                        // Hitting enemy from the east
+                        if (directionHit == 2)
+                        {
+                            if (!IntersectsCollidable(enemy))
+                            {
+                                enemy.Position = new Vector2(enemy.Position.X - distance, enemy.Position.Y);
+                            }
+                        }
+
+                        // Hitting enemy from the south
+                        if (directionHit == 1)
+                        {
+                            if (!IntersectsCollidable(enemy))
+                            {
+                                enemy.Position = new Vector2(enemy.Position.X, enemy.Position.Y - distance);
+                            }
+                            else
+                            {
+                                enemy.Position = new Vector2(enemy.Position.X, enemy.Position.Y + 10);
+                            }
+                        }
                     }
                 }
             }

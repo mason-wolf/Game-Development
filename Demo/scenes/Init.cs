@@ -218,6 +218,14 @@ namespace Demo.Scenes
                         Player.Position = new Vector2(42f, 90f);
                     }
 
+                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1NorthEast")
+                    {
+                        transitionState = true;
+                        FadeInMap(Level_1Map);
+                        SelectedScene = Scene.Level_1;
+                        Player.Position = new Vector2(984f, 120f);
+                    }
+
                     if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1A")
                     {
                         transitionState = true;

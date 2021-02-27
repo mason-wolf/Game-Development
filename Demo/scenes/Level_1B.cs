@@ -17,8 +17,9 @@ using Microsoft.Xna.Framework.Input;
 using Demo.Interface;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+using Demo.Scenes;
 
-namespace Demo.Scenes
+namespace Demo
 {
     public class Level_1B : Scene
     {
@@ -30,6 +31,8 @@ namespace Demo.Scenes
         AnimatedSprite torchSprite;
         AnimatedSprite barrelSprite;
         AnimatedSprite chestSprite;
+        AnimatedSprite rockSprite;
+        Boss bossEntity;
         Texture2D arrowsSprite;
         List<SoundEffect> soundEffects;
         Song song;
@@ -87,7 +90,7 @@ namespace Demo.Scenes
                         barrelSprite.Play("idle");
                         barrelSprite.Position = mapObject.GetPosition();
                         mapObject.SetSprite(barrelSprite);
-                        IBox barrelCollidable = Init.Level_1AMap.GetWorld().Create(barrelSprite.Position.X, barrelSprite.Position.Y - 4, 16, 16);
+                        IBox barrelCollidable = Init.Level_1BMap.GetWorld().Create(barrelSprite.Position.X, barrelSprite.Position.Y - 4, 16, 16);
                         mapObject.SetCollisionBox(barrelCollidable);
                         break;
                     case ("Chest"):
@@ -95,8 +98,24 @@ namespace Demo.Scenes
                         chestSprite.Play("Unopened");
                         chestSprite.Position = mapObject.GetPosition();
                         mapObject.SetSprite(chestSprite);
-                        IBox chestCollidable = Init.Level_1AMap.GetWorld().Create(chestSprite.Position.X, chestSprite.Position.Y, 16, 16);
+                        IBox chestCollidable = Init.Level_1BMap.GetWorld().Create(chestSprite.Position.X, chestSprite.Position.Y, 16, 16);
                         mapObject.SetCollisionBox(chestCollidable);
+                        break;
+                    case ("Rock"):
+                        rockSprite = new AnimatedSprite(Sprites.rockAnimation);
+                        rockSprite.Play("idle");
+                        rockSprite.Position = mapObject.GetPosition();
+                        mapObject.SetSprite(rockSprite);
+                        IBox rockCollidable = Init.Level_1BMap.GetWorld().Create(rockSprite.Position.X, rockSprite.Position.Y, 16, 16);
+                        mapObject.SetCollisionBox(rockCollidable);
+                        break;
+                    case ("Boss"):
+                        bossEntity = new Boss(Sprites.prospectorAnimation);
+                        bossEntity.MaxHealth = 20;
+                        bossEntity.CurrentHealth = 20;
+                        bossEntity.AttackDamage = 0.06;
+                        bossEntity.Position = mapObject.GetPosition();
+                        bossEntity.Name = "The Prospector";
                         break;
                 }
             }
@@ -115,6 +134,7 @@ namespace Demo.Scenes
 
         public override void Update(GameTime gameTime)
         {
+            bossEntity.Update(gameTime);
             enemyAI.Update(gameTime);
 
             foreach (Entity enemy in enemyList)
@@ -158,7 +178,7 @@ namespace Demo.Scenes
                         mapObject.GetSprite().Play("broken");
                         mapObject.Destroy();
                         soundEffects[0].Play();
-                        Init.Level_1AMap.GetWorld().Remove(mapObject.GetCollisionBox());
+                        Init.Level_1BMap.GetWorld().Remove(mapObject.GetCollisionBox());
                     }
                 }
 
@@ -167,10 +187,10 @@ namespace Demo.Scenes
                     if (!mapObject.ItemPickedUp())
                     {
                         mapObject.GetSprite().Play("Opened");
-                        message = "You obtained a key.";
+                        message = "You obtained dynamite.";
                         messageEnabled = true;
                         mapObject.PickUpItem();
-                        Inventory.TotalKeys = Inventory.TotalKeys += 1;
+                        Inventory.TotalDynamite = Inventory.TotalDynamite += 3;
                     }
                 }
             }
@@ -193,6 +213,7 @@ namespace Demo.Scenes
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            bossEntity.Draw(spriteBatch);
             foreach (Entity enemy in enemyList)
             {
                 enemy.Draw(spriteBatch);

@@ -415,3 +415,5 @@ C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Cont
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\items\Dynamite.xnb
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Dynamite.xnb
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Explosion.xnb
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\BigRock.xnb
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\Prospector.xnb

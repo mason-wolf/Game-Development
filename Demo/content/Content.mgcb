@@ -142,18 +142,6 @@
 /processorParam:TextureFormat=Color
 /build:interface/escapeMenu.png
 
-#begin spritesheets/Skeleton.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:spritesheets/Skeleton.png
-
 #begin spritesheets/Bat.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -340,18 +328,6 @@
 /processorParam:Quality=Best
 /build:sounds/dead-goblin.mp3
 
-#begin ../../../../../Downloads/Goblin.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../../../../Downloads/Goblin.png
-
 #begin spritesheets/Goblin.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -412,18 +388,6 @@
 /processorParam:TextureFormat=Color
 /build:items\Dynamite
 
-#begin ../../../../../Downloads/Dynamite.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../../../../Downloads/Dynamite.png
-
 #begin objects/Dynamite.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -447,4 +411,40 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:objects/Explosion.png
+
+#begin spritesheets/Skeleton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:spritesheets/Skeleton.png
+
+#begin objects/BigRock.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:objects/BigRock.png
+
+#begin spritesheets/Prospector.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:spritesheets/Prospector.png
 

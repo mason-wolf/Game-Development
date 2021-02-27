@@ -80,6 +80,16 @@ namespace Demo
         // Single dynamite sprite
         public static Texture2D singleDynamiteTexture;
 
+        // Rock sprite
+        public static Texture2D rockTexture;
+        public TextureAtlas rockAtlas;
+        public static SpriteSheetAnimationFactory rockAnimation;
+
+        // Prospector sprite
+        public static Texture2D prospectorTexture;
+        public TextureAtlas prospectorAtlas;
+        public static SpriteSheetAnimationFactory prospectorAnimation;
+
         public void LoadContent(ContentManager content)
         {
             //Bat
@@ -125,18 +135,18 @@ namespace Demo
             skeletonAtlas = TextureAtlas.Create(skeletonTexture, 32, 32);
             skeletonAnimation = new SpriteSheetAnimationFactory(skeletonAtlas);
             skeletonAnimation.Add("idleSouth1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
-            skeletonAnimation.Add("walkSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
-            skeletonAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
-            skeletonAnimation.Add("walkWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
-            skeletonAnimation.Add("attackWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
+            skeletonAnimation.Add("walkSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 4 }, animationSpeed, isLooping: true));
+            skeletonAnimation.Add("attackSouthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 4}, attackSpeed, isLooping: true));
+            skeletonAnimation.Add("walkWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 4}, animationSpeed, isLooping: true));
+            skeletonAnimation.Add("attackWestPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 4}, attackSpeed, isLooping: true));
             skeletonAnimation.Add("idleWest1", new SpriteSheetAnimationData(new[] { 0 }));
-            skeletonAnimation.Add("walkEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
-            skeletonAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
+            skeletonAnimation.Add("walkEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 4}, animationSpeed, isLooping: true));
+            skeletonAnimation.Add("attackEastPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 4}, attackSpeed, isLooping: true));
             skeletonAnimation.Add("idleEast1", new SpriteSheetAnimationData(new[] { 0 }));
-            skeletonAnimation.Add("walkNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, animationSpeed, isLooping: true));
-            skeletonAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2 }, attackSpeed, isLooping: true));
+            skeletonAnimation.Add("walkNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 4 }, animationSpeed, isLooping: true));
+            skeletonAnimation.Add("attackNorthPattern1", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 4 }, attackSpeed, isLooping: true));
             skeletonAnimation.Add("idleNorth1", new SpriteSheetAnimationData(new[] { 0 }));
-            skeletonAnimation.Add("dead", new SpriteSheetAnimationData(new[] { 3 }, .2f, isLooping: false));
+            skeletonAnimation.Add("dead", new SpriteSheetAnimationData(new[] { 5 }, .2f, isLooping: false));
 
             // Goblin
             goblinTexture = content.Load<Texture2D>(@"spritesheets\Goblin");
@@ -233,6 +243,21 @@ namespace Demo
             explosionAnimation = new SpriteSheetAnimationFactory(explosionAtlas);
             explosionAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }, .1f, isLooping: false));
             explosionAnimation.Add("explosion", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 4 }, .1f, isLooping: false ));
+
+            // Rock
+            rockTexture = content.Load<Texture2D>(@"objects\BigRock");
+            rockAtlas = TextureAtlas.Create(rockTexture, 32, 32);
+            rockAnimation = new SpriteSheetAnimationFactory(rockAtlas);
+            rockAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }, .1f, isLooping: false));
+            rockAnimation.Add("broken", new SpriteSheetAnimationData(new[] { 1, 2, 3 }, .08f, isLooping: false));
+
+            // Prospector
+            prospectorTexture = content.Load<Texture2D>(@"spritesheets\Prospector");
+            prospectorAtlas = TextureAtlas.Create(prospectorTexture, 32, 42);
+            prospectorAnimation = new SpriteSheetAnimationFactory(prospectorAtlas);
+            prospectorAnimation.Add("walking", new SpriteSheetAnimationData(new[] { 0, 1 }, 0.08f, isLooping: true));
+            prospectorAnimation.Add("Attack1", new SpriteSheetAnimationData(new[] { 1, 2 }, 0.4f, isLooping: true));
+            prospectorAnimation.Add("Attack2", new SpriteSheetAnimationData(new[] { 3, 4 }, 0.4f, isLooping: true));
         }
     }
 }
