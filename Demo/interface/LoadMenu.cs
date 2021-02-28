@@ -224,6 +224,7 @@ namespace Demo.Scenes
 
                 Init.SavedGamePosition = savedGame.Position;
                 Init.Player.CurrentHealth = savedGame.PlayerHealth;
+                Init.Player.Position = new Vector2();
                 Inventory.SavedGameLoaded = true;
                 Inventory.TotalArrows = savedGame.Arrows;
                 Init.SavedGameLocation = savedGame.Location;

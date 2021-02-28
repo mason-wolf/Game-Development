@@ -1,4 +1,4 @@
-player_health=100.800000000001
+player_health=101
 arrows=30
 location=Level_1B
-player_position=520,216.4002
+player_position=521.8998,153.1505

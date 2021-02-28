@@ -26,6 +26,7 @@ namespace Demo
         Rectangle containedItemBoundingBox;
         bool destroyed = false;
         bool itemPickedUp = false;
+
         IBox collisionBox;
 
         public string GetName()

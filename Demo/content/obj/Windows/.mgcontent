@@ -31,7 +31,6 @@
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-bat.wav</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/destroyed-barrel.wav</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/bow-shoot.mp3</File>
-    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/music/level_1.mp3</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-skeleton.mp3</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/sounds/dead-goblin.mp3</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Goblin.png</File>
@@ -44,5 +43,8 @@
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Skeleton.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/objects/BigRock.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Prospector.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Pickaxe.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/ChainedGate.png</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/music/level_1.wav</File>
   </SourceFiles>
 </SourceFileCollection>

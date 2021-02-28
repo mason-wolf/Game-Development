@@ -79,6 +79,7 @@ namespace Demo
             playerAnimation.Add("attackNorthPattern2", new SpriteSheetAnimationData(new[] { 93, 94, 95}, .1f, isLooping: true));
             playerAnimation.Add("idleNorth1", new SpriteSheetAnimationData(new[] { 37 }));
             playerAnimation.Add("idleNorth2", new SpriteSheetAnimationData(new[] { 82 }));
+            playerAnimation.Add("dead", new SpriteSheetAnimationData(new[] { 48, 49, 50 }, 0.08f, isLooping: false));
             statusBar = content.Load<Texture2D>(@"interface\statusbar");
             healthBar = content.Load<Texture2D>(@"interface\healthbar");
             staminaBar = content.Load<Texture2D>(@"interface\staminabar");
@@ -173,7 +174,18 @@ namespace Demo
                 }
             }
         }
-
+        /// <summary>
+        /// Method to check status of the player. Death, status effects, etc.
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public void CheckPlayerStatus(GameTime gameTime)
+        {
+            if (CurrentHealth <= 0)
+            {
+                Dead = true;
+                sprite.Play("dead");
+            }
+        }
         // Handle attacking and movement animations.
         public void HandleInput(GameTime gameTime, Entity player, IBox playerCollisionBox, KeyboardState newState, KeyboardState oldState)
         {
@@ -182,6 +194,7 @@ namespace Demo
 
             float speed = 0;
             ActionButtonPressed = false;
+
             if (newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
             {
                 ActionButtonPressed = true;

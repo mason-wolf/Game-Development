@@ -372,7 +372,6 @@ C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Cont
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\interface\titlescreen.xnb
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\maps\area_1.tmx
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\maps\village.xnb
-C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\music\level_1.wma
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\music\level_1.xnb
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\items\Chicken.xnb
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\enemies\wolf.xnb
@@ -417,3 +416,6 @@ C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Cont
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\Explosion.xnb
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\objects\BigRock.xnb
 C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\Prospector.xnb
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\Pickaxe.xnb
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\spritesheets\ChainedGate.xnb
+C:\Users\Mason\Documents\GitHub\Game-Development\Demo\bin\Windows\x86\Debug\Content\music\level_1.wma

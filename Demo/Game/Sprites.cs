@@ -90,6 +90,16 @@ namespace Demo
         public TextureAtlas prospectorAtlas;
         public static SpriteSheetAnimationFactory prospectorAnimation;
 
+        // Pickaxe sprite
+        public static Texture2D pickaxeTexture;
+        public TextureAtlas pickaxeAtlas;
+        public static SpriteSheetAnimationFactory pickaxeAnimation;
+
+        // Chained gate
+        public static Texture2D chainedGateTexture;
+        public TextureAtlas chainedGateAtlas;
+        public static SpriteSheetAnimationFactory chainedGateAnimation;
+
         public void LoadContent(ContentManager content)
         {
             //Bat
@@ -257,7 +267,22 @@ namespace Demo
             prospectorAnimation = new SpriteSheetAnimationFactory(prospectorAtlas);
             prospectorAnimation.Add("walking", new SpriteSheetAnimationData(new[] { 0, 1 }, 0.08f, isLooping: true));
             prospectorAnimation.Add("Attack1", new SpriteSheetAnimationData(new[] { 1, 2 }, 0.4f, isLooping: true));
-            prospectorAnimation.Add("Attack2", new SpriteSheetAnimationData(new[] { 3, 4 }, 0.4f, isLooping: true));
+            prospectorAnimation.Add("Attack2", new SpriteSheetAnimationData(new[] { 4, 4}, 0.4f, isLooping: true));
+
+            // Pickaxe 
+            pickaxeTexture = content.Load<Texture2D>(@"spritesheets\Pickaxe");
+            pickaxeAtlas = TextureAtlas.Create(pickaxeTexture, 32, 32);
+            pickaxeAnimation = new SpriteSheetAnimationFactory(pickaxeAtlas);
+            pickaxeAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }, 1f, isLooping: false));
+            pickaxeAnimation.Add("Attack1", new SpriteSheetAnimationData(new[] { 1, 2, 3, 4, 5, 6, 0}, 0.08f, isLooping: false));
+            pickaxeAnimation.Add("Attack2", new SpriteSheetAnimationData(new[] { 8, 8, 8, 8, 8, 8, 0 }, 0.5f, isLooping: false));
+
+            // Chained gate
+            chainedGateTexture = content.Load<Texture2D>(@"spritesheets\ChainedGate");
+            chainedGateAtlas = TextureAtlas.Create(chainedGateTexture, 48, 32);
+            chainedGateAnimation = new SpriteSheetAnimationFactory(chainedGateAtlas);
+            chainedGateAnimation.Add("idle", new SpriteSheetAnimationData(new[] { 0 }, 1f, isLooping: false));
+            chainedGateAnimation.Add("open", new SpriteSheetAnimationData(new[] { 1, 2, 3, 4 }, 0.05f, isLooping: false));
         }
     }
 }

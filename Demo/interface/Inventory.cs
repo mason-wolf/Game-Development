@@ -57,8 +57,8 @@ namespace Demo.Interface
             selectedItemTexture.SetData(new[] { selectedItemTextureColor });
             InventoryOpen = false;
 
-            TotalDynamite = 5;
-
+            TotalDynamite = 10;
+            TotalKeys = 1;
             if (!SavedGameLoaded)
             {
                 TotalChickens = 3;
@@ -175,6 +175,11 @@ namespace Demo.Interface
                             mapObject.GetSprite().Play("broken");
                             mapObject.Destroy();
                             Init.SelectedMap.GetWorld().Remove(mapObject.GetCollisionBox());
+                        }
+
+                        if (mapObject.GetName() == "Boss" && explosionEntity.BoundingBox.Intersects(mapObject.GetBoundingBox()))
+                        {
+                            Boss.Stunned = true;
                         }
                     }
                     if (explosionTimer < 35)
@@ -381,7 +386,7 @@ namespace Demo.Interface
                     TotalChickens -= 1;
                     if (Init.Player.CurrentHealth < Init.Player.MaxHealth)
                     {
-                        Init.Player.CurrentHealth += 10;
+                        Init.Player.CurrentHealth += 25;
                     }
                 }
                 if (itemList[SelectedItem].Name == "Dynamite")

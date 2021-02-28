@@ -55,7 +55,7 @@ namespace Demo.Scenes
         public static Vector2 SavedGamePosition;
         public static string SavedGameLocation;
         DialogBox dialogBox;
-
+        public static bool TransitionState = false;
         // Create entities for this map.
         Entity sittingWarriorEntity;
         AnimatedSprite campfire;
@@ -156,8 +156,8 @@ namespace Demo.Scenes
             base.LoadContent();
         }
 
-        bool transitionState = false;
-        int counter = 0;
+        int transitionFrames = 0;
+        int pauseAfterDeathFrames = 0;
         public override void Update(GameTime gameTime)
         {
             // If save was loaded, create transition effects, assign the player's saved scene and position.
@@ -169,17 +169,22 @@ namespace Demo.Scenes
                 {
                     case (Scene.StartingArea):
                         FadeInMap(StartingAreaMap);
+                   //     Player.Position = new Vector2(335f, 150f);
                         break;
                     case (Scene.Level_1):
                         FadeInMap(Level_1Map);
+                   //     Player.Position = new Vector2(408f, 880f);
                         break;
                     case (Scene.Level_1A):
                         FadeInMap(Level_1AMap);
+                    //    Player.Position = new Vector2(105f, 980f);
                         break;
                     case (Scene.Level_1B):
                         FadeInMap(Level_1BMap);
+                  //      Player.Position = new Vector2(520f, 980f);
                         break;
                 }
+                Player.Position = new Vector2();
                 Player.Position = SavedGamePosition;
                 Reloaded = false;
             }
@@ -190,14 +195,7 @@ namespace Demo.Scenes
                 {
                     if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "StartingArea")
                     {
-                        if (Player.EnemyList.Count > 0)
-                        {
-                            Player.EnemyList.Clear();
-                        }
-                        transitionState = true;
-                        Content.Unload();
-                        LoadContent();
-
+                        TransitionState = true;
                         FadeInMap(StartingAreaMap);
                         SelectedScene = Scene.StartingArea;
                         Player.Position = new Vector2(335f, 150f);
@@ -205,6 +203,16 @@ namespace Demo.Scenes
 
                     if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1South")
                     {
+                        if (Player.EnemyList.Count > 0)
+                        {
+                            Player.EnemyList.Clear();
+                            Level_1.enemyAI.Clear();
+                            Level_1A.enemyAI.Clear();
+                            Level_1B.enemyAI.Clear();
+                        }
+                        TransitionState = true;
+                        Content.Unload();
+                        LoadContent();
                         FadeInMap(Level_1Map);
                         SelectedScene = Scene.Level_1;
                         Player.Position = new Vector2(408f, 880f);
@@ -212,7 +220,7 @@ namespace Demo.Scenes
 
                     if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1NorthWest")
                     {
-                        transitionState = true;
+                        TransitionState = true;
                         FadeInMap(Level_1Map);
                         SelectedScene = Scene.Level_1;
                         Player.Position = new Vector2(42f, 90f);
@@ -220,7 +228,7 @@ namespace Demo.Scenes
 
                     if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1NorthEast")
                     {
-                        transitionState = true;
+                        TransitionState = true;
                         FadeInMap(Level_1Map);
                         SelectedScene = Scene.Level_1;
                         Player.Position = new Vector2(984f, 120f);
@@ -228,7 +236,7 @@ namespace Demo.Scenes
 
                     if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1A")
                     {
-                        transitionState = true;
+                        TransitionState = true;
                         FadeInMap(Level_1AMap);
                         SelectedScene = Scene.Level_1A;
                         Player.Position = new Vector2(105f, 980f);
@@ -236,7 +244,7 @@ namespace Demo.Scenes
 
                     if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1B")
                     {
-                        transitionState = true;
+                        TransitionState = true;
                         FadeInMap(Level_1BMap);
                         SelectedScene = Scene.Level_1B;
                         Player.Position = new Vector2(520f, 980f);
@@ -245,12 +253,12 @@ namespace Demo.Scenes
             }
 
             // Create a short pause after transitioning to next level.
-            counter++;
+            transitionFrames++;
 
-            if (counter > 70)
+            if (transitionFrames > 70)
             {
-                counter = 0;
-                transitionState = false;
+                transitionFrames = 0;
+                TransitionState = false;
             }
 
             KeyBoardNewState = Keyboard.GetState();
@@ -308,9 +316,29 @@ namespace Demo.Scenes
 
             Camera.Zoom = 3;
 
-            if (!inDialog && !transitionState)
+
+            if (!inDialog && !TransitionState && !Player.Dead)
             {
                 Player.HandleInput(gameTime, Player, playerCollision, KeyBoardNewState, KeyBoardOldState);
+                Player.CheckPlayerStatus(gameTime);
+            }
+
+
+            if (Player.Dead)
+            {
+                pauseAfterDeathFrames++;
+            }
+
+            if (pauseAfterDeathFrames > 500)
+            {
+                TransitionState = true;
+                FadeInMap(StartingAreaMap);
+                SelectedScene = Scene.StartingArea;
+                Player.Position = new Vector2(335f, 150f);
+                pauseAfterDeathFrames = 0;
+                Player.Dead = false;
+                Player.CurrentHealth = 100;
+                Player.State = Action.IdleSouth1;
             }
 
             Camera.LookAt(Player.Position);
@@ -383,6 +411,11 @@ namespace Demo.Scenes
             //    spriteBatch.DrawString(Font, health.ToString() + " / 100", healthStatus, Color.White);
                 dialogBox.Draw(spriteBatch);
                 inventory.Draw(spriteBatch);
+            }
+
+            if (Player.Dead)
+            {
+                spriteBatch.DrawString(Init.Font, "YOU DIED", new Vector2(Init.Player.Position.X - 20, Init.Player.Position.Y - 50), Color.Red);
             }
             spriteBatch.End();
             base.Draw(gameTime);

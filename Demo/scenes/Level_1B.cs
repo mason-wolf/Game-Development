@@ -32,6 +32,7 @@ namespace Demo
         AnimatedSprite barrelSprite;
         AnimatedSprite chestSprite;
         AnimatedSprite rockSprite;
+        public static AnimatedSprite chainedGateSprite;
         Boss bossEntity;
         Texture2D arrowsSprite;
         List<SoundEffect> soundEffects;
@@ -111,11 +112,19 @@ namespace Demo
                         break;
                     case ("Boss"):
                         bossEntity = new Boss(Sprites.prospectorAnimation);
-                        bossEntity.MaxHealth = 20;
-                        bossEntity.CurrentHealth = 20;
+                        bossEntity.MaxHealth = 40;
+                        bossEntity.CurrentHealth = 40;
                         bossEntity.AttackDamage = 0.06;
                         bossEntity.Position = mapObject.GetPosition();
                         bossEntity.Name = "The Prospector";
+                        break;
+                    case ("Gate"):
+                        chainedGateSprite = new AnimatedSprite(Sprites.chainedGateAnimation);
+                        chainedGateSprite.Play("idle");
+                        chainedGateSprite.Position = mapObject.GetPosition();
+                        mapObject.SetSprite(chainedGateSprite);
+                        IBox chainedGateCollidable = Init.Level_1BMap.GetWorld().Create(chainedGateSprite.Position.X - 10, chainedGateSprite.Position.Y, 32, 16);
+                        mapObject.SetCollisionBox(chainedGateCollidable);
                         break;
                 }
             }
@@ -129,6 +138,7 @@ namespace Demo
             soundEffects.Add(content.Load<SoundEffect>(@"sounds\dead-goblin"));
             arrowsSprite = content.Load<Texture2D>(@"objects\arrows");
             song = content.Load<Song>(@"music\level_1");
+            bossEntity.LoadContent(content);
             //   MediaPlayer.Play(song);
         }
 
@@ -190,11 +200,25 @@ namespace Demo
                         message = "You obtained dynamite.";
                         messageEnabled = true;
                         mapObject.PickUpItem();
-                        Inventory.TotalDynamite = Inventory.TotalDynamite += 3;
+                        Inventory.TotalDynamite = Inventory.TotalDynamite += 10;
+                    }
+                }
+
+                if (player.BoundingBox.Intersects(mapObject.GetBoundingBox()) && Player.ActionButtonPressed && mapObject.GetName() == "Gate")
+                {
+                    if (Inventory.TotalKeys == 0)
+                    {
+                        message = "Gate is locked. You need a key.";
+                        messageEnabled = true;
+                    }
+                    else
+                    {
+                        Inventory.TotalKeys = Inventory.TotalKeys - 1;
+                        mapObject.GetSprite().Play("open");
+                        Init.Level_1BMap.GetWorld().Remove(mapObject.GetCollisionBox());
                     }
                 }
             }
-
         }
 
         public void ShowMessage(string message, SpriteBatch spriteBatch)
