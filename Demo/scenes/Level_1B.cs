@@ -36,7 +36,8 @@ namespace Demo
         Boss bossEntity;
         Texture2D arrowsSprite;
         List<SoundEffect> soundEffects;
-        Song song;
+        Song levelThemeSong;
+        Song bossThemeSong;
         int frameCount = 0;
         string message = "";
         bool messageEnabled = false;
@@ -137,14 +138,31 @@ namespace Demo
             soundEffects.Add(content.Load<SoundEffect>(@"sounds\dead-skeleton"));
             soundEffects.Add(content.Load<SoundEffect>(@"sounds\dead-goblin"));
             arrowsSprite = content.Load<Texture2D>(@"objects\arrows");
-            song = content.Load<Song>(@"music\level_1");
+            levelThemeSong = content.Load<Song>(@"music\level_1");
+            bossThemeSong = content.Load<Song>(@"music\boss_fight");
             bossEntity.LoadContent(content);
             //   MediaPlayer.Play(song);
         }
 
+        bool bossThemePlaying = false;
+
         public override void Update(GameTime gameTime)
         {
             bossEntity.Update(gameTime);
+            
+            if (Boss.bossEngaged && bossThemePlaying == false)
+            {
+                MediaPlayer.Play(bossThemeSong);
+                bossThemePlaying = true;
+            }
+            else if (bossEntity.Dead)
+            {
+                MediaPlayer.Stop();
+            }
+            else if (player.Dead)
+            {
+                MediaPlayer.Play(levelThemeSong);
+            }
             enemyAI.Update(gameTime);
 
             foreach (Entity enemy in enemyList)

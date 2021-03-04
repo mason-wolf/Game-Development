@@ -158,11 +158,13 @@ namespace Demo.Scenes
 
         int transitionFrames = 0;
         int pauseAfterDeathFrames = 0;
+
         public override void Update(GameTime gameTime)
         {
             // If save was loaded, create transition effects, assign the player's saved scene and position.
             if (Reloaded)
             {
+                TransitionState = true;
                 SelectedScene = (Init.Scene)Enum.Parse(typeof(Init.Scene), SavedGameLocation);
 
                 switch (SelectedScene)
@@ -184,8 +186,10 @@ namespace Demo.Scenes
                   //      Player.Position = new Vector2(520f, 980f);
                         break;
                 }
-                Player.Position = new Vector2();
+
+
                 Player.Position = SavedGamePosition;
+                Player.MotionVector = SavedGamePosition;
                 Reloaded = false;
             }
 
@@ -249,21 +253,17 @@ namespace Demo.Scenes
                         SelectedScene = Scene.Level_1B;
                         Player.Position = new Vector2(520f, 980f);
                     }
+
+
+                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1C")
+                    {
+                        TransitionState = true;
+                        FadeInMap(Level_1BMap);
+                        SelectedScene = Scene.Level_1B;
+                        Player.Position = new Vector2(520f, 980f);
+                    }
                 }
             }
-
-            // Create a short pause after transitioning to next level.
-            transitionFrames++;
-
-            if (transitionFrames > 70)
-            {
-                transitionFrames = 0;
-                TransitionState = false;
-            }
-
-            KeyBoardNewState = Keyboard.GetState();
-
-            HandleDialog();
 
             switch (SelectedScene)
             {
@@ -305,33 +305,27 @@ namespace Demo.Scenes
                     Player.EnemyList = Level_1B.enemyList;
                     break;
             }
-            dialogBox.Update();
-            inventory.Update(gameTime);
 
-            // Handle player's collision.
-            playerCollision.Move(Player.Position.X, Player.Position.Y, (collision) => CollisionResponses.Slide);
-            Player.Update(gameTime);
-
-            campfire.Update(gameTime);
-
-            Camera.Zoom = 3;
-
-
-            if (!inDialog && !TransitionState && !Player.Dead)
-            {
-                Player.HandleInput(gameTime, Player, playerCollision, KeyBoardNewState, KeyBoardOldState);
-                Player.CheckPlayerStatus(gameTime);
-            }
-
-
+            // Create a pause if the player dies.
             if (Player.Dead)
             {
                 pauseAfterDeathFrames++;
             }
 
-            if (pauseAfterDeathFrames > 500)
+            // If the player dies, reload and restart from beginning.
+            if (pauseAfterDeathFrames > 200)
             {
+                if (Player.EnemyList.Count > 0)
+                {
+                    Player.EnemyList.Clear();
+                    Level_1.enemyAI.Clear();
+                    Level_1A.enemyAI.Clear();
+                    Level_1B.enemyAI.Clear();
+                }
                 TransitionState = true;
+                Content.Unload();
+                LoadContent();
+
                 FadeInMap(StartingAreaMap);
                 SelectedScene = Scene.StartingArea;
                 Player.Position = new Vector2(335f, 150f);
@@ -339,6 +333,40 @@ namespace Demo.Scenes
                 Player.Dead = false;
                 Player.CurrentHealth = 100;
                 Player.State = Action.IdleSouth1;
+            }
+
+            // Create a short pause after transitioning to next level.
+            transitionFrames++;
+
+            if (transitionFrames > 70)
+            {
+                transitionFrames = 0;
+                TransitionState = false;
+            }
+
+            KeyBoardNewState = Keyboard.GetState();
+
+            HandleDialog();
+
+            dialogBox.Update();
+            inventory.Update(gameTime);
+
+            Player.Update(gameTime);
+
+            // Handle player's collision.        
+            Console.WriteLine("\n" + Player.Position);
+            Console.WriteLine(playerCollision.X +"," + playerCollision.Y + "\n");
+
+            playerCollision.Move(Player.Position.X, Player.Position.Y, (collision) => CollisionResponses.Slide);
+
+            campfire.Update(gameTime);
+
+            Camera.Zoom = 3;
+
+            if (!inDialog && !TransitionState && !Player.Dead)
+            {
+                Player.HandleInput(gameTime, Player, playerCollision, KeyBoardNewState, KeyBoardOldState);
+                Player.CheckPlayerStatus(gameTime);
             }
 
             Camera.LookAt(Player.Position);

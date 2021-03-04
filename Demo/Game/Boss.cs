@@ -2,6 +2,7 @@
 using Humper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using MonoGame.Extended.Animations.SpriteSheets;
 using MonoGame.Extended.Shapes;
 using MonoGame.Extended.Sprites;
@@ -43,7 +44,7 @@ namespace Demo
         bool attackDecided = false;
         bool attackTypeDecided = false;
         bool attacking = false;
-        bool bossEngaged = false;
+        public static bool bossEngaged = false;
 
         public new void Update(GameTime gameTime)
         {

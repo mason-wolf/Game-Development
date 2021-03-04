@@ -36,6 +36,7 @@ namespace Demo
         public static bool PressedContinue = false;
         public static bool IsAttacking = false;
         public static bool ActionButtonPressed = false;
+        public static Vector2 MotionVector;
         public static string CurrentLevel { get; set; }
         private string EquipedWeapon = "Sword";
         AnimatedSprite arrow;
@@ -186,20 +187,23 @@ namespace Demo
                 sprite.Play("dead");
             }
         }
+
         // Handle attacking and movement animations.
         public void HandleInput(GameTime gameTime, Entity player, IBox playerCollisionBox, KeyboardState newState, KeyboardState oldState)
         {
             playerEntity = player;
-            Vector2 motion = new Vector2(playerCollisionBox.X, playerCollisionBox.Y);
+            MotionVector = new Vector2(playerCollisionBox.X, playerCollisionBox.Y);
 
             float speed = 0;
             ActionButtonPressed = false;
 
+            // If action button 'E' is pressed.
             if (newState.IsKeyDown(Keys.E) && oldState.IsKeyUp(Keys.E))
             {
                 ActionButtonPressed = true;
             }
 
+            // If run button 'Shift' is held down.
             if (newState.IsKeyDown(Keys.LeftShift) && CurrentStamina >= 0)
             {
                 speed = 2.2f;
@@ -278,6 +282,7 @@ namespace Demo
                 }
             }
 
+            // Handle animations when bow is equipped.
             if (newState.IsKeyDown(Keys.D2) && oldState.IsKeyDown(Keys.D2))
             {
                 EquipedWeapon = "Bow";
@@ -403,8 +408,8 @@ namespace Demo
                         // Walk east if W and D are pressed
                         if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.D))
                         {
-                            motion.Y -= speed;
-                            player.Position = motion;
+                            MotionVector.Y -= speed;
+                            player.Position = MotionVector;
 
                             if (EquipedWeapon == "Sword")
                             {
@@ -418,8 +423,8 @@ namespace Demo
                         // Walk west if W and A are pressed.
                         else if (newState.IsKeyDown(Keys.W) && newState.IsKeyDown(Keys.A))
                         {
-                            motion.Y -= speed;
-                            player.Position = motion;
+                            MotionVector.Y -= speed;
+                            player.Position = MotionVector;
 
                             if (EquipedWeapon == "Sword")
                             {
@@ -433,8 +438,8 @@ namespace Demo
                         else
                         {
                             // Walk north.
-                            motion.Y -= speed;
-                            player.Position = motion;
+                            MotionVector.Y -= speed;
+                            player.Position = MotionVector;
                             if (EquipedWeapon == "Sword")
                             {
                                 player.State = Action.WalkNorthPattern1;
@@ -451,8 +456,8 @@ namespace Demo
                         // Walk east if S and D are pressed.
                         if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.D))
                         {
-                            motion.Y += speed;
-                            player.Position = motion;
+                            MotionVector.Y += speed;
+                            player.Position = MotionVector;
 
                             if (EquipedWeapon == "Sword")
                             {
@@ -468,8 +473,8 @@ namespace Demo
                         // Walk west if S and A are pressed.
                         else if (newState.IsKeyDown(Keys.S) && newState.IsKeyDown(Keys.A))
                         {
-                            motion.Y += speed;
-                            player.Position = motion;
+                            MotionVector.Y += speed;
+                            player.Position = MotionVector;
 
                             if (EquipedWeapon == "Sword")
                             {
@@ -483,8 +488,8 @@ namespace Demo
                         else
                         {
                             // Walk south
-                            motion.Y += speed;
-                            player.Position = motion;
+                            MotionVector.Y += speed;
+                            player.Position = MotionVector;
 
                             if (EquipedWeapon == "Sword")
                             {
@@ -500,8 +505,8 @@ namespace Demo
                     // Walk east
                     if (newState.IsKeyDown(Keys.D) && player.State != Action.AttackEastPattern1 && player.State != Action.AttackEastPattern2)
                     {
-                        motion.X += speed;
-                        player.Position = motion;
+                        MotionVector.X += speed;
+                        player.Position = MotionVector;
 
                         if (EquipedWeapon == "Sword")
                         {
@@ -516,8 +521,8 @@ namespace Demo
                     // Walk west
                     if (newState.IsKeyDown(Keys.A) && player.State != Action.AttackWestPattern1 && player.State != Action.AttackWestPattern2)
                     {
-                        motion.X -= speed;
-                        player.Position = motion;
+                        MotionVector.X -= speed;
+                        player.Position = MotionVector;
 
                         if (EquipedWeapon == "Sword")
                         {

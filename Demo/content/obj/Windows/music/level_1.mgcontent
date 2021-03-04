@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/music/level_1.wav</SourceFile>
-  <SourceTime>2021-02-27T20:35:53.1062642-06:00</SourceTime>
+  <SourceFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/music/level_1.mp3</SourceFile>
+  <SourceTime>2021-02-28T16:00:59.8907541-06:00</SourceTime>
   <DestFile>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/bin/Windows/music/level_1.xnb</DestFile>
-  <DestTime>2021-02-27T20:39:15.8886533-06:00</DestTime>
-  <Importer>WavImporter</Importer>
+  <DestTime>2021-03-01T17:28:58.5912598-06:00</DestTime>
+  <Importer>Mp3Importer</Importer>
   <ImporterTime>2016-03-30T01:36:08-05:00</ImporterTime>
   <Processor>SongProcessor</Processor>
   <ProcessorTime>2016-03-30T01:36:08-05:00</ProcessorTime>

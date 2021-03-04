@@ -466,9 +466,15 @@
 /processorParam:TextureFormat=Color
 /build:spritesheets/ChainedGate.png
 
-#begin music/level_1.wav
-/importer:WavImporter
+#begin music\level_1.mp3
+/importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:music/level_1.wav
+/build:music\level_1.mp3
+
+#begin music\boss_fight.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:music\boss_fight.mp3
 

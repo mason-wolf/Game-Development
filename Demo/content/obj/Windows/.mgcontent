@@ -45,6 +45,7 @@
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Prospector.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/Pickaxe.png</File>
     <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/spritesheets/ChainedGate.png</File>
-    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/music/level_1.wav</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/music/level_1.mp3</File>
+    <File>C:/Users/Mason/Documents/GitHub/Game-Development/Demo/Content/music/boss_fight.mp3</File>
   </SourceFiles>
 </SourceFileCollection>
