@@ -40,7 +40,9 @@
   <ItemGroup>
     <Compile Include="Game\Boss.cs" />
     <Compile Include="Game\EnemyAI.cs" />
+    <Compile Include="Game\SceneLogic.cs" />
     <Compile Include="Game\Item.cs" />
+    <Compile Include="Game\Level.cs" />
     <Compile Include="Game\MapObject.cs" />
     <Compile Include="Game\SavedGame.cs" />
     <Compile Include="Game\Scene.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Interface\StartMenu.cs" />
     <Compile Include="Scenes\Level_1A.cs" />
     <Compile Include="Scenes\Level_1B.cs" />
+    <Compile Include="Scenes\Level_1C.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Humper, Version=1.0.6093.38709, Culture=neutral, processorArchitecture=MSIL">

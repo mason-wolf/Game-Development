@@ -15,15 +15,16 @@ namespace Demo
 {
     public class Map
     {
-        public ContentManager content;
-        public MapRenderer map;
-        public string MapName;
+        ContentManager content;
+        MapRenderer map;
+        string mapName;
         IBox collisionWorld;
         Scene scene;
         Texture2D transitionTexture;
         bool fadeIn;
-        public Color color;
-        List<MapObject> mapObjects;
+        Color transitionColor;
+        static List<MapObject> mapObjects;
+        bool hasFaded = false;
 
         /// <summary>
         /// Loads and renders a map. Every map has collision and a basic screen transition effect.
@@ -32,7 +33,7 @@ namespace Demo
         /// <param name="mapName">Map Name</param>
         public Map(ContentManager content, string mapName)
         {
-            this.MapName = mapName;
+            this.mapName = mapName;
             map = new MapRenderer();
             map.LoadMap(content, mapName);
             mapObjects = map.GetMapObjects();
@@ -40,15 +41,26 @@ namespace Demo
             collisionWorld = map.GenerateCollisionWorld();
             transitionTexture = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);
             transitionTexture.SetData(new Color[] { Color.Black });
-            color = new Color(255, 255, 255, 255);
+            transitionColor = new Color(255, 255, 255, 255);
             fadeIn = false;
 
             foreach (MapObject mapObject in mapObjects)
             {
                 if (mapObject.GetObjectType() == "teleporter")
                 {
-                    Rectangle tRect = new Rectangle((int)mapObject.GetPosition().X, (int)mapObject.GetPosition().Y, 8, 1);
-                    Teleporter teleporter = new Teleporter(tRect, mapObject.GetName(), mapName);
+                    Rectangle teleporterRect = new Rectangle((int)mapObject.GetPosition().X, (int)mapObject.GetPosition().Y, 8, 1);
+                    List<string> targetPosition = mapObject.GetCustomProperties();
+                    float x = 0;
+                    float y = 0;
+                    foreach (string p in targetPosition)
+                    {
+                        if (p != string.Empty)
+                        {
+                             x = float.Parse(targetPosition[0]);
+                             y = float.Parse(targetPosition[1]);
+                        }
+                    }
+                    Teleporter teleporter = new Teleporter(teleporterRect, mapObject.GetName(), mapName, new Vector2(x, y));
                     teleporter.Enabled = true;
                     Init.teleporterList.Add(teleporter);
                 }
@@ -57,11 +69,19 @@ namespace Demo
 
         public Map() { }
 
+        /// <summary>
+        /// Returns the collision world of a map to set boundaries the player cannot cross.
+        /// </summary>
+        /// <returns></returns>
         public IBox GetCollisionWorld()
         {
             return collisionWorld;
         }
 
+        /// <summary>
+        /// Returns the world of a map to allow creation and destruction of collidable objects.
+        /// </summary>
+        /// <returns></returns>
         public World GetWorld()
         {
             return map.GetWorld();
@@ -72,16 +92,56 @@ namespace Demo
             fadeIn = true;
         }
 
+        /// <summary>
+        /// Returns a list of map objects that are in the object layer of a tmx map.
+        /// </summary>
+        /// <returns></returns>
         public List<MapObject> GetMapObjects()
         {
             return map.GetMapObjects();
         }
 
+        /// <summary>
+        /// Returns a list of all tiles in the collision layer of a tmx map.
+        /// </summary>
+        /// <returns></returns>
         public List<Tile> GetCollisionTiles()
         {
             return map.GetCollisionLayer();
         }
 
+        /// <summary>
+        /// Sets the color of the transition texture that occurs upon map entry and exit.
+        /// </summary>
+        /// <param name="color"></param>
+        public void SetTransitionColor(Color color)
+        {
+            this.transitionColor = color;
+        }
+
+        /// <summary>
+        /// Signals whether the map has finished transitioning and the fade effect has finished.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasFaded()
+        {
+            return hasFaded;
+        }
+
+        public void HasFaded(bool trueFalse)
+        {
+            hasFaded = trueFalse;
+        }
+
+        public string GetMapName()
+        {
+            return this.mapName;
+        }
+
+        /// <summary>
+        /// Generates and returns a path finding grid of collidable tiles based upon the collision layer in a tiled map.
+        /// </summary>
+        /// <returns></returns>
         public RoyT.AStar.Grid GenerateAStarGrid()
         {
             RoyT.AStar.Grid grid = new RoyT.AStar.Grid(map.Width() * 16, map.Height() * 16, 1);
@@ -111,27 +171,28 @@ namespace Demo
 
             return grid;
         }
-        public void LoadScene(Scene scene)
+
+        public void SetScene(Scene scene)
         {
             this.scene = scene;
+        }
 
-            if (scene != null)
+        public void LoadScene()
+        {
+            if (scene != null )
             {
                 scene.LoadContent(content);
             }
         }
-
-        public bool hasFaded = false;
-
         public void Update(GameTime gameTime)
         {
             if (fadeIn && hasFaded == false)
             {
-                color.A -= 5;
-                color.B -= 5;
-                color.G -= 5;
+                transitionColor.A -= 5;
+                transitionColor.B -= 5;
+                transitionColor.G -= 5;
 
-                if (color.A <= 0)
+                if (transitionColor.A <= 0)
                 {
                     hasFaded = true;
                 }
@@ -139,7 +200,7 @@ namespace Demo
 
             if (scene != null)
             {
-                scene.Update(gameTime);
+             //   scene.Update(gameTime);
             }
         }
         /// <summary>
@@ -167,7 +228,7 @@ namespace Demo
 
             if (fadeIn == true)
             {
-                spriteBatch.Draw(transitionTexture, new Rectangle(-1000, -500, 4000, 2000), color);
+                spriteBatch.Draw(transitionTexture, new Rectangle(-1000, -500, 4000, 2000), transitionColor);
             }
         }
     }

@@ -57,8 +57,9 @@ namespace Demo.Interface
             selectedItemTexture.SetData(new[] { selectedItemTextureColor });
             InventoryOpen = false;
 
-            TotalDynamite = 10;
-            TotalKeys = 1;
+            TotalDynamite = 0;
+            TotalKeys = 0;
+
             if (!SavedGameLoaded)
             {
                 TotalChickens = 3;

@@ -1,6 +1,6 @@
-player_health=94.9500000000003
+player_health=92.9500000000001
 arrows=25
 location=Level_1B
-player_position=638.2018,127.9506
+player_position=520,270.7499
 inventory_item=Chicken,3
 inventory_item=Dynamite,10

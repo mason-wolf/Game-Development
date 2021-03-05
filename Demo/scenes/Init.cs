@@ -33,11 +33,11 @@ namespace Demo.Scenes
         public static Camera2D Camera;
         // Store the maps.
         public static Map StartingAreaMap;
-        public static Map Level_1Map;
-        public static Map Level_1AMap;
-        public static Map Level_1BMap;
+        //public static Map Level_1Map;
+        //public static Map Level_1AMap;
+        //public static Map Level_1BMap;
         public static SpriteFont Font;
-        private Vector2 playerStartingPosition = new Vector2(408, 894);
+        private Vector2 playerStartingPosition = new Vector2(335f, 150f);
 
         public EscapeMenu escapeMenu;
         public static SaveMenu saveMenu;
@@ -46,7 +46,7 @@ namespace Demo.Scenes
         public Inventory inventory;
         private Texture2D HUDArrows;
         private Texture2D HUDKeys;
-        // Create teleporters.
+        // Stores a list of teleporters from imported maps.
         public static List<Teleporter> teleporterList;
 
         private GameWindow window;
@@ -57,13 +57,19 @@ namespace Demo.Scenes
         DialogBox dialogBox;
         public static bool TransitionState = false;
         // Create entities for this map.
-        Entity sittingWarriorEntity;
         AnimatedSprite campfire;
 
         // Store the player's collision state to pass to different scenes.
         IBox playerCollision;
 
         public static bool Reloaded = false;
+
+        List<Level> levelList = new List<Level>();
+        Level newLevel;
+
+        public static string Message = "";
+        public static bool MessageEnabled = false;
+        static int messageFrameCount = 0;
 
         public Init(Game game, GameWindow window) : base(game)
         {
@@ -93,33 +99,50 @@ namespace Demo.Scenes
             StartingArea,
             Level_1,
             Level_1A,
-            Level_1B
+            Level_1B,
+            Level_1C
         }
 
         protected override void LoadContent()
         {
             teleporterList = new List<Teleporter>();
             StartingAreaMap = new Map(Content, "Content/maps/StartingArea.tmx");
-            Level_1Map = new Map(Content, "Content/maps/level_1.tmx");
-            Level_1AMap = new Map(Content, "Content/maps/level_1a.tmx");
-            Level_1BMap = new Map(Content, "Content/maps/level_1b.tmx");
+            Sprites sprites = new Sprites();
+            sprites.LoadContent(Content);
+      
+            newLevel = new Level();
+            newLevel.SetMap(new Map(Content, "Content/maps/level_1.tmx"));
+            newLevel.SetScene(new Level_1());
+            newLevel.SetLevelName("Level_1");
+            newLevel.LoadContent(Content);
+            levelList.Add(newLevel);
+
+            newLevel = new Level();
+            newLevel.SetMap(new Map(Content, "Content/maps/level_1A.tmx"));
+            newLevel.SetScene(new Level_1A());
+            newLevel.SetLevelName("Level_1A");
+            newLevel.LoadContent(Content);
+            levelList.Add(newLevel);
+
+            newLevel = new Level();
+            newLevel.SetMap(new Map(Content, "Content/maps/level_1B.tmx"));
+            newLevel.SetScene(new Level_1B());
+            newLevel.LoadContent(Content);
+            newLevel.SetLevelName("Level_1B");
+            levelList.Add(newLevel);
+
+            newLevel = new Level();
+            newLevel.SetMap(new Map(Content, "Content/maps/level_1C.tmx"));
+            newLevel.SetScene(new Level_1C());
+            newLevel.LoadContent(Content);
+            newLevel.SetLevelName("Level_1C");
+            levelList.Add(newLevel);
+
             Font = Content.Load<SpriteFont>(@"interface\font");
             Player.LoadContent(Content);
             Player.sprite = new AnimatedSprite(Player.playerAnimation);
             Player.State = Action.IdleSouth1;
             Player.Position = playerStartingPosition;
-            Sprites sprites = new Sprites();
-            sprites.LoadContent(Content);
-
-            sittingWarriorEntity = new Entity(Sprites.sittingWarriorAnimation);
-
-            Level_1Map.LoadScene(new Level_1());
-            Level_1AMap.LoadScene(new Level_1A());
-            Level_1BMap.LoadScene(new Level_1B());
-            sittingWarriorEntity.CurrentHealth = 1;
-            sittingWarriorEntity.Position = new Vector2(Player.Position.X - 100, Player.Position.Y + 65);
-            sittingWarriorEntity.State = Action.IdleEast1;
-            StartingAreaMap.AddCollidable(sittingWarriorEntity.Position.X, sittingWarriorEntity.Position.Y - 16, 16, 31);
 
             escapeMenu = new EscapeMenu(game, window, Content);
             saveMenu = new SaveMenu(game, window, Content);
@@ -144,15 +167,13 @@ namespace Demo.Scenes
             campfire = Sprites.campfireSprite;
             campfire.Position = new Vector2(300, 260);
             StartingAreaMap.AddCollidable(campfire.Position.X, campfire.Position.Y, 8, 8);
-            SelectedScene = Scene.Level_1;
+            SelectedScene = Scene.StartingArea;
             playerCollision = StartingAreaMap.GetCollisionWorld();
             Item chickenItem = new Item();
             chickenItem.HealthAmount = 10;
             chickenItem.ItemTexture = Sprites.chickenTexture;
             HUDArrows = Content.Load<Texture2D>(@"objects\arrows");
             HUDKeys = Content.Load<Texture2D>(@"objects\key");
-            //Player.InventoryList[0] = chickenItem;
-            //Player.InventoryList[1] = chickenItem;
             base.LoadContent();
         }
 
@@ -167,26 +188,21 @@ namespace Demo.Scenes
                 TransitionState = true;
                 SelectedScene = (Init.Scene)Enum.Parse(typeof(Init.Scene), SavedGameLocation);
 
-                switch (SelectedScene)
+                if(SelectedScene.ToString() == "StartingArea")
                 {
-                    case (Scene.StartingArea):
-                        FadeInMap(StartingAreaMap);
-                   //     Player.Position = new Vector2(335f, 150f);
-                        break;
-                    case (Scene.Level_1):
-                        FadeInMap(Level_1Map);
-                   //     Player.Position = new Vector2(408f, 880f);
-                        break;
-                    case (Scene.Level_1A):
-                        FadeInMap(Level_1AMap);
-                    //    Player.Position = new Vector2(105f, 980f);
-                        break;
-                    case (Scene.Level_1B):
-                        FadeInMap(Level_1BMap);
-                  //      Player.Position = new Vector2(520f, 980f);
-                        break;
+                    FadeInMap("StartingArea");
+                    Player.Position = new Vector2(335f, 150f);
                 }
-
+                else
+                {
+                    foreach (Level level in levelList)
+                    {
+                        if (level.GetLevelName() == SelectedScene.ToString())
+                        {
+                            FadeInMap(level.GetMap().GetMapName());
+                        }
+                    }
+                }
 
                 Player.Position = SavedGamePosition;
                 Player.MotionVector = SavedGamePosition;
@@ -199,68 +215,32 @@ namespace Demo.Scenes
                 {
                     if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "StartingArea")
                     {
+                        if (Player.EnemyList.Count > 0)
+                        {
+                            Player.EnemyList.Clear();
+
+                            foreach (Level level in levelList)
+                            {
+                                level.GetEnemyAI().Clear();
+                            }
+                        }
+
+                        levelList.Clear();
+
+                        FadeInMap("StartingArea");
                         TransitionState = true;
-                        FadeInMap(StartingAreaMap);
+                        Content.Unload();
+                        LoadContent();
                         SelectedScene = Scene.StartingArea;
                         Player.Position = new Vector2(335f, 150f);
                     }
 
-                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1South")
-                    {
-                        if (Player.EnemyList.Count > 0)
-                        {
-                            Player.EnemyList.Clear();
-                            Level_1.enemyAI.Clear();
-                            Level_1A.enemyAI.Clear();
-                            Level_1B.enemyAI.Clear();
-                        }
-                        TransitionState = true;
-                        Content.Unload();
-                        LoadContent();
-                        FadeInMap(Level_1Map);
-                        SelectedScene = Scene.Level_1;
-                        Player.Position = new Vector2(408f, 880f);
-                    }
-
-                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1NorthWest")
+                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()))
                     {
                         TransitionState = true;
-                        FadeInMap(Level_1Map);
-                        SelectedScene = Scene.Level_1;
-                        Player.Position = new Vector2(42f, 90f);
-                    }
-
-                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1NorthEast")
-                    {
-                        TransitionState = true;
-                        FadeInMap(Level_1Map);
-                        SelectedScene = Scene.Level_1;
-                        Player.Position = new Vector2(984f, 120f);
-                    }
-
-                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1A")
-                    {
-                        TransitionState = true;
-                        FadeInMap(Level_1AMap);
-                        SelectedScene = Scene.Level_1A;
-                        Player.Position = new Vector2(105f, 980f);
-                    }
-
-                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1B")
-                    {
-                        TransitionState = true;
-                        FadeInMap(Level_1BMap);
-                        SelectedScene = Scene.Level_1B;
-                        Player.Position = new Vector2(520f, 980f);
-                    }
-
-
-                    if (Player.BoundingBox.Intersects(teleporter.GetRectangle()) && teleporter.GetDestinationMap() == "Level_1C")
-                    {
-                        TransitionState = true;
-                        FadeInMap(Level_1BMap);
-                        SelectedScene = Scene.Level_1B;
-                        Player.Position = new Vector2(520f, 980f);
+                        FadeInMap(teleporter.GetDestinationMap());
+                        SelectedScene = (Init.Scene)Enum.Parse(typeof(Init.Scene), teleporter.GetDestinationMap());
+                        Player.Position = teleporter.GetTargetPosition();
                     }
                 }
             }
@@ -276,34 +256,28 @@ namespace Demo.Scenes
                 case Scene.LoadMenu:
                     loadMenu.Update(gameTime);
                     break;
-                case Scene.StartingArea:
-                    playerCollision = StartingAreaMap.GetCollisionWorld();
-                    sittingWarriorEntity.Update(gameTime);
-                    StartingAreaMap.Update(gameTime);
-                    SelectedMap = StartingAreaMap;
-                    ToggleTeleporters(SelectedMap.MapName);
-                    break;
-                case Scene.Level_1:
-                    playerCollision = Level_1Map.GetCollisionWorld();
-                    Level_1Map.Update(gameTime);
-                    SelectedMap = Level_1Map;
-                    ToggleTeleporters(SelectedMap.MapName);
-                    Player.EnemyList = Level_1.enemyList;
-                    break;
-                case Scene.Level_1A:
-                    playerCollision = Level_1AMap.GetCollisionWorld();
-                    Level_1AMap.Update(gameTime);
-                    SelectedMap = Level_1AMap;
-                    ToggleTeleporters(SelectedMap.MapName);
-                    Player.EnemyList = Level_1A.enemyList;
-                    break;
-                case Scene.Level_1B:
-                    playerCollision = Level_1BMap.GetCollisionWorld();
-                    Level_1BMap.Update(gameTime);
-                    SelectedMap = Level_1BMap;
-                    ToggleTeleporters(SelectedMap.MapName);
-                    Player.EnemyList = Level_1B.enemyList;
-                    break;
+            }
+
+            if (SelectedScene == Scene.StartingArea)
+            {
+                playerCollision = StartingAreaMap.GetCollisionWorld();
+                StartingAreaMap.Update(gameTime);
+                SelectedMap = StartingAreaMap;
+                ToggleTeleporters(SelectedMap.GetMapName());
+            }
+            else
+            {
+                foreach (Level level in levelList)
+                {
+                    if (level.GetLevelName() == SelectedScene.ToString())
+                    {
+                        playerCollision = level.GetMap().GetCollisionWorld();
+                        level.Update(gameTime);
+                        SelectedMap = level.GetMap();
+                        ToggleTeleporters(SelectedMap.GetMapName());
+                        Player.EnemyList = level.GetEnemyList();
+                    }
+                }
             }
 
             // Create a pause if the player dies.
@@ -318,15 +292,18 @@ namespace Demo.Scenes
                 if (Player.EnemyList.Count > 0)
                 {
                     Player.EnemyList.Clear();
-                    Level_1.enemyAI.Clear();
-                    Level_1A.enemyAI.Clear();
-                    Level_1B.enemyAI.Clear();
+                    foreach (Level level in levelList)
+                    {
+                        level.GetEnemyAI().Clear();
+                    }
                 }
+
+                levelList.Clear();
                 TransitionState = true;
                 Content.Unload();
                 LoadContent();
 
-                FadeInMap(StartingAreaMap);
+                FadeInMap("StartingArea");
                 SelectedScene = Scene.StartingArea;
                 Player.Position = new Vector2(335f, 150f);
                 pauseAfterDeathFrames = 0;
@@ -354,8 +331,6 @@ namespace Demo.Scenes
             Player.Update(gameTime);
 
             // Handle player's collision.        
-            Console.WriteLine("\n" + Player.Position);
-            Console.WriteLine(playerCollision.X +"," + playerCollision.Y + "\n");
 
             playerCollision.Move(Player.Position.X, Player.Position.Y, (collision) => CollisionResponses.Slide);
 
@@ -383,23 +358,24 @@ namespace Demo.Scenes
         {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.GetViewMatrix());
             // Draw the selected screen.
-            switch (SelectedScene)
+
+            if (SelectedScene == Scene.StartingArea)
             {
-                case Scene.StartingArea:
-                    StartingAreaMap.Draw(spriteBatch);
-                    campfire.Draw(spriteBatch);
-                    sittingWarriorEntity.Draw(spriteBatch);
-                    break;
-                case Scene.Level_1:
-                    Level_1Map.Draw(spriteBatch);
-                    break;
-                case Scene.Level_1A:
-                    Level_1AMap.Draw(spriteBatch);
-                    break;
-                case Scene.Level_1B:
-                    Level_1BMap.Draw(spriteBatch);
-                    break;
+                StartingAreaMap.Draw(spriteBatch);
+                campfire.Draw(spriteBatch);
             }
+            else
+            {
+                foreach (Level level in levelList)
+                {
+                    if (level.GetLevelName() == SelectedScene.ToString())
+                    {
+                        level.GetMap().Draw(spriteBatch);
+                        level.Draw(spriteBatch);
+                    }
+                }
+            }
+
 
             // Escape menu.
             if (SelectedScene == Scene.EscapeMenu)
@@ -445,6 +421,11 @@ namespace Demo.Scenes
             {
                 spriteBatch.DrawString(Init.Font, "YOU DIED", new Vector2(Init.Player.Position.X - 20, Init.Player.Position.Y - 50), Color.Red);
             }
+
+            if (MessageEnabled)
+            {
+                ShowMessage(Message, spriteBatch);
+            }
             spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -453,33 +434,52 @@ namespace Demo.Scenes
 
         public void HandleDialog()
         {
-            if (Player.BoundingBox.Intersects(sittingWarriorEntity.BoundingBox) && KeyBoardNewState.IsKeyDown(Keys.E) && KeyBoardOldState.IsKeyUp(Keys.E))
-            {
-                dialogBox.Show();
-            }
+            //if (Player.BoundingBox.Intersects(sittingWarriorEntity.BoundingBox) && KeyBoardNewState.IsKeyDown(Keys.E) && KeyBoardOldState.IsKeyUp(Keys.E))
+            //{
+            //    dialogBox.Show();
+            //}
 
-            if (dialogBox.IsActive())
-            {
-                inDialog = true;
-            }
-            else
-            {
-                inDialog = false;
-            }
+            //if (dialogBox.IsActive())
+            //{
+            //    inDialog = true;
+            //}
+            //else
+            //{
+            //    inDialog = false;
+            //}
         }
         /// <summary>
         /// Creates a transition effect on the map.
         /// </summary>
         /// <param name="map">Map to fade in.</param>
-        public static void FadeInMap(Map map)
+        public void FadeInMap(string mapName)
         {
-            // Fade in the screen.
-            map.FadeIn();
-            // The effect occured once, so set the trigger back to false and reset visibility color.
-            if (map.hasFaded)
+            if (mapName == "StartingArea")
             {
-                map.hasFaded = false;
-                map.color = new Color(255, 255, 255, 255);
+                StartingAreaMap.FadeIn();
+                if (StartingAreaMap.HasFaded())
+                {
+                    StartingAreaMap.HasFaded(false);
+                    StartingAreaMap.SetTransitionColor(new Color(255, 255, 255, 255));
+                }
+            }
+            else
+            {
+                foreach (Level level in levelList)
+                {
+                    if (level.GetLevelName() == mapName)
+                    {
+                        // Fade in the screen
+                        level.GetMap().FadeIn();
+
+                        // The effect occured once, so set the trigger back to false and reset visibility color.
+                        if (level.GetMap().HasFaded())
+                        {
+                            level.GetMap().HasFaded(false);
+                            level.GetMap().SetTransitionColor(new Color(255, 255, 255, 255));
+                        }
+                    }
+                }
             }
         }
 
@@ -515,6 +515,20 @@ namespace Demo.Scenes
                 {
                     teleporter.Enabled = false;
                 }
+            }
+        }
+
+        public static void ShowMessage(string message, SpriteBatch spriteBatch)
+        {
+            if (messageFrameCount < 120)
+            {
+                spriteBatch.DrawString(Init.Font, message, new Vector2(Init.Player.Position.X - 165, Init.Player.Position.Y + 105), Color.White);
+                messageFrameCount++;
+            }
+            else
+            {
+                MessageEnabled = false;
+                messageFrameCount = 0;
             }
         }
 

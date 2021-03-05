@@ -1,4 +1,5 @@
 ﻿using Demo;
+using Demo.Scenes;
 using Humper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -95,16 +96,34 @@ namespace Demo.Engine
                         layers.Add(newLayer);
                     }
 
+                    int objectId = 0;
+
                     // Get the object layer.
                     if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "object")
                     {
+                        objectId = Int32.Parse(reader.GetAttribute("id"));
                         string objectName = reader.GetAttribute("name");
-                        Vector2 objectPosition = new Vector2(float.Parse(reader.GetAttribute("x")), float.Parse(reader.GetAttribute("y")));
-                        MapObject newObject = new MapObject(reader.GetAttribute("name"), reader.GetAttribute("type"), objectPosition);
+                        string objectType = reader.GetAttribute("type");
+                        float objectPositionX = float.Parse(reader.GetAttribute("x"));
+                        float objectPositionY = float.Parse(reader.GetAttribute("y"));
+
+                        MapObject newObject = new MapObject(objectId, objectName, objectType, new Vector2(objectPositionX, objectPositionY));
                         mapObjects.Add(newObject);
+
+                        // Add custom properties
+                        List<string> customProperties = new List<string>(0);
+
+                        XmlReader subTree = reader.ReadSubtree();
+                        while (subTree.Read())
+                        {
+                            if (subTree.Name == "property" && subTree.GetAttribute("value") != string.Empty)
+                            {
+                                customProperties.Add(subTree.GetAttribute("value"));
+                            }
+                        }
+                        mapObjects.Where(mapObject => mapObject.GetId() == objectId).FirstOrDefault().SetCustomProperties(customProperties);
                     }
                 }
-
                 reader.Close();
             }
 

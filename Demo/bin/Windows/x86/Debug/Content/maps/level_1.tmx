@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3536" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="116">
+<map version="1.2" tiledversion="1.2.3536" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="118">
  <tileset firstgid="1" source="tileset_2.tsx"/>
  <layer id="2" name="Layer 1" width="64" height="64">
   <data encoding="csv">
@@ -185,8 +185,23 @@
   <object id="93" name="Barrel" x="704.708" y="881.083"/>
   <object id="96" name="Skeleton" x="735.667" y="448.667"/>
   <object id="97" name="Skeleton" x="988.667" y="492.667"/>
-  <object id="112" name="StartingArea" type="teleporter" x="407.5" y="919.75"/>
-  <object id="113" name="Level_1A" type="teleporter" x="40.4545" y="53.9091"/>
-  <object id="114" name="Level_1B" type="teleporter" x="984.545" y="86.3636"/>
+  <object id="112" name="StartingArea" type="teleporter" x="408.5" y="925.25">
+   <properties>
+    <property name="targetX" type="float" value="335"/>
+    <property name="targetY" type="float" value="150"/>
+   </properties>
+  </object>
+  <object id="116" name="Level_1A" type="teleporter" x="40" y="53.2727">
+   <properties>
+    <property name="targetX" type="float" value="105"/>
+    <property name="targetY" type="float" value="980"/>
+   </properties>
+  </object>
+  <object id="117" name="Level_1B" type="teleporter" x="984.727" y="85.4545">
+   <properties>
+    <property name="targetX" type="float" value="520"/>
+    <property name="targetY" type="float" value="980"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

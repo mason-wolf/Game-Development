@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3536" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="40" nextobjectid="13">
+<map version="1.2" tiledversion="1.2.3536" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="40" nextobjectid="15">
  <tileset firstgid="1" source="tileset_1.tsx"/>
  <layer id="34" name="Tile Layer 1" width="64" height="64">
   <data encoding="csv">
@@ -138,6 +138,11 @@
 </data>
  </layer>
  <objectgroup id="39" name="Object Layer 1">
-  <object id="12" name="Level_1South" type="teleporter" x="334.295" y="117.932"/>
+  <object id="12" name="Level_1" type="teleporter" x="334.295" y="117.932">
+   <properties>
+    <property name="targetX" type="float" value="408"/>
+    <property name="targetY" type="float" value="880"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

@@ -55,7 +55,7 @@ namespace Demo
             {
                 bossEngaged = true;
                 Level_1B.chainedGateSprite.Play("idle");
-                IBox chainedGateCollidable = Init.Level_1BMap.GetWorld().Create(Level_1B.chainedGateSprite.Position.X - 10, Level_1B.chainedGateSprite.Position.Y, 32, 16);
+             //   IBox chainedGateCollidable = Init.Level_1BMap.GetWorld().Create(Level_1B.chainedGateSprite.Position.X - 10, Level_1B.chainedGateSprite.Position.Y, 32, 16);
             }
 
             pickaxe.Update(gameTime);
@@ -219,7 +219,7 @@ namespace Demo
             {
                 sprite.Draw(spriteBatch);
             }
- 
+
             if (!Dead)
             {
                 // Draw boss weapon and health bar

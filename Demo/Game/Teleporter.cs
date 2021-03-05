@@ -13,6 +13,7 @@ namespace Demo
         private Rectangle rectangle;
         private string destinationMap;
         private string sourceMap;
+        private Vector2 targetPosition;
 
         public Rectangle GetRectangle()
         {
@@ -24,6 +25,15 @@ namespace Demo
             return destinationMap;
         }
 
+        public void SetTargetPosition(Vector2 targetPosition)
+        {
+            this.targetPosition = targetPosition;
+        }
+
+        public Vector2 GetTargetPosition()
+        {
+            return targetPosition;
+        }
         public string GetSourceMap()
         {
             return sourceMap;
@@ -35,11 +45,12 @@ namespace Demo
         /// </summary>
         /// <param name="rectangle">Rectangle dimensions and position</param>
         /// <param name="destinationMap">Name of the scene the teleporter is assigned to</param>
-        public Teleporter(Rectangle rectangle, string destinationMap, string sourceMap)
+        public Teleporter(Rectangle rectangle, string destinationMap, string sourceMap, Vector2 targetPosition)
         {
             this.rectangle = rectangle;
             this.destinationMap = destinationMap;
             this.sourceMap = sourceMap;
+            this.targetPosition = targetPosition;
         }
     }
 }

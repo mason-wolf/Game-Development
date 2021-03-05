@@ -16,6 +16,7 @@ namespace Demo
 {
     public class MapObject : Scene
     {
+        int id;
         string name;
         string type;
         GameTime gameTime;
@@ -26,9 +27,23 @@ namespace Demo
         Rectangle containedItemBoundingBox;
         bool destroyed = false;
         bool itemPickedUp = false;
+        List<string> customProperties;
 
         IBox collisionBox;
 
+        public MapObject(int objectId, string objectName, string objectType, Vector2 position)
+        {
+            this.id = objectId;
+            this.name = objectName;
+            this.type = objectType;
+            this.position = position;
+            this.objectBoundingBox = new Rectangle((int)position.X, (int)position.Y - 5, 10, 10);
+        }
+
+        public int GetId()
+        {
+            return id;
+        }
         public string GetName()
         {
             return name;
@@ -59,6 +74,11 @@ namespace Demo
             return animatedSprite;
         }
 
+        public void SetId(int id)
+        {
+            this.id = id;
+        }
+
         public void SetContainedItem(Item item)
         {
             this.containedItem = item;
@@ -67,6 +87,16 @@ namespace Demo
         public void SetCollisionBox(IBox collisionBox)
         {
             this.collisionBox = collisionBox;
+        }
+
+        public void SetCustomProperties(List<string> customProperties)
+        {
+            this.customProperties = customProperties;
+        }
+
+        public List<string> GetCustomProperties()
+        {
+            return customProperties;
         }
 
         public IBox GetCollisionBox()
@@ -160,14 +190,6 @@ namespace Demo
                 }
                 containedItemBoundingBox = new Rectangle(x, y, 1, 1);
             }
-        }
-
-        public MapObject(string objectName, string objectType, Vector2 position)
-        {
-            this.name = objectName;
-            this.type = objectType;
-            this.position = position;
-            this.objectBoundingBox = new Rectangle((int)position.X, (int)position.Y - 5, 10, 10);
         }
     }
 }
